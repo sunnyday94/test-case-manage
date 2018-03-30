@@ -31,7 +31,7 @@ public class UsersController {
 	 * @param @return
 	 * @return String
 	 */
-	@GetMapping(value="login")
+	@GetMapping(value= {"","/goToLogin"})
 	public String goToLoginIndex() {
 		return "login";
 	}
@@ -46,7 +46,7 @@ public class UsersController {
 	 * @param @return
 	 * @return String
 	 */
-	@GetMapping(value="register")
+	@GetMapping(value="/register")
 	public String register(Model model) {
 		return "register";
 	}

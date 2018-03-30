@@ -39,11 +39,12 @@ public class DataSourceConfig {
 	        return new com.alibaba.druid.pool.DruidDataSource();
 	    }
 	    
+
 	 	/**
 	 	 * 
 	 	 * @description: <p class="detail">SqlSessionFactory</p>
 	 	 * @author: <a href="mailto:sunny@chunmi.com ">sunny</a>
-	 	 * @date: 2017年12月11日-下午2:06:40
+	 	 * @date: 2018年3月30日-下午9:21:02
 	 	 * @param @return
 	 	 * @param @throws Exception
 	 	 * @return SqlSessionFactory

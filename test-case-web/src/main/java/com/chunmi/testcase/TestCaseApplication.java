@@ -20,11 +20,10 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.boot.Banner;
 
 import lombok.extern.slf4j.Slf4j;
 
-@SpringBootApplication(scanBasePackages="{com.chunmi.testcase}")
+@SpringBootApplication(scanBasePackages= {"com.chunmi.testcase"})
 @EnableTransactionManagement
 @EnableCaching
 @Slf4j

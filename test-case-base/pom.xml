@@ -70,6 +70,11 @@
 			    <groupId>org.springframework</groupId>
 			    <artifactId>spring-beans</artifactId>
 			</dependency>
+			<!-- 配置Spring-Data-JPA启动器 -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-data-jpa</artifactId>
+			</dependency>
 			      
 			<!-- 七牛云SDK -->
 			<dependency>
@@ -182,11 +187,19 @@
 			    <artifactId>poi-ooxml</artifactId>
 			</dependency>
 			
-			<!-- httpclient -->
-			<dependency>
-			    <groupId>org.apache.httpcomponents</groupId>
-			    <artifactId>httpclient</artifactId>
-			</dependency>     	
+	        <!-- httpclient -->
+	        <dependency>
+	            <groupId>org.apache.httpcomponents</groupId>
+	            <artifactId>httpcore</artifactId>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.apache.httpcomponents</groupId>
+	            <artifactId>httpmime</artifactId>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.apache.httpcomponents</groupId>
+	            <artifactId>httpclient</artifactId>
+	        </dependency>   	
 		</dependencies>
 		
 		<build>

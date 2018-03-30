@@ -21,13 +21,11 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import com.chunmi.testcase.model.po.Users;
 import com.chunmi.testcase.utils.Constant;
 
-@WebFilter(urlPatterns="/*",filterName="managerCheckFilter")
 public class ManagerCheckFilter implements Filter{
 
 	@Override
@@ -48,10 +46,10 @@ public class ManagerCheckFilter implements Filter{
 		HttpServletResponse res = (HttpServletResponse) response;
 		String servletPath = req.getServletPath();	
 		if(!servletPath.endsWith(".css") && !servletPath.endsWith(".js") && !servletPath.endsWith(".jpg") &&
-				!servletPath.endsWith("checkLogin") && !servletPath.endsWith("login")) {
+				!servletPath.endsWith("checkLogin") && !servletPath.endsWith("goToLogin")) {
 			Users manager = (Users) req.getSession().getAttribute(Constant.LOGIN_MANAGER);
 			if(manager == null) {
-				res.sendRedirect(req.getScheme()+"://"+req.getServerName()+":"+req.getServerPort()+req.getContextPath()+"/login");
+				res.sendRedirect(req.getScheme()+"://"+req.getServerName()+":"+req.getServerPort()+req.getContextPath()+"/goToLogin");
 				return;
 			}
 		}

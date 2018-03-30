@@ -20,6 +20,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
+import com.chunmi.testcase.filter.ManagerCheckFilter;
+import com.chunmi.testcase.filter.XSSFilter;
+
 @Configuration
 public class FilterConfig {
     
@@ -32,14 +35,50 @@ public class FilterConfig {
 	 * @param @return
 	 * @return FilterRegistrationBean
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Bean
-	public FilterRegistrationBean encodingFilter() {
-		FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+	public FilterRegistrationBean<CharacterEncodingFilter> encodingFilter() {
+		FilterRegistrationBean<CharacterEncodingFilter> registrationBean = new FilterRegistrationBean<CharacterEncodingFilter>();
 		registrationBean.setFilter(new CharacterEncodingFilter());
 		registrationBean.addInitParameter("encoding","UTF-8");
 		registrationBean.addInitParameter("forceEncoding","true");
 		registrationBean.addServletNames("encodingFilter");
+		registrationBean.addUrlPatterns("/*");
+		registrationBean.setEnabled(true);
+		return registrationBean;
+	}
+	
+	/**
+	 * 
+	 * @description: <p class="detail">登录过滤器</p>
+	 * @author: <a href="mailto:sunny@chunmi.com ">sunny</a>
+	 * @date: 2018年3月30日-下午10:44:11
+	 * @param @return
+	 * @return FilterRegistrationBean<ManagerCheckFilter>
+	 */
+	@Bean
+	public FilterRegistrationBean<ManagerCheckFilter> managerCheckFilter(){
+		FilterRegistrationBean<ManagerCheckFilter> registrationBean = new FilterRegistrationBean<ManagerCheckFilter>();
+		registrationBean.setFilter(new ManagerCheckFilter());
+		registrationBean.addServletNames("managerCheckFilter");
+		registrationBean.addUrlPatterns("/*");
+		registrationBean.setEnabled(true);
+		return registrationBean;
+	}
+	
+	
+	/**
+	 * 
+	 * @description: <p class="detail">XSSFilter</p>
+	 * @author: <a href="mailto:sunny@chunmi.com ">sunny</a>
+	 * @date: 2018年3月30日-下午10:44:26
+	 * @param @return
+	 * @return FilterRegistrationBean<XSSFilter>
+	 */
+	@Bean
+	public FilterRegistrationBean<XSSFilter> xssFilter(){
+		FilterRegistrationBean<XSSFilter> registrationBean = new FilterRegistrationBean<XSSFilter>();
+		registrationBean.setFilter(new XSSFilter());
+		registrationBean.addServletNames("xssFilter");
 		registrationBean.addUrlPatterns("/*");
 		registrationBean.setEnabled(true);
 		return registrationBean;
