@@ -46,7 +46,8 @@ public class ManagerCheckFilter implements Filter{
 		HttpServletResponse res = (HttpServletResponse) response;
 		String servletPath = req.getServletPath();	
 		if(!servletPath.endsWith(".css") && !servletPath.endsWith(".js") && !servletPath.endsWith(".jpg") &&
-				!servletPath.endsWith("checkLogin") && !servletPath.endsWith("goToLogin")) {
+				!servletPath.endsWith("checkLogin") && !servletPath.endsWith("goToLogin") && !servletPath.endsWith("goToRegister")
+				&& !servletPath.endsWith("checkRegister")) {
 			Users manager = (Users) req.getSession().getAttribute(Constant.LOGIN_MANAGER);
 			if(manager == null) {
 				res.sendRedirect(req.getScheme()+"://"+req.getServerName()+":"+req.getServerPort()+req.getContextPath()+"/goToLogin");

@@ -14,6 +14,11 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="is_disabled" jdbcType="CHAR" property="isDisabled" />
   </resultMap>
+  
+  <resultMap type="com.chunmi.testcase.model.po.Users" id="UserResultMap" extends="BaseResultMap">
+  	<association property="role" column="role_id" fetchType="lazy" select="com.chunmi.testcase.mapper.RoleMapper.selectByPrimaryKey"/>
+  </resultMap>
+  
   <sql id="Base_Column_List">
     <!--
       WARNING - @mbg.generated
@@ -63,44 +68,30 @@
     -->
     insert into cm_user
     <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
+      <if test="user.id != null">
         id,
       </if>
-      <if test="userName != null">
+      <if test="user.userName != null">
         user_name,
       </if>
-      <if test="password != null">
+      <if test="user.password != null">
         password,
       </if>
-      <if test="roleId != null">
         role_id,
-      </if>
-      <if test="createTime != null">
         create_time,
-      </if>
-      <if test="isDisabled != null">
-        is_disabled,
-      </if>
+        is_disabled
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
+      <if test="user.id != null">
+        #{user.id,jdbcType=BIGINT},
       </if>
-      <if test="userName != null">
-        #{userName,jdbcType=VARCHAR},
+      <if test="user.userName != null">
+        #{user.userName,jdbcType=VARCHAR},
       </if>
-      <if test="password != null">
-        #{password,jdbcType=VARCHAR},
+      <if test="user.password != null">
+        MD5(#{user.password,jdbcType=VARCHAR}),
       </if>
-      <if test="roleId != null">
-        #{roleId,jdbcType=BIGINT},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="isDisabled != null">
-        #{isDisabled,jdbcType=CHAR},
-      </if>
+		2,NOW(),'0'
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.chunmi.testcase.model.po.Users">
@@ -142,5 +133,42 @@
       create_time = #{createTime,jdbcType=TIMESTAMP},
       is_disabled = #{isDisabled,jdbcType=CHAR}
     where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectVoteUsersByName" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/> from cm_user where user_name = #{userName,jdbcType=VARCHAR}
+  </select>
+  
+  <select id="selectUserCountsByCondition" resultType="java.lang.Integer">
+  	select COUNT(1) FROM cm_user
+  	<where>
+  		<if test="user.userName!=null and user.userName !=''">
+  			user_name = #{user.userName}
+  		</if>
+  		<if test="user.isDisabled !=null and user.isDisabled !=''">
+  			and is_disabled = #{user.isDisabled}
+  		</if>
+  	</where>
+  </select>
+  
+  <select id="selectUserListByCondition" resultMap="UserResultMap">
+  	select <include refid="Base_Column_List"/> from cm_user 
+  	<where>
+  		<if test="user.userName !=null and user.userName !=''">
+  			user_name = #{user.userName}
+  		</if>
+  		<if test="user.isDisabled !=null and user.isDisabled !=''">
+  			and is_disabled = #{user.isDisabled}
+  		</if>
+  	</where>
+  	limit #{pageRequest.offSet},#{pageRequest.pageSize}
+  </select>
+  
+  <update id="updateUserStatus">
+  	update cm_user 
+  	<set>
+  		is_disabled = #{user.isDisabled}
+  	</set>
+  	where id = #{user.id}
   </update>
 </mapper>
