@@ -1,6 +1,11 @@
 package com.chunmi.testcase.mapper;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.chunmi.testcase.model.po.ProjectVersion;
+import com.chunmi.testcase.utils.PageRequest;
 
 public interface ProjectVersionMapper {
     /**
@@ -50,4 +55,10 @@ public interface ProjectVersionMapper {
      * @mbg.generated Fri Mar 30 15:28:36 CST 2018
      */
     int updateByPrimaryKey(ProjectVersion record);
+
+	Integer selectProjectVersionCountsByCondition(@Param("version")ProjectVersion projectVersion);
+
+	List<ProjectVersion> selectProjectVersionByCondition(@Param("pageRequest")PageRequest pageRequest, @Param("version")ProjectVersion projectVersion);
+
+	ProjectVersion seletProjectVersionByProjectIdAndVersionNum(@Param("version")ProjectVersion projectVersion);
 }

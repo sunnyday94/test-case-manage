@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>纯米 | 项目列表</title>
+
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
+<link th:href="@{/css/style.css}" rel="stylesheet" />
+
+<link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet"/>
+<link th:href="@{/css/plugins/footable/footable.core.css}" rel="stylesheet"/>
+<link th:href="@{/js/layer/layer.css}" rel="stylesheet"/>
+</head>
+<body>
+    <div id="wrapper">
+		<nav class="navbar-default navbar-static-side" role="navigation" th:include="nav :: navigation"></nav>
+		<div id="page-wrapper" class="gray-bg">
+        	<div class="border-bottom" th:include="header :: headerTop"></div>
+      		<div class="row wrapper border-bottom white-bg page-heading" th:fragment="headerNav">
+		   		<div class="col-lg-10">
+		     		<h2>项目列表</h2>
+		      	</div>
+		      	<div class="col-lg-2">
+		      	</div>
+		  	</div>
+		  	
+        	<div class="wrapper wrapper-content animated fadeInRight">
+	               <div class="row">
+	                   <div class="col-sm-12" >
+	                   		<form id="dataTable" th:action="@{projectList_0_0_0}" method="get">
+	                                   <label class="control-label">项目名:</label>
+	                                   <input class="input-medium"  name="projectName" type="text" th:value="${pb.objectBean.projectName}" id="projectName"
+	                                          style="height: 2.6rem; width: 20rem;margin-right: 3rem;"/>
+	                                   <button type="submit" class="btn btn-primary">查询</button>
+	                                   <div style="display: inline-block;margin-left: 15px;">
+	                                    	<button type="button" class="btn btn-primary" th:onclick="'javascript:addProject();'">新增</button>
+	                                   </div>
+        	 				</form>
+	                   </div>
+	               </div>
+            	<div class="row" style="margin-top:14px;">
+                	<div class="col-sm-12">
+	                    <div class="ibox float-e-margins">
+	                        <div class="ibox-title">
+	                            <h5>项目列表</h5>
+	                            <div class="ibox-tools">
+	                                <a class="collapse-link">
+	                                    <i class="fa fa-chevron-up"></i>
+	                                </a>
+	                            </div>
+	                        </div>
+	                        <div class="ibox-content">
+	                            <div class="table-responsive">
+	                                <table class=" table table-hover" data-page-size="10">
+	                                    <thead>
+		                                    <tr>
+		                                    	<th width="33%">序号</th>
+		                                    	<th width="33%">项目名</th>
+		                                        <th width="34%">操作</th>
+		                                    </tr>
+	                                    </thead>
+	                                    <tbody>
+	                                    	<tr th:each="project : ${pb.list}">
+										   		<td th:text="${project.id}">序号</td>
+												<td th:text="${project.projectName}">项目名</td>
+										      	<td>
+										      		<a style="margin-right: 10px" href="#" th:text="查看版本号" th:onclick="'javascript:selectProjectVersion('+${project.id}+');'">查看版本号</a>
+													<a href="#" th:text="删除" th:onclick="'javascript:delProjectById('+${project.id}+');'" title="删除">删除</a>	      		
+										      	</td>
+											</tr>
+	                                    </tbody>
+	                                   	<tfoot>
+			                                <tr>
+			                                    <td colspan="3">
+			                                        <ul id="pageHTML" class="pagination pull-right"></ul>
+			                                    </td>
+			                                </tr>
+		                                </tfoot>
+	                                </table>
+			                	</div>
+	                        </div>
+	           			</div>
+                	</div>
+            	</div>
+        	</div>
+        	<div class="footer" th:include="footer :: copyright"></div>
+      	</div>
+		
+		<!-- Add Modal-->
+		<div class="modal fade" id="addProjectDiv" tabindex="-1" role="dialog"
+			aria-labelledby="ModalTitle" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="ModalTitle">新增项目</h4>
+					</div>
+					<form class="form-horizontal" method="post" id="addProjectForm" th:action="@{addProject}">
+						<div class="box-body">
+							<div class="form-group">
+								<label class="control-label col-sm-3">项目名：</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" id="addProjectName" name="projectName" value="" placeholder="输入项目名"/>
+								</div>
+							</div>
+					</form>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" onclick="saveAddProject();">确定</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+	</div>
+	
+    <!-- Mainly scripts -->
+    <script th:src="@{/js/jquery-2.1.1.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+    <script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+	
+    <!-- Peity -->
+    <script th:src="@{/js/plugins/peity/jquery.peity.min.js}"></script>
+	
+    <!-- Custom and plugin javascript -->
+    <script th:src="@{/js/inspinia.js}"></script>
+    <script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+	
+    <!-- iCheck -->
+    <script th:src="@{/js/plugins/iCheck/icheck.min.js}"></script>
+	
+    <!-- Peity -->
+    <script th:src="@{/js/demo/peity-demo.js}"></script>
+	
+	<!-- FooTable -->
+    <script th:src="@{/js/plugins/footable/footable.all.min.js}"></script>
+    
+    <!-- common -->
+    <script th:src="@{/js/common.js}"></script>
+    
+
+    <!-- layerui -->
+	<script th:src="@{/js/layer/layer.js}"></script> 
+	
+	<script th:src="@{js/jquery.form.min.js}"></script>
+    
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+	    var pageHTML = [[${pageHTML}]];
+		$(document).ready(function () {
+			siderBar("projectList");
+			$("#pageHTML").html(pageHTML);
+			
+		});
+		
+		//删除项目
+		function delProjectById(projectId){
+			layer.confirm('确定删除此项目?',{
+				btn:['确认','取消']
+			},function(){
+				$.post("delProjectById",{"id":projectId},function(){
+					window.location.reload();
+				});
+			},function(){
+				
+			});			
+		}
+		
+		
+		//新增项目(弹窗)
+		function addProject(){
+			$("#addProjectDiv").modal('show');
+		}
+		
+		
+		//保存新增项目
+		function saveAddProject(){
+			var projectName = $("#addProjectName").val();
+			if(projectName == null || projectName == ''){
+				layer.msg("项目名不能为空",{time:1000});
+				return;
+			}
+			$.ajax({
+				type:"post",
+				async:false,
+				url: "addProject",
+				data: {"projectName":projectName},
+				dataType:"JSON",
+				success:function(data){
+					if(data.code==10000){
+						$("#addProjectDiv").modal('hide');
+						window.location.reload();
+					}else{
+						layer.msg(data.message,{time:1000});
+					}	
+				}
+			});
+		}
+		
+		//查看版本号
+		function selectProjectVersion(projectId){
+			window.location.href="projectVersionList_0_0_0"+"?projectId="+projectId;
+		}
+		
+	/*]]>*/
+	</script>
+
+</body>
+
+</html>

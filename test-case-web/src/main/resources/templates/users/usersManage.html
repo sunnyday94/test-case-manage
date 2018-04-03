@@ -22,7 +22,7 @@
         	<div class="border-bottom" th:include="header :: headerTop"></div>
       		<div class="row wrapper border-bottom white-bg page-heading" th:fragment="headerNav">
 		   		<div class="col-lg-10">
-		     		<h2>用户管理</h2>
+		     		<h2>用户列表</h2>
 		      	</div>
 		      	<div class="col-lg-2">
 		      	</div>
@@ -61,10 +61,10 @@
 		                                    <thead>
 			                                    <tr>
 			                                    	<th width="25%">用户名</th>
-			                                        <th width="20%">角色</th>
-			                                        <th width="20%">当前状态</th>
+			                                        <th width="25%">角色</th>
+			                                        <th width="25%">当前状态</th>
 			                                        <div th:if="${loginManager.roleId==1}">
-			                                        	<th width="35%">操作</th>
+			                                        	<th width="25%">操作</th>
 			                                        </div>
 			                                        
 			                                    </tr>
@@ -86,7 +86,7 @@
 		                                    </tbody>
 		                                   	<tfoot>
 				                                <tr>
-				                                    <td colspan="6">
+				                                    <td colspan="4">
 				                                        <ul id="pageHTML" class="pagination pull-right"></ul>
 				                                    </td>
 				                                </tr>

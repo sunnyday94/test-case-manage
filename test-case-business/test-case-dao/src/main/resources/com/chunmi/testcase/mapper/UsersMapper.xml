@@ -155,12 +155,13 @@
   	select <include refid="Base_Column_List"/> from cm_user 
   	<where>
   		<if test="user.userName !=null and user.userName !=''">
-  			user_name = #{user.userName}
+  			user_name like concat('%',#{user.userName},'%')
   		</if>
   		<if test="user.isDisabled !=null and user.isDisabled !=''">
   			and is_disabled = #{user.isDisabled}
   		</if>
   	</where>
+  	order by create_time desc
   	limit #{pageRequest.offSet},#{pageRequest.pageSize}
   </select>
   

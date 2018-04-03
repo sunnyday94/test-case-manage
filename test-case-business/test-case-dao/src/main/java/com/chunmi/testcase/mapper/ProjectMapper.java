@@ -1,6 +1,11 @@
 package com.chunmi.testcase.mapper;
 
+import java.util.List;
+
+import org.apache.ibatis.annotations.Param;
+
 import com.chunmi.testcase.model.po.Project;
+import com.chunmi.testcase.utils.PageRequest;
 
 public interface ProjectMapper {
     /**
@@ -50,4 +55,12 @@ public interface ProjectMapper {
      * @mbg.generated Fri Mar 30 15:28:36 CST 2018
      */
     int updateByPrimaryKey(Project record);
+
+	Integer selectProjectCountsByCondition(@Param("project") Project project);
+
+	List<Project> selectProjectListByCondition(@Param("project")Project project, @Param("pageRequest")PageRequest pageRequest);
+
+	Project selectProjectByName(@Param("projectName")String projectName);
+
+	Integer delProjectById(@Param("id")Long id);
 }
