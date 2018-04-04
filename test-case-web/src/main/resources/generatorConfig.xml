@@ -23,6 +23,7 @@
 			<!--  <property name="trimStrings" value="true" />  -->
 		</javaModelGenerator>
 		
+		
         <!-- targetProject:mapper映射文件生成的位置 -->
 		<sqlMapGenerator targetPackage="com\chunmi\testcase\mapper" 
 			targetProject="D:\STS_Workspace\test-case-manage\test-case-business\test-case-dao\src\main\resources">
@@ -35,6 +36,7 @@
 		</javaClientGenerator>
 		
 		<!-- 数据库表和对应实体类 -->
+		<!--  
 		<table tableName="cm_user" domainObjectName="Users" 
 				enableCountByExample="false"  enableDeleteByExample="false" 
 				enableSelectByExample="false" enableUpdateByExample="false"/> 
@@ -50,7 +52,7 @@
 		<table tableName="cm_version" domainObjectName="ProjectVersion" 
 				enableCountByExample="false"  enableDeleteByExample="false" 
 				enableSelectByExample="false" enableUpdateByExample="false"/> 
-				
+		-->	
 		<table tableName="cm_module" domainObjectName="ProjectModule" 
 				enableCountByExample="false"  enableDeleteByExample="false" 
 				enableSelectByExample="false" enableUpdateByExample="false"/> 
@@ -59,9 +61,12 @@
 		<table tableName="cm_casedetail" domainObjectName="CaseDetail" 
 				enableCountByExample="false"  enableDeleteByExample="false" 
 				enableSelectByExample="false" enableUpdateByExample="false"/> 
-				
+		
+		<!--  	
 		<table tableName="cm_actual_result" domainObjectName="ActualResult" 
 				enableCountByExample="false"  enableDeleteByExample="false" 
 				enableSelectByExample="false" enableUpdateByExample="false"/> 
+				
+				-->
 	</context>
 </generatorConfiguration>

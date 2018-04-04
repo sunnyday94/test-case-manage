@@ -11,12 +11,12 @@
  * it only in accordance with the terms of the license agreement
  * you entered into with CHUNMI.
  *
- * File Created @ [2018年4月3日, 下午3:53:39 (CST)]
+ * File Created @ [2018年4月4日, 上午10:45:39 (CST)]
  */
 package com.chunmi.testcase.controller;
 
 import java.util.HashMap;
-
+import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,8 +27,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.chunmi.testcase.model.po.ProjectVersion;
-import com.chunmi.testcase.service.ProjectVersionService;
+import com.chunmi.testcase.model.po.ProjectModule;
+import com.chunmi.testcase.service.ProjectModuleService;
 import com.chunmi.testcase.utils.Constant;
 import com.chunmi.testcase.utils.MessageExceptionEnum;
 import com.chunmi.testcase.utils.PageBean;
@@ -39,64 +39,81 @@ import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
-public class ProjectVersionController {
+public class ProjectModuleController {
 	
 	@Autowired
-	private ProjectVersionService versionService;
+	private ProjectModuleService moduleService;
 
 	/**
 	 * 
-	 * @description: <p class="detail">查询项目版本号</p>
+	 * @description: <p class="detail"></p>
 	 * @author: <a href="mailto:sunny@chunmi.com ">sunny</a>
-	 * @date: 2018年4月3日-下午3:57:42
+	 * @date: 2018年4月4日-上午10:52:16
 	 * @param @param request
 	 * @param @param model
 	 * @param @param pageCurrent
 	 * @param @param pageSize
 	 * @param @param pageCount
-	 * @param @param projectVersion
+	 * @param @param projectModule
 	 * @param @return
 	 * @return String
 	 */
-	@GetMapping(value="/projectVersionList_{pageCurrent}_{pageSize}_{pageCount}")
-	public String projectVersionList(HttpServletRequest request,Model model,@PathVariable("pageCurrent") Integer pageCurrent,
-			@PathVariable("pageSize") Integer pageSize,@PathVariable("pageCount") Integer pageCount,ProjectVersion projectVersion) {
-		HashMap<String,Object> map = new HashMap<String,Object>();
-		map.put(Constant.LOGIN_MANAGER, request.getSession().getAttribute(Constant.LOGIN_MANAGER));
+	@GetMapping(value="/projectModuleList_{pageCurrent}_{pageSize}_{pageCount}")
+	public String projectModuleList(HttpServletRequest request,Model model,@PathVariable("pageCurrent") Integer pageCurrent,
+			@PathVariable("pageSize") Integer pageSize,@PathVariable("pageCount")Integer pageCount,ProjectModule projectModule) {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put(Constant.LOGIN_MANAGER,request.getSession().getAttribute(Constant.LOGIN_MANAGER));
 		try {
-			PageBean<ProjectVersion> pb = versionService.selectProjectVersionByCondition(projectVersion,pageCurrent,pageSize,pageCount);
-			map.put("pb",pb);
+			PageBean<ProjectModule> pb = moduleService.selectModuleListByCondition(projectModule,pageCurrent,pageSize,pageCount);
+		    map.put("pb",pb);
 			//生成新的查询url
-			String newUrl = "projectList_{pageCurrent}_{pageSize}_{pageCount}?projectId="+projectVersion.getProjectId()+"&versionNum="+projectVersion.getVersionNum();
+			String newUrl = "projectModuleList_{pageCurrent}_{pageSize}_{pageCount}?projectId="+projectModule.getProjectId()+"&moduleName="+projectModule.getModuleName();
 			//返回分页内容
 			String pageHTML = PageUtil.getPageContent(newUrl,pb.getPageCurrent(), pb.getPageSize(), pb.getPageCount());
-			map.put("pageHTML", pageHTML);	
+			map.put("pageHTML", pageHTML);
 		} catch (Exception e) {
 			log.info(e.getMessage());
 		}
 		model.addAllAttributes(map);
-		return "version/versionList";
+		return "module/moduleList";
 	}
 	
 	/**
 	 * 
-	 * @description: <p class="detail">添加项目版本号</p>
+	 * @description: <p class="detail">添加项目模块</p>
 	 * @author: <a href="mailto:sunny@chunmi.com ">sunny</a>
-	 * @date: 2018年4月3日-下午4:43:46
-	 * @param @param projectVersion
+	 * @date: 2018年4月4日-上午11:58:16
+	 * @param @param projectModule
 	 * @param @return
 	 * @return Response
 	 */
-	@PostMapping(value="/addProjectVersion")
+	@PostMapping(value="/addProjectModule")
 	@ResponseBody
-	public Response addProjectVersion(ProjectVersion projectVersion) {
+	public Response addProjectModule(ProjectModule projectModule) {
 		try {
-			if(versionService.seletProjectVersionByProjectIdAndVersionNum(projectVersion)!=null)
-				return Response.getError(MessageExceptionEnum.VERSION_EXISTED);
-			versionService.addProjectVersion(projectVersion);
+			if(moduleService.selectModuleByProjectIdAndModuleName(projectModule)!=null)
+				return Response.getError(MessageExceptionEnum.MODULE_EXISTED);
+			moduleService.addProjectModule(projectModule);
 			return Response.getSuccess();
 		} catch (Exception e) {
+			log.info(e.getMessage());
 			return Response.getError(MessageExceptionEnum.ERROR_HANDLE);
 		}
+	}
+	
+	
+	/**
+	 * 
+	 * @description: <p class="detail">删除项目模块</p>
+	 * @author: <a href="mailto:sunny@chunmi.com ">sunny</a>
+	 * @date: 2018年4月4日-下午12:14:34
+	 * @param @param projectModule
+	 * @param @return
+	 * @return Integer
+	 */
+	@PostMapping(value="/delModule")
+	@ResponseBody
+	public Integer delModule(ProjectModule projectModule) {
+		return moduleService.delModule(projectModule);
 	}
 }

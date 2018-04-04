@@ -77,7 +77,8 @@ public enum MessageExceptionEnum {
 	ACTIVE_IS_CLOSED(10067,"活动已关�?,不能再投�?"), 
 	VOTE_NUM_IS_MAX(10068,"投票次数已上�?"),
 	PROJECT_EXISTED(10069,"项目已存在!"),
-	VERSION_EXISTED(10070,"版本号已存在!");
+	VERSION_EXISTED(10070,"版本号已存在!"), 
+	MODULE_EXISTED(10071,"项目模块已存在!");
 	
 	private Integer code;
 	private String message;

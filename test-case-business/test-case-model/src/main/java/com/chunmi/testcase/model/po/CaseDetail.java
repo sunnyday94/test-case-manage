@@ -116,5 +116,29 @@ public class CaseDetail implements Serializable{
      * 实际结果
      */
     private ActualResult actualResult;
+    
+    
+    /**
+     * 项目id
+     */
+    private Long projectId;
+    
+    
+    /**
+     * 版本id
+     */
+    private Long versionId;
+    
+    
+    /**
+     * 项目
+     */
+    private Project project;
+    
+    
+    /**
+     * 版本
+     */
+    private ProjectVersion projectVersion;
 
 }
