@@ -78,7 +78,8 @@ public enum MessageExceptionEnum {
 	VOTE_NUM_IS_MAX(10068,"投票次数已上�?"),
 	PROJECT_EXISTED(10069,"项目已存在!"),
 	VERSION_EXISTED(10070,"版本号已存在!"), 
-	MODULE_EXISTED(10071,"项目模块已存在!");
+	MODULE_EXISTED(10071,"项目模块已存在!"), 
+	TESTCASE_EXISTED(10072,"用例名称已存在!");
 	
 	private Integer code;
 	private String message;

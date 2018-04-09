@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<title>纯米 | 测试用例列表</title>
+
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
+<link th:href="@{/css/style.css}" rel="stylesheet" />
+<link th:href="@{/css/plugins/iCheck/custom.css}" rel="stylesheet"/>
+<link th:href="@{/css/plugins/footable/footable.core.css}" rel="stylesheet"/>
+<link th:href="@{/js/layer/layer.css}" rel="stylesheet"/>
+</head>
+<body>
+    <div id="wrapper">
+		<nav class="navbar-default navbar-static-side" role="navigation" th:include="nav :: navigation"></nav>
+		<div id="page-wrapper" class="gray-bg">
+        	<div class="border-bottom" th:include="header :: headerTop"></div>
+      		<div class="row wrapper border-bottom white-bg page-heading" th:fragment="headerNav">
+		   		<div class="col-lg-10">
+		     		<h2>测试用例列表</h2>
+		      	</div>
+		      	<div class="col-lg-2">
+		      	</div>
+		  	</div>
+			<div class="col-sm-9" style="margin-top: 8px;margin-bottom: 8px;">
+				<button type="button" th:onclick="'javascript:goBack();'" class="btn btn-primary">返回</button>
+			</div>		  	
+        	<div class="wrapper wrapper-content animated fadeInRight">
+	               <div class="row">
+	                   <div class="col-sm-12" >
+	                   		<form id="dataTable" th:action="@{testCaseList_0_0_0}" method="get">
+	                   				   <input type="hidden" name="projectId" th:value="${pb.objectBean.projectId}"/>
+	                   				   <input type="hidden" name="versionId" th:value="${pb.objectBean.versionId}"/>
+	                                   <label class="control-label">用例名称:</label>
+	                                   <input class="input-medium"  name="caseName" type="text" th:value="${pb.objectBean.caseName}" id="caseName"
+	                                          style="height: 2.6rem; width: 20rem;margin-right: 3rem;"/>
+	                                   <label class="control-label">用例标题:</label>
+	                                   <input class="input-medium"  name="caseTitle" type="text" th:value="${pb.objectBean.caseTitle}" id="caseTitle"
+	                                          style="height: 2.6rem; width: 20rem;margin-right: 3rem;"/>
+	                                   <label class="control-label">优先级:</label>
+	                                   <select id="priority" name="priority" class="selector" style="height: 2.6rem; width: 20rem;margin-right: 3rem;">
+	                                   	   <option value="">---请选择---</option>
+	                                       <option value="0">低</option>
+	                                       <option value="1">中</option>
+	                                       <option value="2">高</option>
+	                                   </select>
+	                                   <label class="control-label">模块:</label>
+	                                   <select id="moduleId" name="moduleId" class="selector" style="height: 2.6rem; width: 20rem;margin-right: 3rem;">
+	                                   	   <option value="">---请选择---</option>
+	                                       <option th:each="module : ${moduleList }" th:value="${module.id}" th:text="${module.moduleName}"></option>
+	                                   </select>
+	                                   <button type="submit" class="btn btn-primary">查询</button>
+	                                   <div style="display: inline-block;margin-left: 15px;">
+	                                    	<button type="button" class="btn btn-primary" th:onclick="'javascript:addTestCase();'">新增</button>
+	                                   </div>
+        	 				</form>
+	                   </div>
+	               </div>
+            	<div class="row" style="margin-top:14px;">
+                	<div class="col-sm-12">
+	                    <div class="ibox float-e-margins">
+	                        <div class="ibox-title">
+	                            <h5>测试用例列表</h5>
+	                            <div class="ibox-tools">
+	                                <a class="collapse-link">
+	                                    <i class="fa fa-chevron-up"></i>
+	                                </a>
+	                            </div>
+	                        </div>
+	                        <div class="ibox-content">
+	                            <div class="table-responsive">
+	                                <table class=" table table-hover" data-page-size="10">
+	                                    <thead>
+		                                    <tr>
+		                                    	<th width="20%">版本号</th>
+		                                    	<th width="20%">用例名称</th>
+		                                    	<th width="20%">用例标题</th>
+		                                    	<th width="20%">模块名称</th>
+		                                        <th width="20%">操作</th>
+		                                    </tr>
+	                                    </thead>
+	                                    <tbody>
+	                                    	<tr th:each="testCase : ${pb.list}">
+	                                    		<td th:text="${testCase.projectVersion.versionNum}">版本号</td>
+										   		<td th:text="${testCase.caseName}">用例名称</td>
+										   		<td th:text="${testCase.caseTitle}">用例标题</td>
+												<td th:text="${testCase.module.moduleName}">模块名称</td>
+										      	<td>
+										      		<a style="margin-right: 10px" href="#" th:text="查看用例详情" th:onclick="'javascript:selectTestCaseDetail('+${testCase.id}+');'">查看用例详情</a>
+										      		<a style="margin-right: 10px" href="#" th:text="编辑" th:onclick="'javascript:updateTestCaseDetail('+${testCase.id}+',\''+${testCase.caseName}+'\',
+										      		\''+${testCase.caseTitle}+'\',\''+${testCase.priority}+'\',\''+${testCase.testMode}+'\','+${testCase.moduleId}+',
+										      		\''+${testCase.testConditions}+'\',\''+${testCase.detailSteps}+'\',\''+${testCase.expectedResult}+'\',
+										      		'+${testCase.actualResultId}+',\''+${testCase.bugId}+'\',\''+${testCase.remarks}+'\');'">编辑</a>
+										      		<a style="margin-right: 10px" href="#" th:text="删除" th:onclick="'javascript:delTestCaseDetail('+${testCase.id}+');'">删除</a>
+										      	</td>
+											</tr>
+	                                    </tbody>
+	                                   	<tfoot>
+			                                <tr>
+			                                    <td colspan="5">
+			                                        <ul id="pageHTML" class="pagination pull-right"></ul>
+			                                    </td>
+			                                </tr>
+		                                </tfoot>
+	                                </table>
+			                	</div>
+	                        </div>
+	           			</div>
+                	</div>
+            	</div>
+        	</div>
+        	<div class="footer" th:include="footer :: copyright"></div>
+      	</div>
+		
+		<!-- Add Modal-->
+		<div class="modal fade" id="addTestCaseDiv" tabindex="-1" role="dialog"
+			aria-labelledby="ModalTitle" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="ModalTitle">新增测试用例</h4>
+					</div>
+					<form class="form-horizontal" method="post" id="addTestCaseForm" th:action="@{addTestCase}">
+						<div class="box-body">
+							<div class="form-group">
+								<label class="control-label col-sm-3">用例名称:</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" id="addCaseName" name="caseName" value="" placeholder="输入用例名称"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3">用例标题:</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" id="addCaseTitle" name="caseTitle" value="" placeholder="输入用例标题"/>
+								</div>
+							</div>
+							<div class="form-group">
+	                            <label class="control-label col-sm-3">优先级:</label>
+	                            <div class="col-sm-5">
+		                            <select id="addPriority" name="priority" class="form-control">
+		                               <option value="">---请选择---</option>
+		                               <option value="0">低</option>
+		                               <option value="1">中</option>
+		                               <option value="2">高</option>
+		                            </select>
+								</div>
+							</div>
+							<div class="form-group">
+	                            <label class="control-label col-sm-3">测试方式:</label>
+	                            <div class="col-sm-5">
+		                            <select id="addTestMode" name="testMode" class="form-control">
+		                               <option value="">---请选择---</option>
+		                               <option value="0">手动</option>
+		                               <option value="1">自动</option>
+		                            </select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">模块: </label>
+	                            <div class="col-sm-5">
+		                            <select id="addModuleId" name="moduleId" class="form-control">
+		                               <option value="">---请选择---</option>
+									   <option th:each="module : ${moduleList }" th:value="${module.id}" th:text="${module.moduleName}"></option>
+		                            </select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3">测试前提:</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" id="addTestConditions" name="testConditions" value="" placeholder="输入测试前提"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">详细步骤: </label>
+								<div class="col-sm-5">
+									<textarea rows="5" cols="4" class="form-control" id="addDetailSteps" name="detailSteps" placeholder="输入详细步骤"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">期望结果: </label>
+								<div class="col-sm-5">
+									<textarea rows="3" cols="4" class="form-control" id="addExpectedResult" name="expectedResult" placeholder="输入期望结果"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">实际结果: </label>
+	                            <div class="col-sm-5">
+		                            <select id="addActualResultId" name="actualResultId" class="form-control">
+		                               <option value="">---请选择---</option>
+									   <option th:each="actualResult : ${actualResultList }" th:value="${actualResult.id}" th:text="${actualResult.actualResult}"></option>
+		                            </select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">BUG_ID: </label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" id="addBugId" name="bugId" value="" placeholder="BUG_ID"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">备注: </label>
+								<div class="col-sm-5">
+									<textarea rows="3" cols="4" class="form-control" id="addRemarks" name="remarks" placeholder="输入备注"></textarea>
+								</div>
+							</div>
+							<input type="hidden" name="projectId" id="addProjectId"/>
+							<input type="hidden" name="versionId" id="addVersionId"/>
+					</form>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" onclick="saveAddTestCase();">确定</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<!-- Update Modal-->
+		<div class="modal fade" id="updateTestCaseDiv" tabindex="-1" role="dialog"
+			aria-labelledby="ModalTitle" aria-hidden="true">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">&times;</button>
+						<h4 class="modal-title" id="ModalTitle">更新测试用例</h4>
+					</div>
+					<form class="form-horizontal" method="post" id="updateTestCaseForm" th:action="@{addTestCase}">
+						<div class="box-body">
+							<div class="form-group">
+								<label class="control-label col-sm-3">用例名称:</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" id="updateCaseName" name="caseName" value="" placeholder="输入用例名称"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3">用例标题:</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" id="updateCaseTitle" name="caseTitle" value="" placeholder="输入用例标题"/>
+								</div>
+							</div>
+							<div class="form-group">
+	                            <label class="control-label col-sm-3">优先级:</label>
+	                            <div class="col-sm-5">
+		                            <select id="updatePriority" name="priority" class="form-control">
+		                               <option value="">---请选择---</option>
+		                               <option value="0">低</option>
+		                               <option value="1">中</option>
+		                               <option value="2">高</option>
+		                            </select>
+								</div>
+							</div>
+							<div class="form-group">
+	                            <label class="control-label col-sm-3">测试方式:</label>
+	                            <div class="col-sm-5">
+		                            <select id="updateTestMode" name="testMode" class="form-control">
+		                               <option value="">---请选择---</option>
+		                               <option value="0">手动</option>
+		                               <option value="1">自动</option>
+		                            </select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">模块: </label>
+	                            <div class="col-sm-5">
+		                            <select id="updateModuleId" name="moduleId" class="form-control">
+		                               <option value="">---请选择---</option>
+									   <option th:each="module : ${moduleList }" th:value="${module.id}" th:text="${module.moduleName}"></option>
+		                            </select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-sm-3">测试前提:</label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" id="updateTestConditions" name="testConditions" value="" placeholder="输入测试前提"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">详细步骤: </label>
+								<div class="col-sm-5">
+									<textarea rows="5" cols="4" class="form-control" id="updateDetailSteps" name="detailSteps" placeholder="输入详细步骤"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">期望结果: </label>
+								<div class="col-sm-5">
+									<textarea rows="3" cols="4" class="form-control" id="updateExpectedResult" name="expectedResult" placeholder="输入期望结果"></textarea>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">实际结果: </label>
+	                            <div class="col-sm-5">
+		                            <select id="updateActualResultId" name="actualResultId" class="form-control">
+		                               <option value="">---请选择---</option>
+									   <option th:each="actualResult : ${actualResultList }" th:value="${actualResult.id}" th:text="${actualResult.actualResult}"></option>
+		                            </select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">BUG_ID: </label>
+								<div class="col-sm-5">
+									<input type="text" class="form-control" id="updateBugId" name="bugId" value="" placeholder="BUG_ID"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-sm-3 control-label">备注: </label>
+								<div class="col-sm-5">
+									<textarea rows="3" cols="4" class="form-control" id="updateRemarks" name="remarks" placeholder="输入备注"></textarea>
+								</div>
+							</div>
+							<input type="hidden" name="id" id="updateCaseDetailId"/>
+							<input type="hidden" name="projectId" id="updateProjectId"/>
+							<input type="hidden" name="versionId" id="updateVersionId"/>
+					</form>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-primary" onclick="saveUpdateTestCase();">确定</button>
+						<button type="button" class="btn btn-primary" data-dismiss="modal">取消</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		<!-- 用例详情 Model-->
+		<div class="modal fade" id="showTestCaseDetail" role="dialog">
+			<div class="modal-dialog modal-lg" style="margin:30px auto 0;">
+				<div class="modal-content">
+					<div class="modal-header">
+	                   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	                   <h4 class="modal-title" id="settingTitle">用例详情</h4>
+	               	</div>
+	               	<div class="modal-body" id="showTestCaseDetailBody">
+	               		 
+	               	</div>
+				</div>
+			</div>
+		</div>
+		
+		
+	</div>
+	
+    <!-- Mainly scripts -->
+    <script th:src="@{/js/jquery-2.1.1.js}"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+    <script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+	
+    <!-- Peity -->
+    <script th:src="@{/js/plugins/peity/jquery.peity.min.js}"></script>
+	
+    <!-- Custom and plugin javascript -->
+    <script th:src="@{/js/inspinia.js}"></script>
+    <script th:src="@{/js/plugins/pace/pace.min.js}"></script>
+	
+    <!-- iCheck -->
+    <script th:src="@{/js/plugins/iCheck/icheck.min.js}"></script>
+	
+    <!-- Peity -->
+    <script th:src="@{/js/demo/peity-demo.js}"></script>
+	
+	<!-- FooTable -->
+    <script th:src="@{/js/plugins/footable/footable.all.min.js}"></script>
+    
+    <!-- common -->
+    <script th:src="@{/js/common.js}"></script>
+    
+
+    <!-- layerui -->
+	<script th:src="@{/js/layer/layer.js}"></script> 
+	
+	<script th:src="@{js/jquery.form.min.js}"></script>
+	
+	<script th:src="@{js/template-web.js}"></script>
+    
+    <script th:inline="javascript">
+    /*<![CDATA[*/
+	    var pageHTML = [[${pageHTML}]];
+    	var projectId = [[${pb.objectBean.projectId}]];  //项目id
+    	var versionId = [[${pb.objectBean.versionId}]];  //版本id
+    	var moduleId = [[${pb.objectBean.moduleId}]];   //模块id
+    	var priority = [[${pb.objectBean.priority}]];   //优先级
+		$(document).ready(function () {
+		//	siderBar("testCaseList");
+			$("#moduleId").val(moduleId); 
+			$("#priority").val(priority);
+			$("#pageHTML").html(pageHTML);
+			
+		});
+		
+		//返回
+		function goBack(){
+			history.back();
+		}
+		
+		
+		//新增测试用例(弹窗)
+		function addTestCase(){
+			$("#addTestCaseDiv").modal('show');
+		}
+		
+		
+		//保存新增测试用例
+		function saveAddTestCase(){
+			$("#addProjectId").val(projectId);
+			$("#addVersionId").val(versionId);
+			var caseName = $("#addCaseName").val();
+			var caseTitle = $("#addCaseTitle").val();
+			var priority = $("#addPriority").val();
+			var testMode = $("#addTestMode option:selected").val();
+			var moduleId = $("#addModuleId option:selected").val();
+			var testConditions = $("#addTestConditions").val();
+			var detailSteps = $("#addDetailSteps").val();
+			var expectedResult = $("#addExpectedResult").val();
+			var actualResultId = $("#addActualResultId option:selected").val();
+			var bugId = $("#addBugId").val();
+			var remarks = $("#addRemarks").val();
+			if(caseName == null || caseName == ''){
+				layer.msg("测试名称不能为空",{time:1000});
+				return;
+			}
+			if(caseTitle == null || caseTitle == ''){
+				layer.msg("测试标题不能为空",{time:1000});
+				return;
+			}
+			if(priority ==null || priority == ''){
+				layer.msg("优先级不能为空",{time:1000});
+				return;
+			}
+			if(testMode ==null || testMode == ''){
+				layer.msg("测试方式不能为空",{time:1000});
+				return;
+			}
+			if(moduleId == null || moduleId == ''){
+				layer.msg("模块不能为空",{time:1000});
+				return;
+			}
+			if(detailSteps == null || detailSteps == ''){
+				layer.msg("详细步骤不能为空",{time:1000});
+				return;
+			}
+			if(expectedResult ==null || expectedResult == ''){
+				layer.msg("期望结果不能为空",{time:1000});
+				return;
+			}
+			$.ajax({
+				type:"POST",
+				async:false,
+				url: "addTestCase",
+				data: $("#addTestCaseForm").serialize(),
+				dataType:"JSON",
+				success:function(data){
+					if(data.code==10000){
+						$("#addTestCaseDiv").modal('hide');
+						window.location.reload();
+					}else{
+						layer.msg(data.message,{time:1000});
+					}	
+				}
+			});
+		}
+		
+		//查看用例详情
+		function selectTestCaseDetail(caseDetailId){
+			$.ajax({
+				type : "GET",
+				url : "selectTestCaseDetailById/"+caseDetailId,
+				dataType : "JSON",
+			    success: function (data) {
+					var html = template('showTestCaseDetailTemplate', {
+							data : data
+						});
+		   		      $("#showTestCaseDetailBody").html(html);
+		   		      $("#showTestCaseDetail").modal("show");
+				}
+			});			
+		}
+		
+		//删除测试用例
+		function delTestCaseDetail(id){
+			layer.confirm('确定删除此用例?',{
+				btn:['确认','取消']
+			},function(){
+				$.post("delTestCaseDetailById",{"id":id},function(){
+					window.location.reload();
+				});
+			},function(){
+				
+			});	
+		}
+		
+		//更新测试用例(弹窗)
+		function updateTestCaseDetail(caseDetailId,caseName,caseTitle,priority,testMode,moduleId,testConditions,detailSteps,expectedResult,
+										actualResultId,bugId,remarks){
+			$("#updateCaseDetailId").val(caseDetailId);
+			$("#updateCaseName").val(caseName);
+			$("#updateCaseTitle").val(caseTitle);
+			$("#updatePriority").val(priority);
+			$("#updateTestMode").val(testMode);
+			$("#updateModuleId").val(moduleId);
+			$("#updateTestConditions").val(testConditions);
+			$("#updateDetailSteps").val(detailSteps);
+			$("#updateExpectedResult").val(expectedResult);
+			$("#updateActualResultId").val(actualResultId);
+			$("#updateBugId").val(bugId);
+			$("#updateRemarks").val(remarks);
+			$("#updateTestCaseDiv").modal('show');
+		}
+		
+		//保存测试用例更新
+		function saveUpdateTestCase(){
+			var caseName = $("#updateCaseName").val();
+			var caseTitle = $("#updateCaseTitle").val();
+			var priority = $("#updatePriority").val();
+			var testMode = $("#updateTestMode option:selected").val();
+			var moduleId = $("#updateModuleId option:selected").val();
+			var testConditions = $("#updateTestConditions").val();
+			var detailSteps = $("#updateDetailSteps").val();
+			var expectedResult = $("#updateExpectedResult").val();
+			var actualResultId = $("#updateActualResultId option:selected").val();
+			var bugId = $("#updateBugId").val();
+			var remarks = $("#updateRemarks").val();
+			if(caseName == null || caseName == ''){
+				layer.msg("测试名称不能为空",{time:1000});
+				return;
+			}
+			if(caseTitle == null || caseTitle == ''){
+				layer.msg("测试标题不能为空",{time:1000});
+				return;
+			}
+			if(priority ==null || priority == ''){
+				layer.msg("优先级不能为空",{time:1000});
+				return;
+			}
+			if(testMode ==null || testMode == ''){
+				layer.msg("测试方式不能为空",{time:1000});
+				return;
+			}
+			if(moduleId == null || moduleId == ''){
+				layer.msg("模块不能为空",{time:1000});
+				return;
+			}
+			if(detailSteps == null || detailSteps == ''){
+				layer.msg("详细步骤不能为空",{time:1000});
+				return;
+			}
+			if(expectedResult ==null || expectedResult == ''){
+				layer.msg("期望结果不能为空",{time:1000});
+				return;
+			}
+			$.ajax({
+				type:"POST",
+				async:false,
+				url: "updateTestCase",
+				data: $("#updateTestCaseForm").serialize(),
+				dataType:"JSON",
+				success:function(data){
+					if(data.code==10000){
+						$("#updateTestCaseDiv").modal('hide');
+						window.location.reload();
+					}else{
+						layer.msg(data.message,{time:1000});
+					}	
+				}
+			});			
+		}
+		
+	/*]]>*/
+	</script>
+
+	<script id="showTestCaseDetailTemplate" type="text/x-template">
+	<table class="table table-striped table-hover table-bordered" style="margin-bottom:0px;">
+		{{if data }}
+			<tr>
+				<td width ="100px">用例名称</td>
+				<td width ="300px">{{data.caseName }}</td>
+				<td width ="100px">用例标题</td>
+				<td width ="300px">{{data.caseTitle }}</td>
+			</tr>
+			<tr>
+				<td width ="100px">优先级</td>
+				<td width ="300px">{{data.priority}}</td>
+				<td width ="100px">测试方式</td>
+				<td width ="300px">{{data.testMode }}</td>
+			</tr>
+			<tr>
+
+				<td width ="100px">模块</td> 
+				<td width ="300px">{{data.moduleName }}</td>
+				<td width ="100px">测试前提</td>
+				<td width ="300px">{{data.testConditions}}</td>
+			</tr>
+			<tr>
+				<td width ="100px">详细步骤</td>
+				<td colspan="3">
+					<div style="height:220px;overflow-y:auto;word-break: break-all;">{{data.detailSteps }}</div>
+				</td>
+			</tr>
+			<tr>
+				<td width ="100px">期望结果</td>
+				<td colspan="3">
+					<div style="height:80px;overflow-y:auto;word-break: break-all;">{{data.expectedResult }}</div>
+				</td>
+			</tr>
+			<tr>
+
+				<td width ="100px">实际结果</td> 
+				<td width ="300px">{{data.actualResult }}</td>
+				<td width ="100px">BUG_ID</td>
+				<td width ="300px">{{data.bugId}}</td>
+			</tr>
+			<tr>
+				<td width ="100px">备注</td>
+				<td colspan="3">
+					<div style="height:80px;overflow-y:auto;word-break: break-all;">{{data.remarks }}</div>
+				</td>
+			</tr>
+	{{/if}}
+  </table>
+	</script>
+</body>
+
+</html>

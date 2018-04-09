@@ -19,12 +19,14 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import lombok.extern.slf4j.Slf4j;
 
 @SpringBootApplication(scanBasePackages= {"com.chunmi.testcase"})
 @MapperScan(basePackages= {"com.chunmi.testcase.mapper"})
 @EnableTransactionManagement
+@EnableAspectJAutoProxy
 @Slf4j
 public class TestCaseApplication  extends SpringBootServletInitializer {
 	

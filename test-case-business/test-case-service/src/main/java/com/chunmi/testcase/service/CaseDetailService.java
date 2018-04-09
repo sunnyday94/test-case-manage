@@ -11,27 +11,27 @@
  * it only in accordance with the terms of the license agreement
  * you entered into with CHUNMI.
  *
- * File Created @ [2018年4月4日, 上午10:52:42 (CST)]
+ * File Created @ [2018年4月8日, 上午10:34:07 (CST)]
  */
 package com.chunmi.testcase.service;
 
-import java.util.List;
-
-import com.chunmi.testcase.model.po.ProjectModule;
+import com.chunmi.testcase.model.po.CaseDetail;
+import com.chunmi.testcase.model.vo.CaseDetailVo;
 import com.chunmi.testcase.utils.PageBean;
-import com.fasterxml.jackson.databind.Module;
 
-public interface ProjectModuleService {
+public interface CaseDetailService {
 
-	PageBean<ProjectModule> selectModuleListByCondition(ProjectModule projectModule, Integer pageCurrent,
-			Integer pageSize, Integer pageCount);
+	PageBean<CaseDetail> selectTestCaseList(CaseDetail testCase, Integer pageCurrent, Integer pageSize,
+			Integer pageCount);
 
-	ProjectModule selectModuleByProjectIdAndModuleName(ProjectModule projectModule);
+	CaseDetail selectTestCaseByConditions(String caseName);
 
-	Integer addProjectModule(ProjectModule projectModule);
+	Integer addTestCase(CaseDetail testCase);
 
-	Integer delModule(ProjectModule projectModule);
+	CaseDetailVo selectTestCaseDetailById(Long id);
 
-	List<Module> selectAllModuleList();
+	Integer delTestCaseDetailById(Long id);
+
+	Integer updateTestCase(CaseDetail caseDetail);
 
 }

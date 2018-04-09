@@ -25,6 +25,13 @@
     <result column="del_time" jdbcType="TIMESTAMP" property="delTime" />
     <result column="del_flag" jdbcType="CHAR" property="delFlag" />
   </resultMap>
+  
+  <resultMap type="com.chunmi.testcase.model.po.CaseDetail" id="caseDetailMap" extends="BaseResultMap">
+  	<association property="project" column="project_id" fetchType="lazy" select="com.chunmi.testcase.mapper.ProjectMapper.selectByPrimaryKey"/>
+  	<association property="projectVersion" column="version_id" fetchType="lazy" select="com.chunmi.testcase.mapper.ProjectVersionMapper.selectByPrimaryKey"/>
+  	<association property="module" column="module_id" fetchType="lazy" select="com.chunmi.testcase.mapper.ProjectModuleMapper.selectByPrimaryKey"/>
+  	<association property="actualResult" column="actual_result_id" fetchType="lazy" select="com.chunmi.testcase.mapper.ActualResultMapper.selectByPrimaryKey"></association>
+  </resultMap>
   <sql id="Base_Column_List">
     <!--
       WARNING - @mbg.generated
@@ -124,15 +131,11 @@
       <if test="versionId != null">
         version_id,
       </if>
-      <if test="createTime != null">
         create_time,
-      </if>
       <if test="delTime != null">
         del_time,
       </if>
-      <if test="delFlag != null">
-        del_flag,
-      </if>
+        del_flag
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -177,15 +180,11 @@
       <if test="versionId != null">
         #{versionId,jdbcType=BIGINT},
       </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
+		NOW(),
       <if test="delTime != null">
         #{delTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="delFlag != null">
-        #{delFlag,jdbcType=CHAR},
-      </if>
+		'0'
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.chunmi.testcase.model.po.CaseDetail">
@@ -271,5 +270,92 @@
       del_time = #{delTime,jdbcType=TIMESTAMP},
       del_flag = #{delFlag,jdbcType=CHAR}
     where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectTestCaseCountsByCondition" resultType="java.lang.Integer">
+  select count(1) from cm_casedetail 
+  <where>
+	<if test="testCase.projectId !=null and testCase.projectId !=''">
+	 	project_id = #{testCase.projectId}
+	</if>
+	<if test="testCase.versionId !=null and testCase.versionId !=''">
+	  and version_id = #{testCase.versionId}
+	</if>
+	<if test="testCase.caseName!=null and testCase.caseName !=''">
+	  and case_name = #{testCase.caseName}
+	</if>
+  	<if test="testCase.caseTitle!=null and testCase.caseTitle !=''">
+  	 and case_title = #{testCase.caseTitle}
+  	</if>
+  	<if test="testCase.priority!=null and testCase.priority !=''">
+  	 and priority = #{testCase.priority}
+  	</if>
+  	<if test="testCase.moduleId !=null and testCase.moduleId !=''">
+  	 and module_id = #{testCase.moduleId}
+  	</if>
+  	 and del_flag = '0'
+  </where>
+  </select>
+  
+  <select id="selectTestCaseListByCondition" resultMap="caseDetailMap">
+  	select <include refid="Base_Column_List"/> from cm_casedetail
+	  <where>
+	  	<if test="testCase.projectId !=null and testCase.projectId !=''">
+	  		project_id = #{testCase.projectId}
+	  	</if>
+	  	<if test="testCase.versionId !=null and testCase.versionId !=''">
+	  	 and version_id = #{testCase.versionId}
+	  	</if>
+	  	<if test="testCase.caseName!=null and testCase.caseName !=''">
+	  	 and case_name = #{testCase.caseName}
+	  	</if>
+	  	<if test="testCase.caseTitle!=null and testCase.caseTitle !=''">
+	  	 and case_title = #{testCase.caseTitle}
+	  	</if>
+	  	<if test="testCase.priority!=null and testCase.priority !=''">
+	  	 and priority = #{testCase.priority}
+	  	</if>
+	  	<if test="testCase.moduleId !=null and testCase.moduleId !=''">
+	  	 and module_id = #{testCase.moduleId}
+	  	</if>
+	  	 and del_flag = '0'
+	  </where>  
+	  limit #{pageRequest.offSet},#{pageRequest.pageSize}	
+  </select>
+  
+  <select id="selectTestCaseByConditions" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/> from cm_casedetail 
+  	where del_flag = '0' and case_name = #{caseName}
+  </select>
+  
+  <select id="selectTestCaseDetailById" resultType="com.chunmi.testcase.model.vo.CaseDetailVo">
+SELECT case_name as caseName, case_title as caseTitle,
+	CASE priority WHEN '0' THEN '低'
+                  WHEN '1' THEN '中'
+                  WHEN '2' THEN '高'
+    ELSE '其他' END AS priority,
+    CASE test_mode WHEN '0' THEN '手动'
+                   WHEN '1' THEN '自动'
+    ELSE '其他' END AS testMode,
+    module_name AS moduleName,
+    test_conditions AS testConditions,
+    detail_steps AS detailSteps,
+    expected_result AS expectedResult,
+    actual_result AS actualResult,
+    bug_id AS bugId,
+    remarks as remarks
+FROM
+	cm_casedetail c
+	LEFT JOIN cm_module m
+ON  c.module_id = m.id
+LEFT JOIN cm_actual_result ar
+ON ar.id = c.actual_result_id
+WHERE c.del_flag = '0' AND m.del_flag = '0'
+and c.id= #{id}
+  </select>
+  
+  <update id="delTestCaseDetailById">
+  	update cm_casedetail set del_flag = '1',del_time = NOW()
+  	where id = #{id}
   </update>
 </mapper>

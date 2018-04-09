@@ -1,5 +1,7 @@
 package com.chunmi.testcase.mapper;
 
+import java.util.List;
+
 import com.chunmi.testcase.model.po.ActualResult;
 
 public interface ActualResultMapper {
@@ -50,4 +52,6 @@ public interface ActualResultMapper {
      * @mbg.generated Fri Mar 30 15:28:36 CST 2018
      */
     int updateByPrimaryKey(ActualResult record);
+
+	List<ActualResult> selectAllActualResultList();
 }

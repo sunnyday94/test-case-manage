@@ -6,7 +6,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>纯米 | 项目列表</title>
+<title>纯米 | 项目版本列表</title>
 
 <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
 <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
@@ -74,7 +74,7 @@
 										   		<td th:text="${version.project.projectName}">项目名</td>
 												<td th:text="${version.versionNum}">版本号</td>
 										      	<td>
-										      		<a  href="#" th:text="查看测试用例">查看测试用例</a>
+										      		<a  href="#" th:text="查看测试用例" th:onclick="'javascript:selectTestCase('+${version.id}+');'">查看测试用例</a>
 										      	</td>
 											</tr>
 	                                    </tbody>
@@ -200,6 +200,11 @@
 					}	
 				}
 			});
+		}
+		
+		//查看测试用例
+		function selectTestCase(versionId){
+			window.location.href = "testCaseList_0_0_0"+"?projectId="+projectId+"&versionId="+versionId;	
 		}
 	/*]]>*/
 	</script>

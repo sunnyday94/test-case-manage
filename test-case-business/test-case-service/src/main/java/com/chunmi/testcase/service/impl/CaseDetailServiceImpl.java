@@ -11,7 +11,7 @@
  * it only in accordance with the terms of the license agreement
  * you entered into with CHUNMI.
  *
- * File Created @ [2018年4月4日, 上午10:53:01 (CST)]
+ * File Created @ [2018年4月8日, 上午10:34:25 (CST)]
  */
 package com.chunmi.testcase.service.impl;
 
@@ -19,29 +19,28 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.chunmi.testcase.mapper.ProjectModuleMapper;
-import com.chunmi.testcase.model.po.ProjectModule;
-import com.chunmi.testcase.service.ProjectModuleService;
+import com.chunmi.testcase.mapper.CaseDetailMapper;
+import com.chunmi.testcase.model.po.CaseDetail;
+import com.chunmi.testcase.model.vo.CaseDetailVo;
+import com.chunmi.testcase.service.CaseDetailService;
 import com.chunmi.testcase.utils.PageBean;
 import com.chunmi.testcase.utils.PageRequest;
-import com.fasterxml.jackson.databind.Module;
 
 @Service
-public class ProjectModuleServiceImpl implements ProjectModuleService {
+public class CaseDetailServiceImpl implements CaseDetailService {
 	
 	@Autowired
-	private ProjectModuleMapper moduleMapper;
-
+	private CaseDetailMapper caseDetailMapper;
+	
 	@Override
-	public PageBean<ProjectModule> selectModuleListByCondition(ProjectModule projectModule, Integer pageCurrent,
-			Integer pageSize, Integer pageCount) {
-		PageBean<ProjectModule> pb = new PageBean<ProjectModule>();
+	public PageBean<CaseDetail> selectTestCaseList(CaseDetail testCase, Integer pageCurrent, Integer pageSize,
+			Integer pageCount) {
+		PageBean<CaseDetail> pb = new PageBean<CaseDetail>();
 		//判断
 		if(pageCurrent==0) pageCurrent =1;  
 		if(pageSize==0)  pageSize = 12;  //每页显示12条数据
-		Integer rows = moduleMapper.selectModuleCountsByCondition(projectModule);
-		pb.setRows(rows);  
+		Integer rows = caseDetailMapper.selectTestCaseCountsByCondition(testCase);
+		pb.setRows(rows);
 		//计算分页
 		pageCount = rows%pageSize == 0 ? (rows/pageSize) : (rows/pageSize) + 1;
 		//设置总页数
@@ -53,30 +52,35 @@ public class ProjectModuleServiceImpl implements ProjectModuleService {
 		PageRequest pageRequest = new PageRequest(pageCurrent, pageSize);
 		pb.setPageSize(pageSize);       //每页显示条目
 		pb.setPageCount(pageCount);     //总页数
-		pb.setObjectBean(projectModule); //设置查询条件
-		List<ProjectModule> projectModuleList = moduleMapper.selectModuleListByCondition(pageRequest,projectModule);
-		pb.setList(projectModuleList);
+		pb.setObjectBean(testCase);      //设置查询条件
+		List<CaseDetail> testCaseList = caseDetailMapper.selectTestCaseListByCondition(pageRequest,testCase);
+		pb.setList(testCaseList);
 		return pb;
 	}
 
 	@Override
-	public ProjectModule selectModuleByProjectIdAndModuleName(ProjectModule projectModule) {
-		return moduleMapper.selectModuleByProjectIdAndModuleName(projectModule);
+	public CaseDetail selectTestCaseByConditions(String caseName) {
+		return caseDetailMapper.selectTestCaseByConditions(caseName);
 	}
 
 	@Override
-	public Integer addProjectModule(ProjectModule projectModule) {
-		return moduleMapper.insertSelective(projectModule);
+	public Integer addTestCase(CaseDetail testCase) {
+		return caseDetailMapper.insertSelective(testCase);
 	}
 
 	@Override
-	public Integer delModule(ProjectModule projectModule) {
-		return moduleMapper.delModule(projectModule);
+	public CaseDetailVo selectTestCaseDetailById(Long id) {
+		return caseDetailMapper.selectTestCaseDetailById(id);
 	}
 
 	@Override
-	public List<Module> selectAllModuleList() {
-		return moduleMapper.selectAllModuleList();
+	public Integer delTestCaseDetailById(Long id) {
+		return caseDetailMapper.delTestCaseDetailById(id);
+	}
+
+	@Override
+	public Integer updateTestCase(CaseDetail caseDetail) {
+		return caseDetailMapper.updateByPrimaryKeySelective(caseDetail);
 	}
 
 }

@@ -169,9 +169,12 @@
   	select <include refid="Base_Column_List"/> from cm_module 
   	where del_flag = '0' and project_id = #{module.projectId} and module_name = #{module.moduleName}
   </select>
-  
 
   <update id="delModule">
   	update cm_module set del_flag = '1' where id = #{module.id}
   </update>
+  
+  <select id="selectAllModuleList" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/> from cm_module where del_flag = '0'
+  </select>
 </mapper>

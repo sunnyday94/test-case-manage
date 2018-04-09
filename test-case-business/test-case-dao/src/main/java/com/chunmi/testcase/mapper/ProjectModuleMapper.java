@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.chunmi.testcase.model.po.ProjectModule;
 import com.chunmi.testcase.utils.PageRequest;
+import com.fasterxml.jackson.databind.Module;
 
 public interface ProjectModuleMapper {
     /**
@@ -63,4 +64,6 @@ public interface ProjectModuleMapper {
 	ProjectModule selectModuleByProjectIdAndModuleName(@Param("module")ProjectModule projectModule);
 
 	Integer delModule(@Param("module")ProjectModule projectModule);
+
+	List<Module> selectAllModuleList();
 }

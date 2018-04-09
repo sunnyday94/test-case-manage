@@ -2,11 +2,9 @@ package com.chunmi.testcase.model.po;
 
 import java.io.Serializable;
 import java.util.Date;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.databind.Module;
 import lombok.Data;
 
 @SuppressWarnings("serial")
@@ -109,7 +107,7 @@ public class CaseDetail implements Serializable{
     /**
      * ÏîÄ¿Ä£¿é
      */
-    private Module module;
+    private ProjectModule module;
     
     
     /**
