@@ -200,7 +200,7 @@ public class UsersController {
 			PageBean<Users> pb = usersService.selectUserListByCondition(user,pageCurrent,pageSize,pageCount); //查询用户列表
 			map.put("pb",pb);
 			//生成新的查询url
-			String newUrl = "userList_{pageCurrent}_{pageSize}_{pageCount}?userName="+user.getUserName();
+			String newUrl = "userList_{pageCurrent}_{pageSize}_{pageCount}?userName="+user.getUserName()+"&isDisabled="+user.getIsDisabled();
 			//返回分页内容
 			String pageHTML = PageUtil.getPageContent(newUrl,pb.getPageCurrent(), pb.getPageSize(), pb.getPageCount());
 			map.put("pageHTML", pageHTML);
