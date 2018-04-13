@@ -15,8 +15,18 @@
  */
 package com.chunmi.testcase.service.impl;
 
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
-
+import javax.servlet.http.HttpServletResponse;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFFont;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.chunmi.testcase.mapper.CaseDetailMapper;
@@ -81,6 +91,126 @@ public class CaseDetailServiceImpl implements CaseDetailService {
 	@Override
 	public Integer updateTestCase(CaseDetail caseDetail) {
 		return caseDetailMapper.updateByPrimaryKeySelective(caseDetail);
+	}
+
+	@Override
+	public PageBean<CaseDetailVo> selectExportTestCaseByConditions(CaseDetail caseDetail) {
+		PageBean<CaseDetailVo> pb = new PageBean<CaseDetailVo>();
+		List<CaseDetailVo> caseDetailList = caseDetailMapper.selectExportTestCaseByConditions(caseDetail);
+		pb.setList(caseDetailList);
+		return pb;
+	}
+
+	@Override
+	public void exportTestCase(PageBean<CaseDetailVo> pb, HttpServletResponse response) {
+		List<CaseDetailVo> caseDetailList = pb.getList();
+		// 第一步 创建一个webbook,对应一个excel文件
+		HSSFWorkbook wb = new HSSFWorkbook();
+	    // 第二步 在webbook中添加sheet，对应excel中的sheet
+		HSSFSheet sheet = wb.createSheet("测试用例");
+	    // 第三步 在sheet中添加表头第0行，此处需要注意老版本poi对Excel的行数列数有限制short
+		HSSFRow row = sheet.createRow((int) 0);
+	    // 第四步 创建单元格样式
+		HSSFCellStyle style = wb.createCellStyle();
+	    HSSFFont hssfFont = wb.createFont(); // 创建字体样式
+		hssfFont.setFontName("仿宋_GB2312"); // 仿宋
+		hssfFont.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//粗体显示 
+	    style.setFont(hssfFont); 
+	    
+	    style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 居中  
+	    style.setFillForegroundColor(IndexedColors.YELLOW.getIndex()); // 设置背景色 
+		style.setFillPattern(CellStyle.SOLID_FOREGROUND); 
+		style.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
+		style.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    
+		style.setBorderTop(HSSFCellStyle.BORDER_THIN);//上边框    
+		style.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框   
+					
+	    // 设置宽度
+		sheet.setColumnWidth(0, 6000);
+		sheet.setColumnWidth(1, 6000);
+		sheet.setColumnWidth(2, 6000);
+		sheet.setColumnWidth(3, 6000);
+		sheet.setColumnWidth(4, 6000);
+		sheet.setColumnWidth(5, 6000); 
+		sheet.setColumnWidth(6, 6000);	
+		sheet.setColumnWidth(7, 6000);	
+		sheet.setColumnWidth(8, 6000);	
+		sheet.setColumnWidth(9, 6000);	
+		sheet.setColumnWidth(10, 6000);	
+		sheet.setColumnWidth(11, 6000);	
+		
+		//第五步 创建单元格
+		HSSFCell cell = row.createCell(0);
+		cell.setCellValue("编号");
+		cell.setCellStyle(style);
+		cell = row.createCell(1);
+		cell.setCellValue("用例名称");
+		cell.setCellStyle(style);
+		cell = row.createCell(2);
+		cell.setCellValue("用例标题");
+		cell.setCellStyle(style);
+		cell = row.createCell(3);
+		cell.setCellValue("优先级");
+		cell.setCellStyle(style);
+		cell = row.createCell(4);
+		cell.setCellValue("测试方式");
+		cell.setCellStyle(style);
+		cell = row.createCell(5);
+		cell.setCellValue("模块");
+		cell.setCellStyle(style);
+		cell = row.createCell(6);
+		cell.setCellValue("测试前提");
+		cell.setCellStyle(style);
+		cell = row.createCell(7);
+		cell.setCellValue("详细步骤");
+		cell.setCellStyle(style);
+		cell = row.createCell(8);
+		cell.setCellValue("期望结果");
+		cell.setCellStyle(style);
+		cell = row.createCell(9);
+		cell.setCellValue("实际结果");
+		cell.setCellStyle(style);
+		cell = row.createCell(10);
+		cell.setCellValue("BUG_ID");
+		cell.setCellStyle(style);
+		cell = row.createCell(11);
+		cell.setCellValue("备注");
+		cell.setCellStyle(style);
+		
+		OutputStream outputStream = null;
+		try {
+			for(int i =0;i<caseDetailList.size();i++){
+				CaseDetailVo caseDetail = caseDetailList.get(i);
+				row = sheet.createRow(i+1);
+				row.createCell(0).setCellValue(caseDetail.getId());
+				row.createCell(1).setCellValue(caseDetail.getCaseName());
+				row.createCell(2).setCellValue(caseDetail.getCaseTitle());
+				row.createCell(3).setCellValue(caseDetail.getPriority());
+				row.createCell(4).setCellValue(caseDetail.getTestMode());
+				row.createCell(5).setCellValue(caseDetail.getModuleName());
+				row.createCell(6).setCellValue(caseDetail.getTestConditions());
+				row.createCell(7).setCellValue(caseDetail.getDetailSteps());
+				row.createCell(8).setCellValue(caseDetail.getExpectedResult());
+				row.createCell(9).setCellValue(caseDetail.getActualResultValue());
+				row.createCell(10).setCellValue(caseDetail.getBugId());
+				row.createCell(11).setCellValue(caseDetail.getRemarks());
+			}
+			outputStream = response.getOutputStream();
+			wb.write(outputStream);
+			outputStream.flush();			
+		} catch (Exception e) {
+			e.getMessage();
+		}finally {
+			if(outputStream!=null) {
+				try {
+					outputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+					
+				}
+			}
+		}
+		
 	}
 
 }

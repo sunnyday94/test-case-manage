@@ -66,4 +66,6 @@ public interface CaseDetailMapper {
 	CaseDetailVo selectTestCaseDetailById(@Param("id")Long id);
 
 	Integer delTestCaseDetailById(@Param("id")Long id);
+
+	List<CaseDetailVo> selectExportTestCaseByConditions(@Param("testCase")CaseDetail caseDetail);
 }

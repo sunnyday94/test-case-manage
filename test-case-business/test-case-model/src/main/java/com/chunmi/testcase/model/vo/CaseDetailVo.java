@@ -32,4 +32,9 @@ public class CaseDetailVo extends CaseDetail {
 	 * 模块名称
 	 */
 	private String moduleName;
+	
+	/**
+	 * 实际结果值
+	 */
+	private String actualResultValue;
 }

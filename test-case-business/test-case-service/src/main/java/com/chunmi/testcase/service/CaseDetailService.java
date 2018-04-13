@@ -15,6 +15,8 @@
  */
 package com.chunmi.testcase.service;
 
+import javax.servlet.http.HttpServletResponse;
+
 import com.chunmi.testcase.model.po.CaseDetail;
 import com.chunmi.testcase.model.vo.CaseDetailVo;
 import com.chunmi.testcase.utils.PageBean;
@@ -33,5 +35,9 @@ public interface CaseDetailService {
 	Integer delTestCaseDetailById(Long id);
 
 	Integer updateTestCase(CaseDetail caseDetail);
+
+	PageBean<CaseDetailVo> selectExportTestCaseByConditions(CaseDetail caseDetail);
+
+	void exportTestCase(PageBean<CaseDetailVo> pb, HttpServletResponse response);
 
 }

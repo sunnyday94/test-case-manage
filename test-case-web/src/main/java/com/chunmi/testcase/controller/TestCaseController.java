@@ -15,10 +15,13 @@
  */
 package com.chunmi.testcase.controller;
 
+import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,6 +58,7 @@ public class TestCaseController {
 	
 	@Autowired
 	private ActualResultService actualResultService;
+	
 
 	/**
 	 * 
@@ -183,6 +187,56 @@ public class TestCaseController {
 		} catch (Exception e) {
 			log.info(e.getMessage());
 			return Response.getError(MessageExceptionEnum.ERROR_HANDLE);
+		}
+	}
+	
+	
+	/**
+	 * 
+	 * @description: <p class="detail">根据查询条件导出测试用例</p>
+	 * @author: <a href="mailto:sunny@chunmi.com ">sunny</a>
+	 * @date: 2018年4月13日-下午2:52:30
+	 * @param @param caseDetail
+	 * @param @param response
+	 * @return void
+	 */
+	@PostMapping(value="/exportTestCase")
+	public void exportTestCase(CaseDetail caseDetail,HttpServletResponse response) {
+		PageBean<CaseDetailVo> pb = null;
+		try {
+			String fileName = "测试用例_"+System.currentTimeMillis()+".xls";  //设置下载时excel客户端名称
+			pb = caseDetailService.selectExportTestCaseByConditions(caseDetail);
+			response.setContentType("application/vnd.ms-excel");
+			response.setHeader("Content-disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+			caseDetailService.exportTestCase(pb,response);
+		} catch (Exception e) {
+			log.error("查询测试用例失败:{}",e.getMessage());
+		}
+	}
+	
+	/**
+	 * 
+	 * @description: <p class="detail">导出测试用例</p>
+	 * @author: <a href="mailto:sunny@chunmi.com ">sunny</a>
+	 * @date: 2018年4月13日-下午3:45:37
+	 * @param @param id
+	 * @param @param response
+	 * @return void
+	 */
+	@GetMapping(value="/exportTestCaseById/{id}")
+	public void exportTestCaseById(@PathVariable("id") Long id,HttpServletResponse response) {
+		try {
+			String fileName = "测试用例_"+System.currentTimeMillis()+".xls";  //设置下载时excel客户端名称
+			List<CaseDetailVo> caseDetailList = new ArrayList<CaseDetailVo>();
+			PageBean<CaseDetailVo> pb = new PageBean<CaseDetailVo>();
+			CaseDetailVo caseDetail = caseDetailService.selectTestCaseDetailById(id);
+			caseDetailList.add(caseDetail);
+			pb.setList(caseDetailList);
+			response.setContentType("application/vnd.ms-excel");
+			response.setHeader("Content-disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+			caseDetailService.exportTestCase(pb, response);
+		} catch (Exception e) {
+			log.error("查询测试用例失败:{}",e.getMessage());
 		}
 	}
 }

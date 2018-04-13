@@ -329,33 +329,74 @@
   </select>
   
   <select id="selectTestCaseDetailById" resultType="com.chunmi.testcase.model.vo.CaseDetailVo">
-SELECT case_name as caseName, case_title as caseTitle,
-	CASE priority WHEN '0' THEN '低'
-                  WHEN '1' THEN '中'
-                  WHEN '2' THEN '高'
-    ELSE '其他' END AS priority,
-    CASE test_mode WHEN '0' THEN '手动'
-                   WHEN '1' THEN '自动'
-    ELSE '其他' END AS testMode,
-    module_name AS moduleName,
-    test_conditions AS testConditions,
-    detail_steps AS detailSteps,
-    expected_result AS expectedResult,
-    actual_result AS actualResult,
-    bug_id AS bugId,
-    remarks as remarks
-FROM
-	cm_casedetail c
-	LEFT JOIN cm_module m
-ON  c.module_id = m.id
-LEFT JOIN cm_actual_result ar
-ON ar.id = c.actual_result_id
-WHERE c.del_flag = '0' AND m.del_flag = '0'
-and c.id= #{id}
+	SELECT c.id as id,case_name as caseName, case_title as caseTitle,
+		CASE priority WHEN '0' THEN '低'
+	                  WHEN '1' THEN '中'
+	                  WHEN '2' THEN '高'
+	    ELSE '其他' END AS priority,
+	    CASE test_mode WHEN '0' THEN '手动'
+	                   WHEN '1' THEN '自动'
+	    ELSE '其他' END AS testMode,
+	    module_name AS moduleName,
+	    test_conditions AS testConditions,
+	    detail_steps AS detailSteps,
+	    expected_result AS expectedResult,
+	    actual_result AS actualResultValue,
+	    bug_id AS bugId,
+	    remarks as remarks
+	FROM
+		cm_casedetail c
+		LEFT JOIN cm_module m
+	ON  c.module_id = m.id
+	LEFT JOIN cm_actual_result ar
+	ON ar.id = c.actual_result_id
+	WHERE c.del_flag = '0' AND m.del_flag = '0'
+	and c.id= #{id}
   </select>
   
   <update id="delTestCaseDetailById">
   	update cm_casedetail set del_flag = '1',del_time = NOW()
   	where id = #{id}
   </update>
+  
+  <select id="selectExportTestCaseByConditions" resultType="com.chunmi.testcase.model.vo.CaseDetailVo">
+	SELECT c.id as id,case_name as caseName, case_title as caseTitle,
+		CASE priority WHEN '0' THEN '低'
+	                  WHEN '1' THEN '中'
+	                  WHEN '2' THEN '高'
+	    ELSE '其他' END AS priority,
+	    CASE test_mode WHEN '0' THEN '手动'
+	                   WHEN '1' THEN '自动'
+	    ELSE '其他' END AS testMode,
+	    module_name AS moduleName,
+	    test_conditions AS testConditions,
+	    detail_steps AS detailSteps,
+	    expected_result AS expectedResult,
+	    actual_result AS actualResultValue,
+	    bug_id AS bugId,
+	    remarks as remarks
+	FROM
+		cm_casedetail c
+		LEFT JOIN cm_module m
+	ON  c.module_id = m.id
+	LEFT JOIN cm_actual_result ar
+	ON ar.id = c.actual_result_id
+	<where>
+		c.del_flag = '0' AND m.del_flag = '0' 
+		and c.project_id = #{testCase.projectId}
+		and c.version_id = #{testCase.versionId}
+		<if test="testCase.caseName !=null and testCase.caseName!=''">
+			and case_name = #{testCase.caseName}
+		</if>
+		<if test="testCase.caseTitle !=null and testCase.caseTitle!=''">
+			and case_title = #{testCase.caseTitle}
+		</if>
+		<if test="testCase.priority !=null and testCase.priority !=''">
+			and priority = #{testCase.priority}
+		</if>
+		<if test="testCase.moduleId !=null and testCase.moduleId !=''">
+			and c.module_id = #{testCase.moduleId}
+		</if>
+	</where>
+  </select>
 </mapper>

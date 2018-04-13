@@ -28,14 +28,15 @@
 		      	</div>
 		  	</div>
 			<div class="col-sm-9" style="margin-top: 8px;margin-bottom: 8px;">
-				<button type="button" th:onclick="'javascript:goBack();'" class="btn btn-primary">返回</button>
-			</div>		  	
+				<button style="margin-right: 8px;" type="button" th:onclick="'javascript:goBack();'" class="btn btn-primary">返回</button>
+				<button type="button" th:onclick="'javascript:exportAll();'" class="btn btn-primary">导出</button>
+			</div>
         	<div class="wrapper wrapper-content animated fadeInRight">
 	               <div class="row">
 	                   <div class="col-sm-12" >
 	                   		<form id="dataTable" th:action="@{testCaseList_0_0_0}" method="get">
-	                   				   <input type="hidden" name="projectId" th:value="${pb.objectBean.projectId}"/>
-	                   				   <input type="hidden" name="versionId" th:value="${pb.objectBean.versionId}"/>
+	                   				   <input type="hidden" name="projectId" th:value="${pb.objectBean.projectId}" id="projectId"/>
+	                   				   <input type="hidden" name="versionId" th:value="${pb.objectBean.versionId}" id="versionId"/>
 	                                   <label class="control-label">用例名称:</label>
 	                                   <input class="input-medium"  name="caseName" type="text" th:value="${pb.objectBean.caseName}" id="caseName"
 	                                          style="height: 2.6rem; width: 20rem;margin-right: 3rem;"/>
@@ -97,6 +98,7 @@
 										      		\''+${testCase.testConditions}+'\',\''+${testCase.detailSteps}+'\',\''+${testCase.expectedResult}+'\',
 										      		'+${testCase.actualResultId}+',\''+${testCase.bugId}+'\',\''+${testCase.remarks}+'\');'">编辑</a>
 										      		<a style="margin-right: 10px" href="#" th:text="删除" th:onclick="'javascript:delTestCaseDetail('+${testCase.id}+');'">删除</a>
+										      		<a  href="#" th:text="导出" th:onclick="'javascript:exportTestCaseById('+${testCase.id}+');'">导出</a>
 										      	</td>
 											</tr>
 	                                    </tbody>
@@ -327,7 +329,6 @@
 			</div>
 		</div>
 		
-		
 		<!-- 用例详情 Model-->
 		<div class="modal fade" id="showTestCaseDetail" role="dialog">
 			<div class="modal-dialog modal-lg" style="margin:30px auto 0;">
@@ -343,6 +344,14 @@
 			</div>
 		</div>
 		
+		<form  id="exportAllForm" th:action="@{exportTestCase}" method="post">
+	        <input type="hidden" name="projectId" id="exportProjectId"/>
+	        <input type="hidden" name="versionId" id="exportVersionId"/>
+	        <input type="hidden" name="caseName" id="exportCaseName"/>
+	        <input type="hidden" name="caseTitle" id="exportCaseTitle"/>
+	        <input type="hidden" name="priority" id="exportPriority"/>
+	        <input type="hidden" name="moduleId" id="exportModuleId"/>
+		</form>
 		
 	</div>
 	
@@ -571,6 +580,22 @@
 			});			
 		}
 		
+		//导出全部
+		function exportAll(){
+			$("#exportProjectId").val($("#projectId").val());
+			$("#exportVersionId").val($("#versionId").val());
+			$("#exportCaseName").val($("#caseName").val());
+			$("#exportCaseTitle").val($("#caseTitle").val());
+			$("#exportPriority").val($("#priority option:selected").val());
+			$("#exportModuleId").val($("#moduleId option:selected").val());
+			$("#exportAllForm").submit();
+		}
+		
+		//导出选中的测试用例
+		function exportTestCaseById(id){
+			window.location.href="exportTestCaseById/"+id;
+		}
+		
 	/*]]>*/
 	</script>
 
@@ -611,7 +636,7 @@
 			<tr>
 
 				<td width ="100px">实际结果</td> 
-				<td width ="300px">{{data.actualResult }}</td>
+				<td width ="300px">{{data.actualResultValue }}</td>
 				<td width ="100px">BUG_ID</td>
 				<td width ="300px">{{data.bugId}}</td>
 			</tr>
