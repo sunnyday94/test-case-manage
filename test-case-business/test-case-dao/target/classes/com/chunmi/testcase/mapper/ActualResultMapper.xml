@@ -95,4 +95,8 @@
     set actual_result = #{actualResult,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <select id="selectAllActualResultList" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/> from cm_actual_result
+  </select>
 </mapper>

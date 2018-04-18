@@ -66,15 +66,11 @@
       <if test="projectName != null">
         project_name,
       </if>
-      <if test="createTime != null">
         create_time,
-      </if>
       <if test="delTime != null">
         del_time,
       </if>
-      <if test="delFlag != null">
-        del_flag,
-      </if>
+        del_flag
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -83,15 +79,11 @@
       <if test="projectName != null">
         #{projectName,jdbcType=VARCHAR},
       </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
+		NOW(),
       <if test="delTime != null">
         #{delTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="delFlag != null">
-        #{delFlag,jdbcType=CHAR},
-      </if>
+		'0'
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.chunmi.testcase.model.po.Project">
@@ -129,5 +121,34 @@
       del_time = #{delTime,jdbcType=TIMESTAMP},
       del_flag = #{delFlag,jdbcType=CHAR}
     where id = #{id,jdbcType=BIGINT}
+  </update>
+  
+  <select id="selectProjectCountsByCondition" resultType="java.lang.Integer">
+  	select count(1) from cm_project
+  	<where>
+  		<if test="project.projectName !=null and project.projectName !=''">
+  			project_name like concat('%',#{project.projectName},'%')
+  		</if>
+  	</where>
+  </select>
+  
+  <select id="selectProjectListByCondition" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/> from cm_project
+  	<where>
+  		<if test="project.projectName !=null and project.projectName !=''">
+  			project_name like concat('%',#{project.projectName},'%') and
+  		</if>
+  		del_flag = '0'
+  	</where>
+  	limit #{pageRequest.offSet},#{pageRequest.pageSize}
+  </select>
+  
+  <select id="selectProjectByName" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/> from cm_project where project_name =#{projectName}
+  	and del_flag = '0'
+  </select>
+  
+  <update id="delProjectById">
+  	update cm_project set del_flag = '1' where id = #{id}
   </update>
 </mapper>

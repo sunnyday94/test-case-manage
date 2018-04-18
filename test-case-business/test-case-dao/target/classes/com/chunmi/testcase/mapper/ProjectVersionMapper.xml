@@ -11,6 +11,11 @@
     <result column="version_num" jdbcType="VARCHAR" property="versionNum" />
     <result column="project_id" jdbcType="BIGINT" property="projectId" />
   </resultMap>
+  
+  <resultMap type="com.chunmi.testcase.model.po.ProjectVersion" id="ProjectVersionMap" extends="BaseResultMap">
+  	<association property="project" column="project_id" fetchType="lazy" select="com.chunmi.testcase.mapper.ProjectMapper.selectByPrimaryKey"/>
+  </resultMap>
+  
   <sql id="Base_Column_List">
     <!--
       WARNING - @mbg.generated
@@ -108,4 +113,34 @@
       project_id = #{projectId,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
+  
+  <select id="selectProjectVersionCountsByCondition" resultType="java.lang.Integer">
+  	select count(1) from cm_version 
+  	<where>
+  		<if test="version.projectId!=null and version.projectId !=''">
+  			project_id = #{version.projectId} 
+  		</if>
+  		<if test="version.versionNum !=null and version.versionNum !=''">
+  			and version_num like concat('%',#{version.versionNum},'%')
+  		</if>
+  	</where>
+  </select>
+  
+  <select id="selectProjectVersionByCondition" resultMap="ProjectVersionMap">
+  	select <include refid="Base_Column_List"/> from cm_version
+  	<where>
+  		<if test="version.projectId!=null and version.projectId !=''">
+  			project_id = #{version.projectId} 
+  		</if>
+  		<if test="version.versionNum !=null and version.versionNum !=''">
+  			and version_num like concat('%',#{version.versionNum},'%')
+  		</if>
+  	</where>
+  	limit #{pageRequest.offSet},#{pageRequest.pageSize}
+  </select>
+  
+  <select id="seletProjectVersionByProjectIdAndVersionNum" resultMap="BaseResultMap">
+  	select <include refid="Base_Column_List"/> from cm_version where
+  	version_num = #{version.versionNum} and project_id = #{version.projectId}
+  </select>
 </mapper>

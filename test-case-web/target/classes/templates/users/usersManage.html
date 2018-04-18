@@ -6,7 +6,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<title>纯米 | 会员列表</title>
+<title>纯米 | 用户列表</title>
 
 <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
 <link th:href="@{/font-awesome/css/font-awesome.css}" rel="stylesheet" />
@@ -22,75 +22,81 @@
         	<div class="border-bottom" th:include="header :: headerTop"></div>
       		<div class="row wrapper border-bottom white-bg page-heading" th:fragment="headerNav">
 		   		<div class="col-lg-10">
-		     		<h2>会员管理</h2>
+		     		<h2>用户列表</h2>
 		      	</div>
 		      	<div class="col-lg-2">
 		      	</div>
 		  	</div>
 		  	
         	<div class="wrapper wrapper-content animated fadeInRight">
-            	<div class="row">
-                	<div class="col-lg-12">
-	                    <div class="ibox float-e-margins">
-	                        <div class="ibox-title">
-	                            <h5>会员列表</h5>
-	                            <div class="ibox-tools">
-	                                <a class="collapse-link">
-	                                    <i class="fa fa-chevron-up"></i>
-	                                </a>
-	                            </div>
-	                        </div>
-	                        <div class="ibox-content">
-	                            <div class="table-responsive">
-	                                <table class=" table table-hover" data-page-size="10">
-	                                    <thead>
-		                                    <tr>
-		                                    	<th width="15%">用户名</th>
-		                                        <th width="15%">所属分组 </th>
-		                                        <th width="20%">角色</th>
-		                                        <th width="15%">当前状态</th>
-		                                        <div th:if="${loginManager.voteRole!=null &amp;&amp; loginManager.voteRole.roleType eq '0'}">
-		                                        	<th width="35%">操作</th>
-		                                        </div>
-		                                        
-		                                    </tr>
-	                                    </thead>
-	                                    <tbody>
-	                                    	<tr th:each="voteUser : ${pb.list}">
-										   		<td th:text="${voteUser.userName}">Onions</td>
-										      	<td th:text="${voteUser.voteGroup!=null} ? 
-										      		${voteUser.voteGroup.groupName} : '暂无'">Onions</td>
-										      	<td th:text="${voteUser.voteRole!=null} ? ${voteUser.voteRole.roleName} : '暂无'">Onions</td>
-										      	<td th:text="${voteUser.delFlag eq '0'} ?'已启用' : '已禁用'">Onions</td>
-										      	<div th:if="${loginManager.voteRole!=null &amp;&amp; loginManager.voteRole.roleType eq '0'}">
-											      	<td>
-														<a style="margin-right: 10px;" href="#" th:text="${voteUser.delFlag eq '0'} ?'禁用' : '启用'"
-														th:onclick="'javascript:updateUserStatus('+${voteUser.id}+','+${voteUser.delFlag}+');'" title="状态">Onions</a>
-					                                    <select name="voteRole" style="margin-right: 10px;" th:onchange="'javascript:updateRole('+${voteUser.id}+',this);'">
-					                                    	 <option value="0">--请选择角色--</option>
-				                                             <option th:each="voteRole : ${voteRoleList}" th:value="${voteRole.id}" th:text="${voteRole.roleName}">角色</option>
-				                                        </select>
-					                                    <select name="voteGroup" th:onchange="'javascript:updateGroup('+${voteUser.id}+',this);'">
-					                                    	<option value="0">--请选择分组--</option>
-					                                    	<option th:each="voteGroup : ${voteGroupList}" th:value="${voteGroup.id}" th:text="${voteGroup.groupName}">分组</option>
-				                                        </select>															
-											      	</td>
-										      	</div>
-											</tr>
-	                                    </tbody>
-	                                   	<tfoot>
-			                                <tr>
-			                                    <td colspan="6">
-			                                        <ul id="pageHTML" class="pagination pull-right"></ul>
-			                                    </td>
-			                                </tr>
-		                                </tfoot>
-	                                </table>
-			                	</div>
-	                        </div>
-	           			</div>
-                	</div>
-            	</div>
+	               <div class="row">
+	                   <div class="col-sm-12" >
+	                   		<form id="dataTable" th:action="@{userList_0_0_0}" method="get">
+	                                   <label class="control-label">用户名:</label>
+	                                   <input class="input-medium"  name="userName" type="text" th:value="${pb.objectBean.userName}" id="userName" style="height: 2.6rem; width: 20rem;margin-right: 3rem;"/>
+	                                   <label class="control-label">状态:</label>
+	                                   <select id="isDisabled" name="isDisabled" class="selector" style="height: 2.6rem; width: 20rem;margin-right: 3rem;">
+	                                   	   <option value="">---请选择---</option>
+	                                       <option value="0">启用</option>
+	                                       <option value="1">禁用</option>
+	                                   </select>                           
+	                                   <button type="submit" class="btn btn-primary">查询</button>
+        	 				</form>
+	                   </div>
+	               </div>       	
+	            	<div class="row" style="margin-top:14px;">
+	                	<div class="col-lg-12">
+		                    <div class="ibox float-e-margins">
+		                        <div class="ibox-title">
+		                            <h5>用户列表</h5>
+		                            <div class="ibox-tools">
+		                                <a class="collapse-link">
+		                                    <i class="fa fa-chevron-up"></i>
+		                                </a>
+		                            </div>
+		                        </div>
+		                        <div class="ibox-content">
+		                            <div class="table-responsive">
+		                                <table class=" table table-hover" data-page-size="10">
+		                                    <thead>
+			                                    <tr>
+			                                    	<th width="25%">用户名</th>
+			                                        <th width="25%">角色</th>
+			                                        <th width="25%">当前状态</th>
+			                                        <div th:if="${loginManager.roleId==1}">
+			                                        	<th width="25%">操作</th>
+			                                        </div>
+			                                        
+			                                    </tr>
+		                                    </thead>
+		                                    <tbody>
+		                                    	<tr th:each="user : ${pb.list}">
+											   		<td th:text="${user.userName}">Onions</td>
+											      	<td th:text="${user.role.roleName}">Onions</td>
+											      	<td th:text="${user.isDisabled eq '0'} ?'已启用' : '已禁用'">Onions</td>
+											      	<div th:if="${loginManager.roleId==1}">
+												      	<td>
+												      		<div th:if = "${user.roleId==2}">
+																<a  href="#" th:text="${user.isDisabled eq '0'} ?'禁用' : '启用'"
+																th:onclick="'javascript:updateUserStatus('+${user.id}+','+${user.isDisabled}+');'" title="状态">Onions</a>													      		
+												      		</div>
+												      	</td>
+											      	</div>
+												</tr>
+		                                    </tbody>
+		                                   	<tfoot>
+				                                <tr>
+				                                    <td colspan="4">
+				                                        <ul id="pageHTML" class="pagination pull-right"></ul>
+				                                    </td>
+				                                </tr>
+			                                </tfoot>
+		                                </table>
+				                	</div>
+		                        </div>
+		           			</div>
+	                	</div>
+	            	</div>
         	</div>
         	<div class="footer" th:include="footer :: copyright"></div>
       	</div>
@@ -128,89 +134,38 @@
     /*<![CDATA[*/
 	    var pageHTML = [[${pageHTML}]];
 		$(document).ready(function () {
-			siderBar("voteUserList");
+			siderBar("userList");
 			$("#pageHTML").html(pageHTML);
+			
+			var isDisabled = [[${pb.objectBean.isDisabled}]];
+			if(isDisabled !=null && isDisabled !=''){
+				$("#isDisabled").val(isDisabled);
+			}
 		});
 		
 		//更新用户状态
-		function updateUserStatus(voteUserId,delFlag){
-			if(delFlag=="0"){
+		function updateUserStatus(userId,isDisabled){
+			if(isDisabled=="0"){
 				layer.confirm('确定禁用此用户?',{
 					btn:['确认','取消']
 				},function(){
-					delFlag='1';
-			 		$.ajax({
-			      		type: "POST",
-			      		async: false,
-			           	url: "updateUserStatus?id="+voteUserId+"&delFlag="+delFlag,
-			           	contentType: "application/json; charset=utf-8",
-			        	success: function(msg){
-			        		 window.location.reload();
-			       		},
-			     		error: function(){
-			     			layer.msg("系统异常!",{time:1000});
-			       		}
+					isDisabled='1';
+					$.post("updateUserStatus",{"id":userId,"isDisabled":isDisabled},function(){
+						window.location.reload();
 					});
+					
 				},function(){
 					
 				});
 			}else{
-				delFlag = '0';
-		 		$.ajax({
-		      		type: "POST",
-		      		async: false,
-		           	url: "updateUserStatus?id="+voteUserId+"&delFlag="+delFlag,
-		           	contentType: "application/json; charset=utf-8",
-		        	success: function(msg){
-		        		 window.location.reload();
-		       		},
-		     		error: function(){
-		     			layer.msg("系统异常!",{time:1000});
-		       		}
-				});			
+				isDisabled = '0';
+				$.post("updateUserStatus",{"id":userId,"isDisabled":isDisabled},function(){
+					window.location.reload();
+				});
 			}
 		}
-		
-		
-		//更换角色
-		function updateRole(voteUserId,obj){
-			var roleId = obj.options[obj.selectedIndex].value;
-			console.log("userId--->"+voteUserId+"roleId--->"+roleId);
-			$.ajax({
-	      		type: "POST",
-	      		async: false,
-	      		url:"updateRole?id="+voteUserId+"&roleId="+roleId,
-	           	contentType: "application/json; charset=utf-8",
-	        	success: function(msg){
-	        		 window.location.reload();
-	       		},
-	     		error: function(){
-	     			layer.msg("系统异常!",{time:1000});
-	       		}				
-			});
-		}
-		
-		//更换分组
-		function updateGroup(voteUserId,obj){
-			var groupId = obj.options[obj.selectedIndex].value;
-			console.log("userId--->"+voteUserId+"groupId--->"+groupId);
-			$.ajax({
-	      		type: "POST",
-	      		async: false,
-	      		url:"updateGroup?id="+voteUserId+"&groupId="+groupId,
-	           	contentType: "application/json; charset=utf-8",
-	        	success: function(msg){
-	        		 window.location.reload();
-	       		},
-	     		error: function(){
-	     			layer.msg("系统异常!",{time:1000});
-	       		}				
-			});
-		}
-		
 		/*]]>*/
     </script>
-
 </body>
 
 </html>
