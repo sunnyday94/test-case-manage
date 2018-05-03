@@ -213,4 +213,9 @@ public class CaseDetailServiceImpl implements CaseDetailService {
 		
 	}
 
+	@Override
+	public Integer batchInsertCaseDetail(List<CaseDetail> caseDetailList) {
+		return caseDetailMapper.batchInsertCaseDetail(caseDetailList);
+	}
+
 }

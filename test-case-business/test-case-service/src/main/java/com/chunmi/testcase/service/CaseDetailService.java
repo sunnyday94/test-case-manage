@@ -15,6 +15,8 @@
  */
 package com.chunmi.testcase.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
 
 import com.chunmi.testcase.model.po.CaseDetail;
@@ -39,5 +41,7 @@ public interface CaseDetailService {
 	PageBean<CaseDetailVo> selectExportTestCaseByConditions(CaseDetail caseDetail);
 
 	void exportTestCase(PageBean<CaseDetailVo> pb, HttpServletResponse response);
+
+	Integer batchInsertCaseDetail(List<CaseDetail> caseDetailList);
 
 }

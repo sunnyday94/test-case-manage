@@ -399,4 +399,15 @@
 		</if>
 	</where>
   </select>
+  
+  <insert id="batchInsertCaseDetail">
+  	insert into cm_casedetail (case_name, case_title, priority, test_mode, module_id, test_conditions, detail_steps, 
+    expected_result, actual_result_id, bug_id, remarks, project_id, version_id, create_time, 
+    del_time, del_flag) values 
+	<foreach collection="caseDetailList" item="caseDetail" index="index" separator=",">
+		(#{caseDetail.caseName},#{caseDetail.caseTitle},#{caseDetail.priority},#{caseDetail.testMode},#{caseDetail.moduleId},
+		#{caseDetail.testConditions},#{caseDetail.detailSteps},#{caseDetail.expectedResult},#{caseDetail.actualResultId},#{caseDetail.bugId},
+		#{caseDetail.remarks},1,1,NOW(),NULL,'0')
+	</foreach>
+  </insert>
 </mapper>

@@ -24,6 +24,9 @@
             <div class="wrapper wrapper-content">
             	<h2><strong>欢迎进入测试用例管理系统</strong></h2>
             </div>
+            <div class="col-sm-9" style="margin-top: 8px;">
+				<button style="margin-left: 8px;" type="button" th:onclick="'javascript:importTestcase();'" class="btn btn-primary">导入测试用例(临时)</button>
+			</div>	
         	<div class="footer" th:include="footer :: copyright"></div>
         </div>
     </div>
@@ -70,5 +73,32 @@
 
 	<!-- layerui -->
 	<script th:src="@{/js/layer/layer.js}"></script>
+	
+	<script type="text/javascript">
+	/*<![CDATA[*/
+	
+		/*
+		*导入测试用例
+		*/
+		function importTestcase(){
+			var index = layer.load(1, {
+				  shade: [0.1,'#fff'] //0.1透明度的白色背景
+				});
+			$.ajax({
+				type:'post',
+				url:"importTestcase",
+				dataType:"JSON",
+				success:function(data){
+					if(data.code == 10000){
+						layer.close(index);
+						layer.msg("测试用例导入成功",{time:1500});
+					}
+					
+				}
+			});
+		}
+	
+	/*]]>*/
+	</script>
 </body>
 </html>
