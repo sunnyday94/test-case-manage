@@ -91,7 +91,7 @@
 												<td th:text="${testCase.module.moduleName}">模块名称</td>
 										      	<td>
 										      		<a style="margin-right: 10px" href="#" th:text="查看用例详情" th:onclick="'javascript:selectTestCaseDetail('+${testCase.id}+');'">查看用例详情</a>
-										      		<a style="margin-right: 10px" href="#" th:text="编辑" th:onclick="'javascript:selectTestCaseDetail('+${testCase.id}+');'">编辑</a>
+										      		<a style="margin-right: 10px" href="#" th:text="编辑" th:onclick="'javascript:updateTestCaseDetail('+${testCase.id}+');'">编辑</a>
 										      		<a style="margin-right: 10px" href="#" th:text="删除" th:onclick="'javascript:delTestCaseDetail('+${testCase.id}+');'">删除</a>
 										      		<a  href="#" th:text="导出" th:onclick="'javascript:exportTestCaseById('+${testCase.id}+');'">导出</a>
 										      	</td>
@@ -501,7 +501,7 @@
 		
 		
 		//更新测试用例(弹窗)
-		function selectTestCaseDetail(caseDetailId){
+		function updateTestCaseDetail(caseDetailId){
 			console.log("caseId--->"+caseDetailId);
 			$.ajax({
 				type : "GET",
