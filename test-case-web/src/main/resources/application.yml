@@ -7,9 +7,9 @@ server:
 # 配置数据源
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/test_case_manage?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
+    url: jdbc:mysql://10.0.10.100:3306/test_case_manage?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
     username: root
-    password: root
+    password: chunmi456
     driver-class-name: com.mysql.jdbc.Driver
     tomcat:
       max-active: 800

@@ -29,7 +29,8 @@
 		  	</div>
 			<div class="col-sm-9" style="margin-top: 8px;margin-bottom: 8px;">
 				<button style="margin-right: 8px;" type="button" th:onclick="'javascript:goBack();'" class="btn btn-primary">返回</button>
-				<button type="button" th:onclick="'javascript:exportAll();'" class="btn btn-primary">导出</button>
+				<button style="margin-right: 8px;" type="button" th:onclick="'javascript:exportAll();'" class="btn btn-primary">导出</button>
+				<button type="button" class="btn btn-primary" th:onclick="'javascript:addTestCase();'">新增</button>
 			</div>
         	<div class="wrapper wrapper-content animated fadeInRight">
 	               <div class="row">
@@ -56,9 +57,6 @@
 	                                       <option th:each="module : ${moduleList }" th:value="${module.id}" th:text="${module.moduleName}"></option>
 	                                   </select>
 	                                   <button type="submit" class="btn btn-primary">查询</button>
-	                                   <div style="display: inline-block;margin-left: 15px;">
-	                                    	<button type="button" class="btn btn-primary" th:onclick="'javascript:addTestCase();'">新增</button>
-	                                   </div>
         	 				</form>
 	                   </div>
 	               </div>
@@ -93,10 +91,7 @@
 												<td th:text="${testCase.module.moduleName}">模块名称</td>
 										      	<td>
 										      		<a style="margin-right: 10px" href="#" th:text="查看用例详情" th:onclick="'javascript:selectTestCaseDetail('+${testCase.id}+');'">查看用例详情</a>
-										      		<a style="margin-right: 10px" href="#" th:text="编辑" th:onclick="'javascript:updateTestCaseDetail('+${testCase.id}+',\''+${testCase.caseName}+'\',
-										      		\''+${testCase.caseTitle}+'\',\''+${testCase.priority}+'\',\''+${testCase.testMode}+'\','+${testCase.moduleId}+',
-										      		\''+${testCase.testConditions}+'\',\''+${testCase.detailSteps}+'\',\''+${testCase.expectedResult}+'\',
-										      		'+${testCase.actualResultId}+',\''+${testCase.bugId}+'\',\''+${testCase.remarks}+'\');'">编辑</a>
+										      		<a style="margin-right: 10px" href="#" th:text="编辑" th:onclick="'javascript:selectTestCaseDetail('+${testCase.id}+');'">编辑</a>
 										      		<a style="margin-right: 10px" href="#" th:text="删除" th:onclick="'javascript:delTestCaseDetail('+${testCase.id}+');'">删除</a>
 										      		<a  href="#" th:text="导出" th:onclick="'javascript:exportTestCaseById('+${testCase.id}+');'">导出</a>
 										      	</td>
@@ -504,22 +499,31 @@
 			});	
 		}
 		
+		
 		//更新测试用例(弹窗)
-		function updateTestCaseDetail(caseDetailId,caseName,caseTitle,priority,testMode,moduleId,testConditions,detailSteps,expectedResult,
-										actualResultId,bugId,remarks){
-			$("#updateCaseDetailId").val(caseDetailId);
-			$("#updateCaseName").val(caseName);
-			$("#updateCaseTitle").val(caseTitle);
-			$("#updatePriority").val(priority);
-			$("#updateTestMode").val(testMode);
-			$("#updateModuleId").val(moduleId);
-			$("#updateTestConditions").val(testConditions);
-			$("#updateDetailSteps").val(detailSteps);
-			$("#updateExpectedResult").val(expectedResult);
-			$("#updateActualResultId").val(actualResultId);
-			$("#updateBugId").val(bugId);
-			$("#updateRemarks").val(remarks);
-			$("#updateTestCaseDiv").modal('show');
+		function selectTestCaseDetail(caseDetailId){
+			console.log("caseId--->"+caseDetailId);
+			$.ajax({
+				type : "GET",
+				url : "selectTestCaseDetailById/"+caseDetailId,
+				dataType : "JSON",
+			    success: function (data) {
+					$("#updateCaseDetailId").val(data.id);
+					$("#updateCaseName").val(data.caseName);
+					$("#updateCaseTitle").val(data.caseTitle);
+					$("#updatePriority").val(data.priority);
+					$("#updateTestMode").val(data.testMode);
+					$("#updateModuleId").val(data.moduleId);
+					$("#updateTestConditions").val(data.testConditions);
+					$("#updateDetailSteps").val(data.detailSteps);
+					$("#updateExpectedResult").val(data.expectedResult);
+					$("#updateActualResultId").val(data.actualResultId);
+					$("#updateBugId").val(data.bugId);
+					$("#updateRemarks").val(data.remarks);
+		   		   $("#updateTestCaseDiv").modal('show');
+				}
+			});	
+			
 		}
 		
 		//保存测试用例更新
