@@ -127,17 +127,17 @@ public class CaseDetailServiceImpl implements CaseDetailService {
 		style.setBorderRight(HSSFCellStyle.BORDER_THIN);//右边框   
 					
 	    // 设置宽度
-		sheet.setColumnWidth(0, 6000);
+		sheet.setColumnWidth(0, 1000);
 		sheet.setColumnWidth(1, 6000);
-		sheet.setColumnWidth(2, 6000);
-		sheet.setColumnWidth(3, 6000);
-		sheet.setColumnWidth(4, 6000);
+		sheet.setColumnWidth(2, 24000);
+		sheet.setColumnWidth(3, 2000);
+		sheet.setColumnWidth(4, 2000);
 		sheet.setColumnWidth(5, 6000); 
-		sheet.setColumnWidth(6, 6000);	
-		sheet.setColumnWidth(7, 6000);	
-		sheet.setColumnWidth(8, 6000);	
-		sheet.setColumnWidth(9, 6000);	
-		sheet.setColumnWidth(10, 6000);	
+		sheet.setColumnWidth(6, 30000);	
+		sheet.setColumnWidth(7, 18000);	
+		sheet.setColumnWidth(8, 18000);	
+		sheet.setColumnWidth(9, 2000);	
+		sheet.setColumnWidth(10, 2000);	
 		sheet.setColumnWidth(11, 6000);	
 		
 		//第五步 创建单元格
@@ -183,6 +183,7 @@ public class CaseDetailServiceImpl implements CaseDetailService {
 			for(int i =0;i<caseDetailList.size();i++){
 				CaseDetailVo caseDetail = caseDetailList.get(i);
 				row = sheet.createRow(i+1);
+				row.setHeightInPoints(40); //设置行高
 				row.createCell(0).setCellValue(caseDetail.getId());
 				row.createCell(1).setCellValue(caseDetail.getCaseName());
 				row.createCell(2).setCellValue(caseDetail.getCaseTitle());
