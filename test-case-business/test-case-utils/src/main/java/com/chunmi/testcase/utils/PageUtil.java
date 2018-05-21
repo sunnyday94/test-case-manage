@@ -17,9 +17,15 @@ public class PageUtil {
 		StringBuffer html = new StringBuffer();
 		html.append("<li class=\"footable-page-arrow"+(pageCurrent<=1?" disabled":"")+"\"><a href=\""+(pageCurrent<=1?"#":first)+"\">«</a></li>");
 		html.append("<li class=\"footable-page-arrow"+(pageCurrent<=1?" disabled":"")+"\"><a href=\""+(pageCurrent<=1?"#":prev)+"\">‹</a></li>");
-		for(int i = 0 ;i < pageCount; i++){
-			String urlItem = urlNew.replace("{pageCurrent}", (i+1)+"");
-			html.append("<li class=\"footable-page"+(((i+1) == pageCurrent)?" active":"")+"\"><a href=\""+urlItem+"\">"+(i+1)+"</a></li>");
+//		for(int i = 0 ;i < pageCount; i++){
+//			String urlItem = urlNew.replace("{pageCurrent}", (i+1)+"");
+//			html.append("<li class=\"footable-page"+(((i+1) == pageCurrent)?" active":"")+"\"><a href=\""+urlItem+"\">"+(i+1)+"</a></li>");
+//		}
+		for(int i = pageCurrent ;i < pageCurrent+5; i++){
+			if(i<=pageCount) {
+				String urlItem = urlNew.replace("{pageCurrent}", i+"");
+				html.append("<li class=\"footable-page"+((i == pageCurrent)?" active":"")+"\"><a href=\""+urlItem+"\">"+i+"</a></li>");
+			}
 		}
 		html.append("<li class=\"footable-page-arrow"+(pageCurrent==pageCount?" disabled":"")+"\"><a href=\""+(pageCurrent==pageCount?"#":next)+"\">›</a></li>");
 		html.append("<li class=\"footable-page-arrow"+(pageCurrent==pageCount?" disabled":"")+"\"><a href=\""+(pageCurrent==pageCount?"#":last)+"\">»</a></li>");

@@ -60,6 +60,7 @@ public class CaseDetailServiceImpl implements CaseDetailService {
 			pb.setPageCurrent(pageCount);
 		}
 		PageRequest pageRequest = new PageRequest(pageCurrent, pageSize);
+		pb.setPageCurrent(pageCurrent);  //设置当前页
 		pb.setPageSize(pageSize);       //每页显示条目
 		pb.setPageCount(pageCount);     //总页数
 		pb.setObjectBean(testCase);      //设置查询条件
