@@ -1,8 +1,5 @@
 package com.chunmi.testcase.controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -31,7 +28,8 @@ public class TemporaryController {
 	 */
 	@PostMapping(value="/importTestcase")
 	@ResponseBody
-	public Response importProjectName(MultipartFile file,Long projectId,Long versionId) {
+	public Response importProjectName(@RequestParam("file")MultipartFile file,
+			@RequestParam("projectId")Long projectId,@RequestParam("versionId")Long versionId) {
 		try {
 			String fileName = file.getOriginalFilename();
 			Workbook wb = null;		
