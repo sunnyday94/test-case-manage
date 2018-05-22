@@ -34,4 +34,6 @@ public interface ProjectModuleService {
 
 	List<Module> selectAllModuleList();
 
+	Integer insertNewModule(ProjectModule pm);
+
 }

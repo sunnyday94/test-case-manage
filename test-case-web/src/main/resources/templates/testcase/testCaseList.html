@@ -29,6 +29,7 @@
 		  	</div>
 			<div class="col-sm-9" style="margin-top: 8px;margin-bottom: 8px;">
 				<button style="margin-right: 8px;" type="button" th:onclick="'javascript:goBack();'" class="btn btn-primary">返回</button>
+				<button style="margin-right: 8px;" type="button" id="choose" class="btn btn-primary">导入</button>
 				<button style="margin-right: 8px;" type="button" th:onclick="'javascript:exportAll();'" class="btn btn-primary">导出</button>
 				<button type="button" class="btn btn-primary" th:onclick="'javascript:addTestCase();'">新增</button>
 			</div>
@@ -76,18 +77,20 @@
 	                                <table class=" table table-hover" data-page-size="10">
 	                                    <thead>
 		                                    <tr>
-		                                    	<th width="20%">版本号</th>
-		                                    	<th width="20%">用例名称</th>
-		                                    	<th width="20%">用例标题</th>
-		                                    	<th width="20%">模块名称</th>
-		                                        <th width="20%">操作</th>
+		                                    	<th width="18%">用例名称</th>
+		                                    	<th width="18%">用例标题</th>
+		                                    	<th width="18%">项目名称</th>
+		                                    	<th width="10%">版本号</th>
+		                                    	<th width="18%">模块名称</th>
+		                                        <th width="18%">操作</th>
 		                                    </tr>
 	                                    </thead>
 	                                    <tbody>
 	                                    	<tr th:each="testCase : ${pb.list}">
-	                                    		<td th:text="${testCase.projectVersion.versionNum}">版本号</td>
 										   		<td th:text="${testCase.caseName}">用例名称</td>
 										   		<td th:text="${testCase.caseTitle}">用例标题</td>
+										   		<td th:text="${testCase.project.projectName}">项目名称</td>
+										   		<td th:text="${testCase.projectVersion.versionNum}">版本号</td>
 												<td th:text="${testCase.module.moduleName}">模块名称</td>
 										      	<td>
 										      		<a style="margin-right: 10px" href="#" th:text="查看用例详情" th:onclick="'javascript:selectTestCaseDetail('+${testCase.id}+');'">查看用例详情</a>
@@ -348,6 +351,12 @@
 	        <input type="hidden" name="moduleId" id="exportModuleId"/>
 		</form>
 		
+		<form id="importTestcaseForm" th:action="@{importTestcase}" method="post">
+			<input type="file" id="testcaseImport" name="file" onchange="importTestcase(this)" style="display: none;" multiple="multiple" />
+			<input name="projectId" type="hidden" th:value="${pb.objectBean.projectId}"/>
+			<input name="versionId" type="hidden" th:value="${pb.objectBean.versionId}"/>
+		</form>
+		
 	</div>
 	
     <!-- Mainly scripts -->
@@ -395,6 +404,10 @@
 			$("#moduleId").val(moduleId); 
 			$("#priority").val(priority);
 			$("#pageHTML").html(pageHTML);
+			
+			$("#choose").click(function(){
+				$("#testcaseImport").click();
+			});
 			
 		});
 		
@@ -598,6 +611,35 @@
 		//导出选中的测试用例
 		function exportTestCaseById(id){
 			window.location.href="exportTestCaseById/"+id;
+		}
+		
+		//导入测试用例(请勿过于依赖此功能)
+		function importTestcase(obj){
+    		var ctxValue = $(obj).val();
+    		var extStart = ctxValue.lastIndexOf(".");
+    		var ext = ctxValue.substring(extStart).toLowerCase();
+    		if(ext =='.xls' || ext =='xlsx' ){
+    			var options = {
+    					url: 'importTestcase',
+    					type: 'post',
+    					dataType: 'JSON',
+    					success: function(data){
+    						if(data.code==10000){
+    							layer.closeAll();
+    							layer.msg("测试用例导入成功",{time:1500});
+    							setTimeout(function(){window.location.reload();},1500);
+    						}
+    					},
+    					error:function(){
+    						layer.closeAll();
+    						layer.msg("系统异常",{time:1500});
+    					}
+    			}
+				$("#importTestcaseForm").ajaxSubmit(options);
+				layer.load(0);
+    		}else{
+    			layer.msg('导入的文件格式有误!',{time:1500});
+    		}
 		}
 		
 	/*]]>*/

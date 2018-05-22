@@ -79,4 +79,9 @@ public class ProjectModuleServiceImpl implements ProjectModuleService {
 		return moduleMapper.selectAllModuleList();
 	}
 
+	@Override
+	public Integer insertNewModule(ProjectModule pm) {
+		return moduleMapper.insertSelective(pm);
+	}
+
 }

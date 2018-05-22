@@ -119,7 +119,7 @@ public class CaseDetailServiceImpl implements CaseDetailService {
 	    style.setFont(hssfFont); 
 	    
 	    style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // 居中  
-	    style.setFillForegroundColor(IndexedColors.YELLOW.getIndex()); // 设置背景色 
+	    style.setFillForegroundColor(IndexedColors.YELLOW.getIndex()); // 设置背景色 (Yellow)
 		style.setFillPattern(CellStyle.SOLID_FOREGROUND); 
 		style.setBorderBottom(HSSFCellStyle.BORDER_THIN); //下边框    
 		style.setBorderLeft(HSSFCellStyle.BORDER_THIN);//左边框    

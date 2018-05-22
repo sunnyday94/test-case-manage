@@ -81,7 +81,7 @@
       <if test="delTime != null">
         del_time,
       </if>
-        del_flag
+        del_flag,
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -97,8 +97,11 @@
       <if test="delTime != null">
         #{delTime,jdbcType=TIMESTAMP},
       </if>
-		'0'
+		'0',
     </trim>
+ 	<selectKey resultType="java.lang.Long" order="AFTER" keyProperty="id">
+ 		SELECT LAST_INSERT_ID() AS id 
+ 	</selectKey>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.chunmi.testcase.model.po.ProjectModule">
     <!--
