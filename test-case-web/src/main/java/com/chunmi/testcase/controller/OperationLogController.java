@@ -68,7 +68,7 @@ public class OperationLogController {
 			PageBean<OperationLog> pb = operationLogService.selectOperationLogListByCondition(user,pageCurrent,pageSize,pageCount); //查询日志列表
 			map.put("pb",pb);
 			//生成新的查询url
-			String newUrl = "userList_{pageCurrent}_{pageSize}_{pageCount}?userName="+user.getUserName();
+			String newUrl = "operationLogList_{pageCurrent}_{pageSize}_{pageCount}?userName="+user.getUserName();
 			//返回分页内容
 			String pageHTML = PageUtil.getPageContent(newUrl,pb.getPageCurrent(), pb.getPageSize(), pb.getPageCount());
 			map.put("pageHTML", pageHTML);
