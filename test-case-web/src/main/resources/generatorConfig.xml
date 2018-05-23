@@ -11,8 +11,8 @@
 		</commentGenerator>
 		<!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
 		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
-			connectionURL="jdbc:mysql://10.0.10.99:3306/test_case_manage?useUnicode=true&amp;characterEncoding=UTF-8" userId="chunmi_test"
-			password="chunmitest">
+			connectionURL="jdbc:mysql://10.0.10.100:3306/test_case_manage?useUnicode=true&amp;characterEncoding=UTF-8" userId="root"
+			password="chunmi456">
 		</jdbcConnection>
 
 
@@ -52,7 +52,7 @@
 		<table tableName="cm_version" domainObjectName="ProjectVersion" 
 				enableCountByExample="false"  enableDeleteByExample="false" 
 				enableSelectByExample="false" enableUpdateByExample="false"/> 
-		-->	
+		
 		<table tableName="cm_module" domainObjectName="ProjectModule" 
 				enableCountByExample="false"  enableDeleteByExample="false" 
 				enableSelectByExample="false" enableUpdateByExample="false"/> 
@@ -62,11 +62,15 @@
 				enableCountByExample="false"  enableDeleteByExample="false" 
 				enableSelectByExample="false" enableUpdateByExample="false"/> 
 		
-		<!--  	
+		 	
 		<table tableName="cm_actual_result" domainObjectName="ActualResult" 
 				enableCountByExample="false"  enableDeleteByExample="false" 
 				enableSelectByExample="false" enableUpdateByExample="false"/> 
 				
-				-->
+		-->
+		
+		<table tableName="cm_operation_log" domainObjectName="OperationLog" 
+				enableCountByExample="false"  enableDeleteByExample="false" 
+				enableSelectByExample="false" enableUpdateByExample="false"/> 
 	</context>
 </generatorConfiguration>

@@ -11,7 +11,7 @@
  * it only in accordance with the terms of the license agreement
  * you entered into with CHUNMI.
  *
- * File Created @ [2018年4月3日, 下午3:53:39 (CST)]
+ * File Created @ [2018年5月23日, 下午4:27:02 (CST)]
  */
 package com.chunmi.testcase.controller;
 
@@ -28,78 +28,82 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.chunmi.testcase.annotation.Loggable;
-import com.chunmi.testcase.model.po.ProjectVersion;
-import com.chunmi.testcase.service.ProjectVersionService;
+import com.chunmi.testcase.model.po.OperationLog;
+import com.chunmi.testcase.model.po.Users;
+import com.chunmi.testcase.service.OperationLogService;
 import com.chunmi.testcase.utils.Constant;
-import com.chunmi.testcase.utils.MessageExceptionEnum;
 import com.chunmi.testcase.utils.PageBean;
 import com.chunmi.testcase.utils.PageUtil;
-import com.chunmi.testcase.utils.Response;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
-public class ProjectVersionController {
+public class OperationLogController {
+
 	
 	@Autowired
-	private ProjectVersionService versionService;
-
+	private OperationLogService operationLogService;
+	
 	/**
 	 * 
-	 * @description: <p class="detail">查询项目版本号</p>
+	 * @description: <p class="detail">查询日志列表</p>
 	 * @author: <a href="mailto:sunny@chunmi.com ">sunny</a>
-	 * @date: 2018年4月3日-下午3:57:42
+	 * @date: 2018年5月23日-下午5:06:19
 	 * @param @param request
 	 * @param @param model
 	 * @param @param pageCurrent
 	 * @param @param pageSize
 	 * @param @param pageCount
-	 * @param @param projectVersion
+	 * @param @param user
 	 * @param @return
 	 * @return String
 	 */
-	@Loggable(logDescription="查询项目版本号列表")
-	@GetMapping(value="/projectVersionList_{pageCurrent}_{pageSize}_{pageCount}")
-	public String projectVersionList(HttpServletRequest request,Model model,@PathVariable("pageCurrent") Integer pageCurrent,
-			@PathVariable("pageSize") Integer pageSize,@PathVariable("pageCount") Integer pageCount,ProjectVersion projectVersion) {
+	@GetMapping(value="operationLogList_{pageCurrent}_{pageSize}_{pageCount}")
+	public String operationLogList(HttpServletRequest request,Model model,@PathVariable("pageCurrent") Integer pageCurrent,
+			@PathVariable("pageSize") Integer pageSize,@PathVariable("pageCount") Integer pageCount,Users user) {
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		map.put(Constant.LOGIN_MANAGER, request.getSession().getAttribute(Constant.LOGIN_MANAGER));
 		try {
-			PageBean<ProjectVersion> pb = versionService.selectProjectVersionByCondition(projectVersion,pageCurrent,pageSize,pageCount);
+			PageBean<OperationLog> pb = operationLogService.selectOperationLogListByCondition(user,pageCurrent,pageSize,pageCount); //查询日志列表
 			map.put("pb",pb);
 			//生成新的查询url
-			String newUrl = "projectList_{pageCurrent}_{pageSize}_{pageCount}?projectId="+projectVersion.getProjectId()+"&versionNum="+projectVersion.getVersionNum();
+			String newUrl = "userList_{pageCurrent}_{pageSize}_{pageCount}?userName="+user.getUserName();
 			//返回分页内容
 			String pageHTML = PageUtil.getPageContent(newUrl,pb.getPageCurrent(), pb.getPageSize(), pb.getPageCount());
-			map.put("pageHTML", pageHTML);	
+			map.put("pageHTML", pageHTML);
 		} catch (Exception e) {
-			log.info(e.getMessage());
+			log.error("查询日志列表失败:{}",e);
 		}
 		model.addAllAttributes(map);
-		return "version/versionList";
+		return "log/operationLogList";
 	}
 	
 	/**
 	 * 
-	 * @description: <p class="detail">添加项目版本号</p>
+	 * @description: <p class="detail">删除日志</p>
 	 * @author: <a href="mailto:sunny@chunmi.com ">sunny</a>
-	 * @date: 2018年4月3日-下午4:43:46
-	 * @param @param projectVersion
+	 * @date: 2018年5月23日-下午5:08:12
+	 * @param @param operationLog
 	 * @param @return
-	 * @return Response
+	 * @return Integer
 	 */
-	@Loggable(logDescription="添加项目版本号")
-	@PostMapping(value="/addProjectVersion")
+	@PostMapping(value="delOperationLog")
 	@ResponseBody
-	public Response addProjectVersion(ProjectVersion projectVersion) {
+	public Integer delOperationLog(OperationLog operationLog) {
+		return operationLogService.delOperationLog(operationLog);
+	}
+	
+	
+	@GetMapping(value="selectOperationLogDetailById/{id}")
+	@ResponseBody
+	public OperationLog selectOperationLogDetailById(@PathVariable("id") Long id) {
+		OperationLog operationLog = null;
 		try {
-			if(versionService.seletProjectVersionByProjectIdAndVersionNum(projectVersion)!=null)
-				return Response.getError(MessageExceptionEnum.VERSION_EXISTED);
-			versionService.addProjectVersion(projectVersion);
-			return Response.getSuccess();
+			operationLog = operationLogService.selectOperationLogDetailById(id);
 		} catch (Exception e) {
-			return Response.getError(MessageExceptionEnum.ERROR_HANDLE);
+			log.error("查询日志详情出错:{}",e.getMessage());
 		}
+		return operationLog;
 	}
 }

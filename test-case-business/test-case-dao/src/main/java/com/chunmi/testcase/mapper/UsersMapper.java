@@ -65,7 +65,7 @@ public interface UsersMapper {
      * @param @return
      * @return Users
      */
-	Users selectVoteUsersByName(@Param("userName")String userName);
+	Users selectUserByName(@Param("userName")String userName);
 
 	/**
 	 * 

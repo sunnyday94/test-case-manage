@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.chunmi.testcase.annotation.Loggable;
 import com.chunmi.testcase.model.po.Users;
 import com.chunmi.testcase.model.vo.UsersVo;
 import com.chunmi.testcase.service.UsersService;
@@ -92,7 +94,7 @@ public class UsersController {
 			model.addAttribute("error", "The password for the two input is inconsistent");
 			return "register";
 		}
-		Users user = usersService.selectVoteUsersByName(usersVo.getUserName());
+		Users user = usersService.selectUserByName(usersVo.getUserName());
 		if(user!=null) {
 			model.addAttribute("error","The user already exists");
 			return "register";
@@ -124,7 +126,7 @@ public class UsersController {
 	public String checkLogin(Users user,Model model,HttpServletRequest request) {
 		String userName = user.getUserName();
 		String password = user.getPassword();
-		Users u = usersService.selectVoteUsersByName(userName);
+		Users u = usersService.selectUserByName(userName);
 		if(u==null) {
 			model.addAttribute("error", "User does not exist, please register first");  //用户不存在
 		}else {
@@ -153,6 +155,7 @@ public class UsersController {
 	 * @param @return
 	 * @return String
 	 */
+	@Loggable(logDescription="进入首页")
 	@GetMapping(value="/dashboard")
 	public String dashboard(Model model,HttpServletRequest request) {
 		model.addAttribute(Constant.LOGIN_MANAGER,request.getSession().getAttribute(Constant.LOGIN_MANAGER));
@@ -169,6 +172,7 @@ public class UsersController {
 	 * @param @return
 	 * @return String
 	 */
+	@Loggable(logDescription="用户退出")
 	@GetMapping(value="/signOut")
 	public String signOut(HttpServletRequest request) {
 		request.getSession().removeAttribute(Constant.LOGIN_MANAGER);
@@ -190,6 +194,7 @@ public class UsersController {
 	 * @param @return
 	 * @return String
 	 */
+	@Loggable(logDescription="进入用户列表")
 	@GetMapping(value="/userList_{pageCurrent}_{pageSize}_{pageCount}")
 	public String goToUserList(HttpServletRequest request,Model model,@PathVariable("pageCurrent")Integer pageCurrent,
 			@PathVariable("pageSize")Integer pageSize,@PathVariable("pageCount")Integer pageCount,
@@ -221,6 +226,7 @@ public class UsersController {
 	 * @param @return
 	 * @return Integer
 	 */
+	@Loggable(logDescription="更新用户状态")
 	@PostMapping(value="/updateUserStatus")
 	@ResponseBody
 	public Integer updateUserStatus(Users user) {

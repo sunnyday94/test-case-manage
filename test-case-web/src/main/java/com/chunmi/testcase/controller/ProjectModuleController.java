@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.chunmi.testcase.annotation.Loggable;
 import com.chunmi.testcase.model.po.ProjectModule;
 import com.chunmi.testcase.service.ProjectModuleService;
 import com.chunmi.testcase.utils.Constant;
@@ -46,7 +47,7 @@ public class ProjectModuleController {
 
 	/**
 	 * 
-	 * @description: <p class="detail"></p>
+	 * @description: <p class="detail">查询项目模块列表</p>
 	 * @author: <a href="mailto:sunny@chunmi.com ">sunny</a>
 	 * @date: 2018年4月4日-上午10:52:16
 	 * @param @param request
@@ -58,6 +59,7 @@ public class ProjectModuleController {
 	 * @param @return
 	 * @return String
 	 */
+	@Loggable(logDescription="查询项目模块列表")
 	@GetMapping(value="/projectModuleList_{pageCurrent}_{pageSize}_{pageCount}")
 	public String projectModuleList(HttpServletRequest request,Model model,@PathVariable("pageCurrent") Integer pageCurrent,
 			@PathVariable("pageSize") Integer pageSize,@PathVariable("pageCount")Integer pageCount,ProjectModule projectModule) {
@@ -87,6 +89,7 @@ public class ProjectModuleController {
 	 * @param @return
 	 * @return Response
 	 */
+	@Loggable(logDescription="添加项目模块")
 	@PostMapping(value="/addProjectModule")
 	@ResponseBody
 	public Response addProjectModule(ProjectModule projectModule) {
@@ -111,6 +114,7 @@ public class ProjectModuleController {
 	 * @param @return
 	 * @return Integer
 	 */
+	@Loggable(logDescription="删除项目模块")
 	@PostMapping(value="/delModule")
 	@ResponseBody
 	public Integer delModule(ProjectModule projectModule) {

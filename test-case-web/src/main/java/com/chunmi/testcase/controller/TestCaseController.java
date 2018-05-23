@@ -31,6 +31,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.chunmi.testcase.annotation.Loggable;
 import com.chunmi.testcase.model.po.ActualResult;
 import com.chunmi.testcase.model.po.CaseDetail;
 import com.chunmi.testcase.model.vo.CaseDetailVo;
@@ -74,6 +75,7 @@ public class TestCaseController {
 	 * @param @return
 	 * @return String
 	 */
+	@Loggable(logDescription="查询测试用例列表")
 	@GetMapping(value="/testCaseList_{pageCurrent}_{pageSize}_{pageCount}")
 	public String testCaseList(HttpServletRequest request,Model model,@PathVariable("pageCurrent") Integer pageCurrent,
 			@PathVariable("pageSize") Integer pageSize,@PathVariable("pageCount") Integer pageCount,CaseDetail testCase) {
@@ -112,6 +114,7 @@ public class TestCaseController {
 	 * @param @return
 	 * @return Response
 	 */
+	@Loggable(logDescription="添加测试用例")
 	@PostMapping(value="/addTestCase")
 	@ResponseBody
 	public Response addTestCase(HttpServletRequest request,CaseDetail testCase) {
@@ -135,6 +138,7 @@ public class TestCaseController {
 	 * @param @return
 	 * @return CaseDetail
 	 */
+	@Loggable(logDescription="查询测试用例详情")
 	@GetMapping(value="selectTestCaseDetailById/{id}")
 	@ResponseBody
 	public CaseDetailVo selectTestCaseDetailById(@PathVariable("id") Long id) {
@@ -156,6 +160,7 @@ public class TestCaseController {
 	 * @param @return
 	 * @return Response
 	 */
+	@Loggable(logDescription="删除测试用例")
 	@PostMapping(value="/delTestCaseDetailById")
 	@ResponseBody
 	public Response delTestCaseDetailById(CaseDetail caseDetail) {
@@ -178,6 +183,7 @@ public class TestCaseController {
 	 * @param @return
 	 * @return Response
 	 */
+	@Loggable(logDescription="更新测试用例")
 	@PostMapping(value="/updateTestCase")
 	@ResponseBody
 	public Response updateTestCase(CaseDetail caseDetail) {
@@ -200,6 +206,7 @@ public class TestCaseController {
 	 * @param @param response
 	 * @return void
 	 */
+	@Loggable(logDescription="按条件导出测试用例")
 	@PostMapping(value="/exportTestCase")
 	public void exportTestCase(CaseDetail caseDetail,HttpServletResponse response) {
 		PageBean<CaseDetailVo> pb = null;
@@ -223,6 +230,7 @@ public class TestCaseController {
 	 * @param @param response
 	 * @return void
 	 */
+	@Loggable(logDescription="按id导出测试用例")
 	@GetMapping(value="/exportTestCaseById/{id}")
 	public void exportTestCaseById(@PathVariable("id") Long id,HttpServletResponse response) {
 		try {

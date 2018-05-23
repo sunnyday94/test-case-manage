@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.chunmi.testcase.annotation.Loggable;
 import com.chunmi.testcase.model.po.Project;
 import com.chunmi.testcase.service.ProjectService;
 import com.chunmi.testcase.utils.Constant;
@@ -57,6 +59,7 @@ public class ProjectController {
 	 * @param @return
 	 * @return String
 	 */
+	@Loggable(logDescription="查询项目列表")
 	@GetMapping(value="/projectList_{pageCurrent}_{pageSize}_{pageCount}")
 	public String goToProjectList(HttpServletRequest request,Model model,@PathVariable("pageCurrent")Integer pageCurrent,
 			@PathVariable("pageSize")Integer pageSize,@PathVariable("pageCount")Integer pageCount,
@@ -88,6 +91,7 @@ public class ProjectController {
 	 * @param @return
 	 * @return Response
 	 */
+	@Loggable(logDescription="添加项目")
 	@PostMapping(value="/addProject")
 	@ResponseBody
 	public Response addProject(Project project) {
@@ -111,6 +115,7 @@ public class ProjectController {
 	 * @param @return
 	 * @return Integer
 	 */
+	@Loggable(logDescription="删除项目")
 	@PostMapping(value="/delProjectById")
 	@ResponseBody
 	public Integer delProjectById(Project project) {

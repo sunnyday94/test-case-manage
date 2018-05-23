@@ -11,34 +11,23 @@
  * it only in accordance with the terms of the license agreement
  * you entered into with CHUNMI.
  *
- * File Created @ [2018年4月2日, 上午10:50:50 (CST)]
+ * File Created @ [2018年5月23日, 下午2:08:31 (CST)]
  */
 package com.chunmi.testcase.service;
 
+import com.chunmi.testcase.model.po.OperationLog;
 import com.chunmi.testcase.model.po.Users;
 import com.chunmi.testcase.utils.PageBean;
 
-public interface UsersService {
+public interface OperationLogService {
 
-	Users selectUserByName(String userName);
+	Integer insertOperationLog(OperationLog operationLog);
 
-	Integer addUser(Users user);
+	PageBean<OperationLog> selectOperationLogListByCondition(Users user, Integer pageCurrent, Integer pageSize,
+			Integer pageCount);
 
-	/**
-	 * 
-	 * @description: <p class="detail">查询用户列表</p>
-	 * @author: <a href="mailto:sunny@chunmi.com ">sunny</a>
-	 * @date: 2018年4月2日-下午2:36:40
-	 * @param @param user
-	 * @param @param pageCurrent
-	 * @param @param pageSize
-	 * @param @param pageCount
-	 * @param @return
-	 * @return PageBean<User>
-	 */
-	PageBean<Users> selectUserListByCondition(Users user, Integer pageCurrent, Integer pageSize, Integer pageCount);
+	Integer delOperationLog(OperationLog operationLog);
 
-
-	Integer updateUserStatus(Users user);
+	OperationLog selectOperationLogDetailById(Long id);
 
 }

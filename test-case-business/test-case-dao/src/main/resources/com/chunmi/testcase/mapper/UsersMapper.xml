@@ -135,7 +135,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   
-  <select id="selectVoteUsersByName" resultMap="BaseResultMap">
+  <select id="selectUserByName" resultMap="BaseResultMap">
   	select <include refid="Base_Column_List"/> from cm_user where user_name = #{userName,jdbcType=VARCHAR}
   </select>
   

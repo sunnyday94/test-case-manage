@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.chunmi.testcase.annotation.Loggable;
 import com.chunmi.testcase.service.TemporaryService;
 import com.chunmi.testcase.utils.Response;
 
@@ -22,10 +23,19 @@ public class TemporaryController {
 	@Autowired
 	private TemporaryService temporaryService;
 
+
 	/**
-	 * 导入测试用例
-	 * @return
+	 * 
+	 * @description: <p class="detail">导入测试用例</p>
+	 * @author: <a href="mailto:sunny@chunmi.com ">sunny</a>
+	 * @date: 2018年5月23日-下午1:56:06
+	 * @param @param file
+	 * @param @param projectId
+	 * @param @param versionId
+	 * @param @return
+	 * @return Response
 	 */
+	@Loggable(logDescription="导入测试用例")
 	@PostMapping(value="/importTestcase")
 	@ResponseBody
 	public Response importProjectName(@RequestParam("file")MultipartFile file,
