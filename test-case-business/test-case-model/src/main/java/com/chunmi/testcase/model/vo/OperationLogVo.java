@@ -32,8 +32,4 @@ public class OperationLogVo extends OperationLog{
 	 */
 	private String userName;
 	
-	/**
-	 * 操作时间字符串(用于模板显示)
-	 */
-	private String opreationTimeStr;
 }

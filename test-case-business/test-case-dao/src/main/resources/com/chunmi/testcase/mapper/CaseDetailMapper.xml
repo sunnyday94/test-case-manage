@@ -407,7 +407,7 @@
 	<foreach collection="caseDetailList" item="caseDetail" index="index" separator=",">
 		(#{caseDetail.caseName},#{caseDetail.caseTitle},#{caseDetail.priority},#{caseDetail.testMode},#{caseDetail.moduleId},
 		#{caseDetail.testConditions},#{caseDetail.detailSteps},#{caseDetail.expectedResult},#{caseDetail.actualResultId},#{caseDetail.bugId},
-		#{caseDetail.remarks},1,1,NOW(),NULL,'0')
+		#{caseDetail.remarks},#{caseDetail.projectId},#{caseDetail.versionId},NOW(),NULL,'0')
 	</foreach>
   </insert>
 </mapper>
