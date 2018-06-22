@@ -41,4 +41,6 @@ public interface UsersService {
 
 	Integer updateUserStatus(Users user);
 
+	Integer updateUserPassword(Users users);
+
 }

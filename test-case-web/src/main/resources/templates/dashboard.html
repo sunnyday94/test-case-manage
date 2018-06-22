@@ -24,6 +24,7 @@
             <div class="wrapper wrapper-content">
             	<h2><strong>欢迎进入测试用例管理系统</strong></h2>
             </div>
+            <div th:include="modifymanager :: modifymanager"></div>
         	<div class="footer" th:include="footer :: copyright"></div>
         </div>
     </div>
@@ -70,5 +71,9 @@
 
 	<!-- layerui -->
 	<script th:src="@{/js/layer/layer.js}"></script>
+	
+	<!-- modifymanager -->
+	<script th:src="@{/js/modifymanager.js}"></script>
+	
 </body>
 </html>

@@ -24,8 +24,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.chunmi.testcase.annotation.Loggable;
 import com.chunmi.testcase.model.po.Users;
 import com.chunmi.testcase.model.vo.UsersVo;
@@ -231,5 +231,57 @@ public class UsersController {
 	@ResponseBody
 	public Integer updateUserStatus(Users user) {
 		return usersService.updateUserStatus(user);
+	}
+	
+	
+	/**
+	 * 
+	 * @description: <p class="detail">检查原密码</p>
+	 * @author: <a href="mailto:sunny@chunmi.com ">sunny</a>
+	 * @date: 2018年6月22日-下午5:16:50
+	 * @param @param user
+	 * @param @return
+	 * @return Integer
+	 */
+	@PostMapping(value="/checkPassword")
+	@ResponseBody
+	public String checkOrginPassword(@RequestParam("password")String password,HttpServletRequest req){
+		Users users = (Users) req.getSession().getAttribute(Constant.LOGIN_MANAGER);
+		if(users==null){
+			return "0";
+		}else{
+			if(users.getPassword().equals(MD5Util.MD5Encryption(password).toLowerCase())){
+				return"1";
+			}else{
+				return "0";
+			}
+		}
+	} 
+	
+	
+	/**
+	 * 
+	 * @description: <p class="detail">修改用户密码</p>
+	 * @author: <a href="mailto:sunny@chunmi.com ">sunny</a>
+	 * @date: 2018年6月22日-下午5:23:20
+	 * @param @param user
+	 * @param @return
+	 * @return Integer
+	 */
+	@PostMapping(value="/updateUserPassword")
+	@ResponseBody
+	public Integer updateManager(@RequestParam("password")String password, HttpServletRequest req){
+		Integer result = 0;
+		Users users = (Users) req.getSession().getAttribute(Constant.LOGIN_MANAGER);
+		if(users == null){
+			return result;
+		}
+		users.setPassword(password);
+		try {
+			result = usersService.updateUserPassword(users);
+		} catch (Exception e) {
+			log.error("用户密码更新失败:{}",e.getMessage());
+		}
+		return result;
 	}
 }

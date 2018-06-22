@@ -3,7 +3,7 @@
 
 <head>
 <meta charset="UTF-8"/>
-<title>Insert title here</title>
+<title>导航列表</title>
 </head>
 <body>
 	<nav class="navbar-default navbar-static-side" role="navigation" th:fragment="navigation">
@@ -17,7 +17,7 @@
                     	<a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <span class="clear"> 
                             	<span class="block m-t-xs">
-                            		<strong class="font-bold" th:text="${loginManager.userName}"></strong>
+                            		<strong class="font-bold" th:text="${loginManager.userName}" th:onclick="'javascript:modifyManager();'"></strong>
                              	</span> 
                              </span>
                      	</a>

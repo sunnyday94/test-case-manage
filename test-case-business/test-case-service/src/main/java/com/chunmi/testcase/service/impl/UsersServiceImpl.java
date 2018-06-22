@@ -73,4 +73,9 @@ public class UsersServiceImpl implements UsersService {
 		return usersMapper.updateUserStatus(user);
 	}
 
+	@Override
+	public Integer updateUserPassword(Users users) {
+		return usersMapper.updateByPrimaryKeySelective(users);
+	}
+
 }

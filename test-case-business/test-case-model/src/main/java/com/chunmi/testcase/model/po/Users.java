@@ -8,10 +8,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @SuppressWarnings("serial")
 @JsonInclude(Include.NON_NULL)
 @Data
+@NoArgsConstructor
 public class Users implements Serializable{
     
 	/**

@@ -106,7 +106,7 @@
         user_name = #{userName,jdbcType=VARCHAR},
       </if>
       <if test="password != null">
-        password = #{password,jdbcType=VARCHAR},
+        password =  MD5(#{password,jdbcType=VARCHAR}),
       </if>
       <if test="roleId != null">
         role_id = #{roleId,jdbcType=BIGINT},
@@ -128,7 +128,7 @@
     -->
     update cm_user
     set user_name = #{userName,jdbcType=VARCHAR},
-      password = #{password,jdbcType=VARCHAR},
+      password =  MD5(#{password,jdbcType=VARCHAR}),
       role_id = #{roleId,jdbcType=BIGINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       is_disabled = #{isDisabled,jdbcType=CHAR}

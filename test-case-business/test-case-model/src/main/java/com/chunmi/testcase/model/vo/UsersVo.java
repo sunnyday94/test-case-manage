@@ -18,10 +18,12 @@ package com.chunmi.testcase.model.vo;
 import com.chunmi.testcase.model.po.Users;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @SuppressWarnings("serial")
 @Data
-@EqualsAndHashCode(callSuper=false)
+@EqualsAndHashCode(callSuper=true)
+@NoArgsConstructor
 public class UsersVo extends Users{
 
 	/**

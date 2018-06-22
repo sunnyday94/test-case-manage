@@ -22,10 +22,10 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Target(ElementType.METHOD)
-@Retention(RetentionPolicy.RUNTIME)
-@Documented
-@Inherited
+@Target(ElementType.METHOD)  //说明了Annotation所修饰的对象范围
+@Retention(RetentionPolicy.RUNTIME) //表示需要在什么级别保存该注释信息，用于描述注解的生命周期
+@Documented //Documented是一个标记注解，没有成员
+@Inherited //一个标记注解，@Inherited阐述了某个被标注的类型是被继承的
 public @interface Loggable {
 	
 	public String logDescription();

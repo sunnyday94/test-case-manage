@@ -19,6 +19,7 @@
 <body>
     <div id="wrapper">
 		<nav class="navbar-default navbar-static-side" role="navigation" th:include="nav :: navigation"></nav>
+		<div th:include="modifymanager :: modifymanager"></div>
 		<div id="page-wrapper" class="gray-bg">
         	<div class="border-bottom" th:include="header :: headerTop"></div>
       		<div class="row wrapper border-bottom white-bg page-heading" th:fragment="headerNav">
@@ -152,6 +153,9 @@
 	<script th:src="@{/js/layer/layer.js}"></script> 
 	
 	<script th:src="@{js/jquery.form.min.js}"></script>
+	
+	<!-- modifymanager -->
+	<script th:src="@{/js/modifymanager.js}"></script>
     
     <script th:inline="javascript">
     /*<![CDATA[*/

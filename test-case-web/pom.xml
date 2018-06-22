@@ -41,12 +41,11 @@
 					<target>${java.version}</target>
 				</configuration>
 			</plugin>
-           <plugin>
+           	<plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <mainClass>${start-class}</mainClass>
-                    <layout>WAR</layout>
                 </configuration>
                 <executions>
                     <execution>

@@ -16,11 +16,14 @@
 package com.chunmi.testcase;
 
 import org.mybatis.spring.annotation.MapperScan;
+import org.springframework.boot.Banner.Mode;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+
 import lombok.extern.slf4j.Slf4j;
 
 @SpringBootApplication(scanBasePackages= {"com.chunmi.testcase"})
@@ -30,17 +33,12 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TestCaseApplication  extends SpringBootServletInitializer {
 	
-		@Override
-		protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-			return configureApplication(builder);
-		}	
-	
 		public static void main(String[] args) throws Exception {
 			log.debug("application start .....");
 			configureApplication(new SpringApplicationBuilder()).run(args);
 		}
 
 		private static SpringApplicationBuilder configureApplication(SpringApplicationBuilder builder) {
-			return builder.sources(TestCaseApplication.class);
+			return builder.sources(TestCaseApplication.class).bannerMode(Mode.OFF);
 		}
 }
