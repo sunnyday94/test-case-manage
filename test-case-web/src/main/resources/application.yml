@@ -7,9 +7,9 @@ server:
 # 配置数据源
 spring:
   datasource:
-    url: jdbc:mysql://10.0.10.100:3306/test_case_manage?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
+    url: jdbc:mysql://39.108.239.226:3306/test_case_manage?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
     username: root
-    password: chunmi456
+    password: root
     driver-class-name: com.mysql.jdbc.Driver
     tomcat:
       max-active: 800
@@ -38,4 +38,9 @@ mybatis:
   mapper-locations: classpath:com/chunmi/testcase/mapper/*.xml
   type-aliases-package: com.chunmi.testcase.model
   config-location: classpath:/mybatis-config.xml
+  
+#swagger2
+swagger2: 
+  package: com.chunmi.testcase.controller
+  
   

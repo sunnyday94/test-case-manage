@@ -19,10 +19,8 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +28,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.chunmi.testcase.annotation.Loggable;
 import com.chunmi.testcase.model.po.ActualResult;
 import com.chunmi.testcase.model.po.CaseDetail;
@@ -44,9 +41,12 @@ import com.chunmi.testcase.utils.PageBean;
 import com.chunmi.testcase.utils.PageUtil;
 import com.chunmi.testcase.utils.Response;
 import com.fasterxml.jackson.databind.Module;
-
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
+@Api(tags= {"测试用例接口"},value="测试用例Controller")
 @Controller
 @Slf4j
 public class TestCaseController {
@@ -138,6 +138,8 @@ public class TestCaseController {
 	 * @param @return
 	 * @return CaseDetail
 	 */
+	@ApiOperation(value="查询测试用例详情",notes="查询测试用例详情")
+	@ApiImplicitParam(name="id",value="测试用例id",dataType="long",paramType="query")
 	@Loggable(logDescription="查询测试用例详情")
 	@GetMapping(value="selectTestCaseDetailById/{id}")
 	@ResponseBody
