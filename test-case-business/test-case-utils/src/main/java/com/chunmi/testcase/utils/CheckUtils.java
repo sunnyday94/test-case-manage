@@ -1,9 +1,8 @@
-package com.chunmi.testcase.utils;//package com.vphoto.mall.common;
+package com.chunmi.testcase.utils;
 
 import com.chunmi.testcase.utils.exception.ResultCodeEnum;
 import com.chunmi.testcase.utils.exception.VPhotoException;
 import org.springframework.beans.BeanUtils;
-
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -144,9 +143,8 @@ public class CheckUtils extends BaseUtils {
 		}
 		//==只有同时为空的时候才抛异常
 		if(!flg) {
-			sb.setCharAt(sb.length()-1, '，');
+			sb.setCharAt(sb.length()-1,'，');
 			throw new VPhotoException(ResultCodeEnum.参数异常,sb.toString()+"不能同时为空");
-//			throw new VPhotoException(VPhotoExceType.NULL,sb.toString()+"不能同时为空");
 		}
 	}
 
@@ -175,7 +173,6 @@ public class CheckUtils extends BaseUtils {
 	public static void checkNum(String num,String field) {
 		if(!isNumber(num)) {
 			throw new VPhotoException(ResultCodeEnum.参数异常,"属性["+field+"]值为["+num+"]，为非数字");
-//			throw new VPhotoException(VPhotoExceType.IVLD_NUM,"属性["+field+"]值为["+num+"]，为非数字");
 		}
 	}
 	/**
@@ -186,7 +183,6 @@ public class CheckUtils extends BaseUtils {
 	public static void checkNums(Object obj,String fields) {
 		if(isNull(obj)) {
 			throw new VPhotoException(ResultCodeEnum.参数异常,"属性[obj]为空");
-//			throw new VPhotoException(VPhotoExceType.NULL,"属性[obj]为空");
 		}
 		if(isNull(fields))return;
 		Map<String,String> fieldNames = getFieldsName(fields);
@@ -199,7 +195,6 @@ public class CheckUtils extends BaseUtils {
 		}
 		if(sb.length()<=0)return;
 		throw new VPhotoException(ResultCodeEnum.参数异常,sb.toString());
-//		throw new VPhotoException(VPhotoExceType.IVLD_NUM,sb.toString());
 	}
 
 	/**
@@ -210,7 +205,6 @@ public class CheckUtils extends BaseUtils {
 	public static void checkDecml(String num,String field) {
 		if(!isDecimal(num)) {
 			throw new VPhotoException(ResultCodeEnum.参数异常,"属性["+field+"]值为["+num+"]，为非数字");
-//			throw new VPhotoException(VPhotoExceType.IVLD_DECML,"属性["+field+"]值为["+num+"]，为非数字");
 		}
 	}
 
@@ -222,7 +216,6 @@ public class CheckUtils extends BaseUtils {
 	public static void checkDecmls(Object obj,String fields) {
 		if(isNull(obj)) {
 			throw new VPhotoException(ResultCodeEnum.参数异常,"属性[obj]为空");
-//			throw new VPhotoException(VPhotoExceType.NULL,"属性[obj]为空");
 		}
 		if(isNull(fields))return;
 		Map<String,String> fieldNames = getFieldsName(fields);
@@ -235,7 +228,6 @@ public class CheckUtils extends BaseUtils {
 		}
 		if(sb.length()<=0)return;
 		throw new VPhotoException(ResultCodeEnum.参数异常,sb.toString());
-//		throw new VPhotoException(VPhotoExceType.IVLD_DECML,sb.toString());
 	}
 
 	/**
@@ -246,7 +238,6 @@ public class CheckUtils extends BaseUtils {
 	public static void checkDate(String date,String field) {
 		if(!DateUtils.isDateString(date)) {
 			throw new VPhotoException(ResultCodeEnum.参数异常,"属性["+field+"]值为["+date+"]，为非日期格式，默认格式为[yyyy-MM-dd、yyyy-MM-dd HH:mm:ss]");
-//				throw new VPhotoException(VPhotoExceType.IVLD_DATE,"属性["+field+"]值为["+date+"]，为非日期格式，默认格式为[yyyy-MM-dd、yyyy-MM-dd HH:mm:ss]");
 		}
 	}
 
@@ -258,7 +249,6 @@ public class CheckUtils extends BaseUtils {
 	public static void checkDates(Object obj,String fields) {
 		if(isNull(obj)) {
 			throw new VPhotoException(ResultCodeEnum.参数异常,"属性[obj]为空");
-//			throw new VPhotoException(VPhotoExceType.NULL,"属性[obj]为空");
 		}
 		if(isNull(fields))return;
 		Map<String,String> fieldNames = getFieldsName(fields);
@@ -272,7 +262,6 @@ public class CheckUtils extends BaseUtils {
 		if(sb.length()<=0)return;
 		sb.append("默认格式为[yyyy-MM-dd、yyyy-MM-dd HH:mm:ss]");
 		throw new VPhotoException(ResultCodeEnum.参数异常,sb.toString());
-//		throw new VPhotoException(VPhotoExceType.IVLD_DATE,sb.toString());
 	}
 
 	/**
@@ -284,7 +273,6 @@ public class CheckUtils extends BaseUtils {
 	public static void checkDate(String date,String field,String formatString) {
 		if(DateUtils.isDateString(date,formatString)) {
 			throw new VPhotoException(ResultCodeEnum.参数异常,"属性["+field+"]值为["+date+"]，为非日期格式，指定格式为["+formatString+"]");
-//			throw new VPhotoException(VPhotoExceType.IVLD_DATE,"属性["+field+"]值为["+date+"]，为非日期格式，指定格式为["+formatString+"]");
 		}
 	}
 
@@ -296,7 +284,6 @@ public class CheckUtils extends BaseUtils {
 	public static void checkDates(Object obj,String fields,String formatString) {
 		if(isNull(obj)) {
 			throw new VPhotoException(ResultCodeEnum.参数异常,"属性[obj]为空");
-//			throw new VPhotoException(VPhotoExceType.NULL,"属性[obj]为空");
 		}
 		if(isNull(fields))return;
 		Map<String,String> fieldNames = getFieldsName(fields);
@@ -310,7 +297,6 @@ public class CheckUtils extends BaseUtils {
 		if(sb.length()<=0)return;
 		sb.append("指定格式为["+formatString+"]");
 		throw new VPhotoException(ResultCodeEnum.参数异常,sb.toString());
-//		throw new VPhotoException(VPhotoExceType.IVLD_DATE,sb.toString());
 	}
 
 	/**
@@ -328,13 +314,11 @@ public class CheckUtils extends BaseUtils {
 		if(min>0) {
 			if(len<min) {
 				throw new VPhotoException(ResultCodeEnum.参数异常,"属性["+field+"]值为["+str+"]，长度短于最小长度["+min+"]");
-//				throw new VPhotoException(VPhotoExceType.TOO_SHORT,"属性["+field+"]值为["+str+"]，长度短于最小长度["+min+"]");
 			}
 		}
 		if(max>0) {
 			if(len>max) {
 				throw new VPhotoException(ResultCodeEnum.参数异常,"属性["+field+"]值为["+str+"]，长度大于最大长度["+max+"]");
-//				throw new VPhotoException(VPhotoExceType.TOO_LONG,"属性["+field+"]值为["+str+"]，长度大于最大长度["+max+"]");
 			}
 		}
 	}
@@ -348,7 +332,6 @@ public class CheckUtils extends BaseUtils {
 	public static void checkLengths(Object obj,String fields) {
 		if(isNull(obj)) {
 			throw new VPhotoException(ResultCodeEnum.参数异常,"属性[obj]为空");
-//			throw new VPhotoException(VPhotoExceType.NULL,"属性[obj]为空");
 		}
 		if(isNull(fields))return;
 		String newFields = "";
@@ -387,13 +370,10 @@ public class CheckUtils extends BaseUtils {
 		}
 		if(sbShort.length()<=0&&sbLong.length()>0) {
 			throw new VPhotoException(ResultCodeEnum.参数异常,sbLong.toString());
-//			throw new VPhotoException(VPhotoExceType.TOO_LONG,sbLong.toString());
 		}else if(sbShort.length()>0&&sbLong.length()<=0) {
 			throw new VPhotoException(ResultCodeEnum.参数异常,sbLong.toString());
-//			throw new VPhotoException(VPhotoExceType.TOO_SHORT,sbShort.toString());
 		}else if(sbShort.length()>0&&sbLong.length()>0) {//如果都有 按照小于的类型输出
 			throw new VPhotoException(ResultCodeEnum.参数异常,sbShort.toString()+sbLong.toString());
-//			throw new VPhotoException(VPhotoExceType.TOO_SHORT,sbShort.toString()+sbLong.toString());
 		}else {
 			//没有异常
 		}
@@ -463,7 +443,6 @@ public class CheckUtils extends BaseUtils {
 		Pattern p = Pattern.compile(REGEX_MPHONE);
 		if(!p.matcher(phoneNumber).matches()) {
 			throw new VPhotoException(ResultCodeEnum.参数异常,"属性["+field+"]值为["+phoneNumber+"],不是手机号");
-//			throw new VPhotoException(VPhotoExceType.IVLD_MPHONE,"属性["+field+"]值为["+phoneNumber+"],不是手机号");
 		}
 		return true;
 	}
@@ -479,7 +458,6 @@ public class CheckUtils extends BaseUtils {
 		Pattern p = Pattern.compile(REGEX_TPHONE);
 		if(!p.matcher(phoneNumber).matches()) {
 			throw new VPhotoException(ResultCodeEnum.参数异常,"属性["+field+"]值为["+phoneNumber+"],不是座机号");
-//			throw new VPhotoException(VPhotoExceType.IVLD_TPHONE,"属性["+field+"]值为["+phoneNumber+"],不是座机号");
 		}
 		return true;
 	}
@@ -495,13 +473,8 @@ public class CheckUtils extends BaseUtils {
 		Pattern p = Pattern.compile(REGEX_EMAIL);
 		if(!p.matcher(email).matches()) {
 			throw new VPhotoException(ResultCodeEnum.参数异常,"属性["+field+"]值为["+email+"],不是手机号");
-//			throw new VPhotoException(VPhotoExceType.IVLD_EMAIL,"属性["+field+"]值为["+email+"],不是手机号");
 		}
 		return true;
 	}
-
-
-
-
 
 }
