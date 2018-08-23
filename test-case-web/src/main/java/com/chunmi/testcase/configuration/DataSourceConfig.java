@@ -61,7 +61,7 @@ public class DataSourceConfig {
 
 	        sqlSessionFactoryBean.setMapperLocations(resolver.getResources(Objects.requireNonNull(env.getProperty("mybatis-plus.mapper-locations"))));
 	        sqlSessionFactoryBean.setTypeAliasesPackage(env.getProperty("mybatis-plus.type-aliases-package"));
-	        //sqlSessionFactoryBean.setConfigLocation(resolver.getResource(env.getProperty("mybatis-plus.config-location")));
+	        sqlSessionFactoryBean.setConfigLocation(resolver.getResource(env.getProperty("mybatis-plus.config-location")));
 
 	        return sqlSessionFactoryBean.getObject();
 	    }

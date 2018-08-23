@@ -6,6 +6,11 @@ server:
   
 # 配置数据源
 spring:
+  application:
+    name: testcase
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
   datasource:
     url: jdbc:mysql://39.108.239.226:3306/test_case_manage?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
     username: root
@@ -31,12 +36,12 @@ spring:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
-      
+
 #mybatis
 mybatis-plus:
   mapper-locations: classpath:com/chunmi/testcase/mapper/**/*.xml
   #扫描配置文件路径
-  #config-location: classpath:/mybatis-config.xml
+  config-location: classpath:mybatis-config.xml
   #实体扫描，多个package用逗号或者分号分隔
   typeAliasesPackage: com.chunmi.testcase.model
   #  typeEnumsPackage: com.baomidou.springboot.entity.enums
@@ -65,7 +70,7 @@ mybatis-plus:
     cache-enabled: false #配置的缓存的全局开关
     lazyLoadingEnabled: true #延时加载的开关
     multipleResultSetsEnabled: true #开启的话，延时加载一个属性时会加载该对象全部属性，否则按需加载属性
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #打印sql语句,调试用
+
 
 #swagger2
 swagger2: 
