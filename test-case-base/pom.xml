@@ -236,8 +236,15 @@
 			    <groupId>org.apache.poi</groupId>
 			    <artifactId>poi-ooxml</artifactId>
 			</dependency>
-			
-	        <!-- httpclient -->
+
+			<dependency>
+				<groupId>jexcelapi</groupId>
+				<artifactId>jxl</artifactId>
+				<version>2.6</version>
+			</dependency>
+
+
+		<!-- httpclient -->
 	        <dependency>
 	            <groupId>org.apache.httpcomponents</groupId>
 	            <artifactId>httpcore</artifactId>

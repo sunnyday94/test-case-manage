@@ -84,7 +84,6 @@ public class DateUtils {
 
 	public static Date getNow(){
 		return new Date();
-//		return System.currentTimeMillis();
 	}
 
 	public static boolean isDateString(String str, String formatString) {
