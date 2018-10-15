@@ -2,7 +2,7 @@
  * This class was created by sunny. It's distributed as
  * part of the test-case-web Mod.
  *
- * ç‰ˆæƒæ‰€æœ‰(C) ä¸Šæµ·çº¯ç±³ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2023
+ * °æÈ¨ËùÓĞ(C) ÉÏº£´¿Ã×µç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2023
  * Copyright 2014-2023 CHUNMI TECHNOLOGY CO..
  *
  * This software is the confidential and proprietary information of
@@ -11,7 +11,7 @@
  * it only in accordance with the terms of the license agreement
  * you entered into with CHUNMI.
  *
- * File Created @ [2018å¹´5æœˆ23æ—¥, ä¸‹åˆ4:27:02 (CST)]
+ * File Created @ [2018Äê5ÔÂ23ÈÕ, ÏÂÎç4:27:02 (CST)]
  */
 package com.chunmi.testcase.controller;
 
@@ -47,9 +47,9 @@ public class OperationLogController {
 	
 	/**
 	 * 
-	 * @description: <p class="detail">æŸ¥è¯¢æ—¥å¿—åˆ—è¡¨</p>
+	 * @description: <p class="detail">²éÑ¯ÈÕÖ¾ÁĞ±í</p>
 	 * @author: <a href="mailto:sunny@chunmi.com ">sunny</a>
-	 * @date: 2018å¹´5æœˆ23æ—¥-ä¸‹åˆ5:06:19
+	 * @date: 2018Äê5ÔÂ23ÈÕ-ÏÂÎç5:06:19
 	 * @param @param request
 	 * @param @param model
 	 * @param @param pageCurrent
@@ -65,15 +65,15 @@ public class OperationLogController {
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		map.put(Constant.LOGIN_MANAGER, request.getSession().getAttribute(Constant.LOGIN_MANAGER));
 		try {
-			PageBean<OperationLog> pb = operationLogService.selectOperationLogListByCondition(user,pageCurrent,pageSize,pageCount); //æŸ¥è¯¢æ—¥å¿—åˆ—è¡¨
+			PageBean<OperationLog> pb = operationLogService.selectOperationLogListByCondition(user,pageCurrent,pageSize,pageCount); //²éÑ¯ÈÕÖ¾ÁĞ±í
 			map.put("pb",pb);
-			//ç”Ÿæˆæ–°çš„æŸ¥è¯¢url
+			//Éú³ÉĞÂµÄ²éÑ¯url
 			String newUrl = "operationLogList_{pageCurrent}_{pageSize}_{pageCount}?userName="+user.getUserName();
-			//è¿”å›åˆ†é¡µå†…å®¹
+			//·µ»Ø·ÖÒ³ÄÚÈİ
 			String pageHTML = PageUtil.getPageContent(newUrl,pb.getPageCurrent(), pb.getPageSize(), pb.getPageCount());
 			map.put("pageHTML", pageHTML);
 		} catch (Exception e) {
-			log.error("æŸ¥è¯¢æ—¥å¿—åˆ—è¡¨å¤±è´¥:{}",e);
+			log.error("²éÑ¯ÈÕÖ¾ÁĞ±íÊ§°Ü:{}",e);
 		}
 		model.addAllAttributes(map);
 		return "log/operationLogList";
@@ -81,9 +81,9 @@ public class OperationLogController {
 	
 	/**
 	 * 
-	 * @description: <p class="detail">åˆ é™¤æ—¥å¿—</p>
+	 * @description: <p class="detail">É¾³ıÈÕÖ¾</p>
 	 * @author: <a href="mailto:sunny@chunmi.com ">sunny</a>
-	 * @date: 2018å¹´5æœˆ23æ—¥-ä¸‹åˆ5:08:12
+	 * @date: 2018Äê5ÔÂ23ÈÕ-ÏÂÎç5:08:12
 	 * @param @param operationLog
 	 * @param @return
 	 * @return Integer
@@ -102,7 +102,7 @@ public class OperationLogController {
 		try {
 			operationLog = operationLogService.selectOperationLogDetailById(id);
 		} catch (Exception e) {
-			log.error("æŸ¥è¯¢æ—¥å¿—è¯¦æƒ…å‡ºé”™:{}",e.getMessage());
+			log.error("²éÑ¯ÈÕÖ¾ÏêÇé³ö´í:{}",e.getMessage());
 		}
 		return operationLog;
 	}

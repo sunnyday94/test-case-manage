@@ -119,11 +119,23 @@
 			
 			<!-- mybatis -->
 			<dependency>
+				<groupId>com.baomidou</groupId>
+				<artifactId>mybatis-plus</artifactId>
+				<version>2.3</version>
+			</dependency>
+			<dependency>
+				<groupId>com.baomidou</groupId>
+				<artifactId>mybatisplus-spring-boot-starter</artifactId>
+				<version>1.0.5</version>
+			</dependency>
+			<!--
+			<dependency>
 				<groupId>org.mybatis.spring.boot</groupId>
 				<artifactId>mybatis-spring-boot-starter</artifactId>
 				<version>${mybatis.spring.version}</version>
 			</dependency>
-			
+			-->
+
 			<!-- fileupload -->
 			<dependency>
 				<groupId>commons-fileupload</groupId>
@@ -157,6 +169,12 @@
 			<dependency>
 				<groupId>mysql</groupId>
 				<artifactId>mysql-connector-java</artifactId>
+				<exclusions>
+					<exclusion>
+						<artifactId>protobuf-java</artifactId>
+						<groupId>com.google.protobuf</groupId>
+					</exclusion>
+				</exclusions>
 			</dependency>
 	
 			<!-- appache common -->
@@ -170,7 +188,7 @@
 				<artifactId>commons-codec</artifactId>
 			</dependency>
 			
-			<!-- jackson -->
+			<!-- jackson-->
 			<dependency>
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-databind</artifactId>
@@ -185,6 +203,7 @@
 				<groupId>com.fasterxml.jackson.core</groupId>
 				<artifactId>jackson-annotations</artifactId>
 			</dependency>
+
 			
 			<!-- json -->
 			<dependency>

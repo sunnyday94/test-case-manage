@@ -3,13 +3,13 @@ package com.chunmi.testcase.utils;
 import java.util.List;
 
 public class PageBean<T> {
-	// 当前页列表数�?
+	// 当前页列表数
 	private List<T> list;
-	// 符合条件的记录�?�数
+	// 符合条件的记录条目数
 	private int rows;
-	// 总页�?
+	// 总页数
 	private int pageCount;
-	// 每页显示多少�?
+	// 每页显示多少条目
 	private int pageSize = 10;
 	// 当前页码
 	private int pageCurrent = 1;
@@ -19,15 +19,15 @@ public class PageBean<T> {
 	private int nextPageNo;
 	// 第一页码
 	private int firstPageNo = 1;
-	// �?后一页码
+	// 最后一页码
 	private int lastPageNo;
-	// �?始页�?
+	//初始页码
 	private int startNo = 1;
 	// 结束页码
 	private int endNo;
-	// 分页�?始的条数
+	// 分页开始的条数
 	private int startRowNum;
-	// 分页结束的条�?
+	// 分页结束的条数
 	private int endRowNum;
 	// 通用对象
 	private Object objectBean;
@@ -115,7 +115,7 @@ public class PageBean<T> {
 	public void setObjectBean(Object objectBean) {
 		this.objectBean = objectBean;
 	}
-	
-	
-	
+
+
+
 }

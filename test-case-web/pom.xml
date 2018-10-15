@@ -21,7 +21,7 @@
 		    <version>0.0.1-SNAPSHOT</version>
    		</dependency>
    		
-		<!-- mybatis -->
+		<!-- mybatis生成器 -->
 		<dependency>
 			<groupId>org.mybatis.generator</groupId>
 			<artifactId>mybatis-generator-core</artifactId>

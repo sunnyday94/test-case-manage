@@ -37,6 +37,6 @@ public class TestCaseApplication  extends SpringBootServletInitializer {
 		}
 
 		private static SpringApplicationBuilder configureApplication(SpringApplicationBuilder builder) {
-			return builder.sources(TestCaseApplication.class).bannerMode(Mode.OFF);
+			return builder.sources(TestCaseApplication.class);//.bannerMode(Mode.OFF);
 		}
 }

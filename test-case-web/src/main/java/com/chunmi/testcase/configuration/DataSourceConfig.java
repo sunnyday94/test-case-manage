@@ -28,6 +28,8 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 
+import java.util.Objects;
+
 @Configuration
 public class DataSourceConfig {
 	
@@ -57,9 +59,9 @@ public class DataSourceConfig {
 
 	        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
 
-	        sqlSessionFactoryBean.setMapperLocations(resolver.getResources(env.getProperty("mybatis.mapper-locations")));
-	        sqlSessionFactoryBean.setTypeAliasesPackage(env.getProperty("mybatis.type-aliases-package"));
-	        sqlSessionFactoryBean.setConfigLocation(resolver.getResource(env.getProperty("mybatis.config-location")));
+	        sqlSessionFactoryBean.setMapperLocations(resolver.getResources(Objects.requireNonNull(env.getProperty("mybatis-plus.mapper-locations"))));
+	        sqlSessionFactoryBean.setTypeAliasesPackage(env.getProperty("mybatis-plus.type-aliases-package"));
+	        sqlSessionFactoryBean.setConfigLocation(resolver.getResource(env.getProperty("mybatis-plus.config-location")));
 
 	        return sqlSessionFactoryBean.getObject();
 	    }
