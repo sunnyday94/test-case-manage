@@ -9,7 +9,7 @@ spring:
   datasource:
     url: jdbc:mysql://39.108.239.226:3306/test_case_manage?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
     username: root
-    password: root
+    password: uAiqwVwjJ8-i
     driver-class-name: com.mysql.jdbc.Driver
     tomcat:
       max-active: 800
