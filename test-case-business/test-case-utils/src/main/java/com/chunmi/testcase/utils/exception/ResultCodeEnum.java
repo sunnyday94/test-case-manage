@@ -1,23 +1,39 @@
+/**
+ * This class was created by sunny. It's distributed as
+ * part of the test-case-utils Mod.
+ *
+ * °æÈ¨ËùÓĞ(C) Î¨´æ(ÉÏº£)ÍøÂç¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2023
+ * Copyright 2014-2023 Vphotos TECHNOLOGY CO..
+ *
+ * This software is the confidential and proprietary information of
+ * Vphotos Corporation ("Confidential Information").  You
+ * shall not disclose such Confidential Information and shall use
+ * it only in accordance with the terms of the license agreement
+ * you entered into with Vphotos.
+ *
+ * File Created @ [2018Äê11ÔÂ1ÈÕ, ÏÂÎç4:04:58 (CST)]
+ */
+
 package com.chunmi.testcase.utils.exception;
 
 public enum ResultCodeEnum {
-    /*0-9999çŠ¶æ€ç åŠ¡ä½¿ç”¨,ç³»ç»Ÿçº§çŠ¶æ€ç */
-    æˆåŠŸ(0, 200, "succeed"),
-    æœªå®šä¹‰çŠ¶æ€ç (1, 503, "unknow error"),
-    ç³»ç»Ÿå¼‚å¸¸(2, 500, "service error"),
-    å‚æ•°å¼‚å¸¸(3, 400, "paramter error"),
-    ç‰ˆæœ¬å·æ— æ•ˆ(4, 403, "unknow version"),
-    è¯·æ±‚çš„èµ„æºä¸å­˜åœ¨(5, 404, "not found"),
-    è·³è½¬ç™»é™†(6,401,"go to login"),
-    ä¸Šä¼ çš„æ–‡ä»¶ä¸åˆæ³•(7,400,"file illegality"),
-    ä¸Šä¼ æ–‡ä»¶å¤±è´¥(8,500,"file error"),
+    /*0-9999×´Ì¬ÂëÎñÊ¹ÓÃ,ÏµÍ³¼¶×´Ì¬Âë*/
+    ³É¹¦(0, 200, "succeed"),
+    Î´¶¨Òå×´Ì¬Âë(1, 503, "unknow error"),
+    ÏµÍ³Òì³£(2, 500, "service error"),
+    ²ÎÊıÒì³£(3, 400, "paramter error"),
+    °æ±¾ºÅÎŞĞ§(4, 403, "unknow version"),
+    ÇëÇóµÄ×ÊÔ´²»´æÔÚ(5, 404, "not found"),
+    Ìø×ªµÇÂ½(6,401,"go to login"),
+    ÉÏ´«µÄÎÄ¼ş²»ºÏ·¨(7,400,"file illegality"),
+    ÉÏ´«ÎÄ¼şÊ§°Ü(8,500,"file error"),
 
 
-    /*10000-49999å†…éƒ¨ç³»ç»Ÿå¯¹æ¥è¿”å›çŠ¶æ€ç */
-    æ•°æ®å·²å­˜åœ¨(10000,200,"existed"),
+    /*10000-49999ÄÚ²¿ÏµÍ³¶Ô½Ó·µ»Ø×´Ì¬Âë*/
+    Êı¾İÒÑ´æÔÚ(10000,200,"existed"),
 
 
-    /*50000-99999ä¸ºç¬¬ä¸‰æ–¹ç³»ç»Ÿè¿”å›çŠ¶æ€ç */;
+    /*50000-99999ÎªµÚÈı·½ÏµÍ³·µ»Ø×´Ì¬Âë*/;
     public final int flag;
     public final int httpStatus;
     public final String defaultMsg;
@@ -37,3 +53,4 @@ public enum ResultCodeEnum {
         return null;
     }
 }
+
