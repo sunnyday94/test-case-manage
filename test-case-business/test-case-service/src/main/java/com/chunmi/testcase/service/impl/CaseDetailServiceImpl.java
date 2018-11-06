@@ -2,7 +2,7 @@
  * This class was created by sunny. It's distributed as
  * part of the test-case-service Mod.
  *
- * °æÈ¨ËùÓĞ(C) ÉÏº£´¿Ã×µç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2023
+ * ç‰ˆæƒæ‰€æœ‰(C) ä¸Šæµ·çº¯ç±³ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2023
  * Copyright 2014-2023 CHUNMI TECHNOLOGY CO..
  *
  * This software is the confidential and proprietary information of
@@ -11,7 +11,7 @@
  * it only in accordance with the terms of the license agreement
  * you entered into with CHUNMI.
  *
- * File Created @ [2018Äê4ÔÂ8ÈÕ, ÉÏÎç10:34:25 (CST)]
+ * File Created @ [2018å¹´4æœˆ8æ—¥, ä¸Šåˆ10:34:25 (CST)]
  */
 package com.chunmi.testcase.service.impl;
 
@@ -38,186 +38,186 @@ import com.chunmi.testcase.utils.PageRequest;
 
 @Service
 public class CaseDetailServiceImpl implements CaseDetailService {
-	
-	@Autowired
-	private CaseDetailMapper caseDetailMapper;
-	
-	@Override
-	public PageBean<CaseDetail> selectTestCaseList(CaseDetail testCase, Integer pageCurrent, Integer pageSize,
-			Integer pageCount) {
-		PageBean<CaseDetail> pb = new PageBean<CaseDetail>();
-		//ÅĞ¶Ï
-		if(pageCurrent==0) pageCurrent =1;  
-		if(pageSize==0)  pageSize = 12;  //Ã¿Ò³ÏÔÊ¾12ÌõÊı¾İ
-		Integer rows = caseDetailMapper.selectTestCaseCountsByCondition(testCase);
-		pb.setRows(rows);
-		//¼ÆËã·ÖÒ³
-		pageCount = rows%pageSize == 0 ? (rows/pageSize) : (rows/pageSize) + 1;
-		//ÉèÖÃ×ÜÒ³Êı
-		pageCount = pageCount ==0 ? 1: pageCount;  
-		//Èç¹ûµ±Ç°Ò³>=×î´óÒ³,ÔòÉèÖÃµ±Ç°Ò³Îª×î´óÒ³
-		if(pageCurrent>=pageCount) {
-			pb.setPageCurrent(pageCount);
-		}
-		PageRequest pageRequest = new PageRequest(pageCurrent, pageSize);
-		pb.setPageCurrent(pageCurrent);  //ÉèÖÃµ±Ç°Ò³
-		pb.setPageSize(pageSize);       //Ã¿Ò³ÏÔÊ¾ÌõÄ¿
-		pb.setPageCount(pageCount);     //×ÜÒ³Êı
-		pb.setObjectBean(testCase);      //ÉèÖÃ²éÑ¯Ìõ¼ş
-		List<CaseDetail> testCaseList = caseDetailMapper.selectTestCaseListByCondition(pageRequest,testCase);
-		pb.setList(testCaseList);
-		return pb;
-	}
 
-	@Override
-	public CaseDetail selectTestCaseByConditions(String caseName) {
-		return caseDetailMapper.selectTestCaseByConditions(caseName);
-	}
+    @Autowired
+    private CaseDetailMapper caseDetailMapper;
 
-	@Override
-	public Integer addTestCase(CaseDetail testCase) {
-		return caseDetailMapper.insertSelective(testCase);
-	}
+    @Override
+    public PageBean<CaseDetail> selectTestCaseList(CaseDetail testCase, Integer pageCurrent, Integer pageSize,
+                                                   Integer pageCount) {
+        PageBean<CaseDetail> pb = new PageBean<CaseDetail>();
+        //åˆ¤æ–­
+        if(pageCurrent==0) pageCurrent =1;
+        if(pageSize==0)  pageSize = 12;  //æ¯é¡µæ˜¾ç¤º12æ¡æ•°æ®
+        Integer rows = caseDetailMapper.selectTestCaseCountsByCondition(testCase);
+        pb.setRows(rows);
+        //è®¡ç®—åˆ†é¡µ
+        pageCount = rows%pageSize == 0 ? (rows/pageSize) : (rows/pageSize) + 1;
+        //è®¾ç½®æ€»é¡µæ•°
+        pageCount = pageCount ==0 ? 1: pageCount;
+        //å¦‚æœå½“å‰é¡µ>=æœ€å¤§é¡µ,åˆ™è®¾ç½®å½“å‰é¡µä¸ºæœ€å¤§é¡µ
+        if(pageCurrent>=pageCount) {
+            pb.setPageCurrent(pageCount);
+        }
+        PageRequest pageRequest = new PageRequest(pageCurrent, pageSize);
+        pb.setPageCurrent(pageCurrent);  //è®¾ç½®å½“å‰é¡µ
+        pb.setPageSize(pageSize);       //æ¯é¡µæ˜¾ç¤ºæ¡ç›®
+        pb.setPageCount(pageCount);     //æ€»é¡µæ•°
+        pb.setObjectBean(testCase);      //è®¾ç½®æŸ¥è¯¢æ¡ä»¶
+        List<CaseDetail> testCaseList = caseDetailMapper.selectTestCaseListByCondition(pageRequest,testCase);
+        pb.setList(testCaseList);
+        return pb;
+    }
 
-	@Override
-	public CaseDetailVo selectTestCaseDetailById(Long id) {
-		return caseDetailMapper.selectTestCaseDetailById(id);
-	}
+    @Override
+    public CaseDetail selectTestCaseByConditions(String caseName) {
+        return caseDetailMapper.selectTestCaseByConditions(caseName);
+    }
 
-	@Override
-	public Integer delTestCaseDetailById(Long id) {
-		return caseDetailMapper.delTestCaseDetailById(id);
-	}
+    @Override
+    public Integer addTestCase(CaseDetail testCase) {
+        return caseDetailMapper.insertSelective(testCase);
+    }
 
-	@Override
-	public Integer updateTestCase(CaseDetail caseDetail) {
-		return caseDetailMapper.updateByPrimaryKeySelective(caseDetail);
-	}
+    @Override
+    public CaseDetailVo selectTestCaseDetailById(Long id) {
+        return caseDetailMapper.selectTestCaseDetailById(id);
+    }
 
-	@Override
-	public PageBean<CaseDetailVo> selectExportTestCaseByConditions(CaseDetail caseDetail) {
-		PageBean<CaseDetailVo> pb = new PageBean<CaseDetailVo>();
-		List<CaseDetailVo> caseDetailList = caseDetailMapper.selectExportTestCaseByConditions(caseDetail);
-		pb.setList(caseDetailList);
-		return pb;
-	}
+    @Override
+    public Integer delTestCaseDetailById(Long id) {
+        return caseDetailMapper.delTestCaseDetailById(id);
+    }
 
-	@Override
-	public void exportTestCase(PageBean<CaseDetailVo> pb, HttpServletResponse response) {
-		List<CaseDetailVo> caseDetailList = pb.getList();
-		// µÚÒ»²½ ´´½¨Ò»¸öwebbook,¶ÔÓ¦Ò»¸öexcelÎÄ¼ş
-		HSSFWorkbook wb = new HSSFWorkbook();
-	    // µÚ¶ş²½ ÔÚwebbookÖĞÌí¼Ósheet£¬¶ÔÓ¦excelÖĞµÄsheet
-		HSSFSheet sheet = wb.createSheet("²âÊÔÓÃÀı");
-	    // µÚÈı²½ ÔÚsheetÖĞÌí¼Ó±íÍ·µÚ0ĞĞ£¬´Ë´¦ĞèÒª×¢ÒâÀÏ°æ±¾poi¶ÔExcelµÄĞĞÊıÁĞÊıÓĞÏŞÖÆshort
-		HSSFRow row = sheet.createRow((int) 0);
-	    // µÚËÄ²½ ´´½¨µ¥Ôª¸ñÑùÊ½
-		HSSFCellStyle style = wb.createCellStyle();
-	    HSSFFont hssfFont = wb.createFont(); // ´´½¨×ÖÌåÑùÊ½
-		hssfFont.setFontName("·ÂËÎ_GB2312"); // ·ÂËÎ
-		hssfFont.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//´ÖÌåÏÔÊ¾ 
-	    style.setFont(hssfFont); 
-	    
-	    style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // ¾ÓÖĞ  
-	    style.setFillForegroundColor(IndexedColors.YELLOW.getIndex()); // ÉèÖÃ±³¾°É« (Yellow)
-		style.setFillPattern(CellStyle.SOLID_FOREGROUND); 
-		style.setBorderBottom(HSSFCellStyle.BORDER_THIN); //ÏÂ±ß¿ò    
-		style.setBorderLeft(HSSFCellStyle.BORDER_THIN);//×ó±ß¿ò    
-		style.setBorderTop(HSSFCellStyle.BORDER_THIN);//ÉÏ±ß¿ò    
-		style.setBorderRight(HSSFCellStyle.BORDER_THIN);//ÓÒ±ß¿ò   
-					
-	    // ÉèÖÃ¿í¶È
-		sheet.setColumnWidth(0, 1000);
-		sheet.setColumnWidth(1, 6000);
-		sheet.setColumnWidth(2, 24000);
-		sheet.setColumnWidth(3, 2000);
-		sheet.setColumnWidth(4, 2000);
-		sheet.setColumnWidth(5, 6000); 
-		sheet.setColumnWidth(6, 30000);	
-		sheet.setColumnWidth(7, 18000);	
-		sheet.setColumnWidth(8, 18000);	
-		sheet.setColumnWidth(9, 2000);	
-		sheet.setColumnWidth(10, 2000);	
-		sheet.setColumnWidth(11, 6000);	
-		
-		//µÚÎå²½ ´´½¨µ¥Ôª¸ñ
-		HSSFCell cell = row.createCell(0);
-		cell.setCellValue("±àºÅ");
-		cell.setCellStyle(style);
-		cell = row.createCell(1);
-		cell.setCellValue("ÓÃÀıÃû³Æ");
-		cell.setCellStyle(style);
-		cell = row.createCell(2);
-		cell.setCellValue("ÓÃÀı±êÌâ");
-		cell.setCellStyle(style);
-		cell = row.createCell(3);
-		cell.setCellValue("ÓÅÏÈ¼¶");
-		cell.setCellStyle(style);
-		cell = row.createCell(4);
-		cell.setCellValue("²âÊÔ·½Ê½");
-		cell.setCellStyle(style);
-		cell = row.createCell(5);
-		cell.setCellValue("Ä£¿é");
-		cell.setCellStyle(style);
-		cell = row.createCell(6);
-		cell.setCellValue("²âÊÔÇ°Ìá");
-		cell.setCellStyle(style);
-		cell = row.createCell(7);
-		cell.setCellValue("ÏêÏ¸²½Öè");
-		cell.setCellStyle(style);
-		cell = row.createCell(8);
-		cell.setCellValue("ÆÚÍû½á¹û");
-		cell.setCellStyle(style);
-		cell = row.createCell(9);
-		cell.setCellValue("Êµ¼Ê½á¹û");
-		cell.setCellStyle(style);
-		cell = row.createCell(10);
-		cell.setCellValue("BUG_ID");
-		cell.setCellStyle(style);
-		cell = row.createCell(11);
-		cell.setCellValue("±¸×¢");
-		cell.setCellStyle(style);
-		
-		OutputStream outputStream = null;
-		try {
-			for(int i =0;i<caseDetailList.size();i++){
-				CaseDetailVo caseDetail = caseDetailList.get(i);
-				row = sheet.createRow(i+1);
-				row.setHeightInPoints(40); //ÉèÖÃĞĞ¸ß
-				row.createCell(0).setCellValue(caseDetail.getId());
-				row.createCell(1).setCellValue(caseDetail.getCaseName());
-				row.createCell(2).setCellValue(caseDetail.getCaseTitle());
-				row.createCell(3).setCellValue(caseDetail.getPriority());
-				row.createCell(4).setCellValue(caseDetail.getTestMode());
-				row.createCell(5).setCellValue(caseDetail.getModuleName());
-				row.createCell(6).setCellValue(caseDetail.getTestConditions());
-				row.createCell(7).setCellValue(caseDetail.getDetailSteps());
-				row.createCell(8).setCellValue(caseDetail.getExpectedResult());
-				row.createCell(9).setCellValue(caseDetail.getActualResultValue());
-				row.createCell(10).setCellValue(caseDetail.getBugId());
-				row.createCell(11).setCellValue(caseDetail.getRemarks());
-			}
-			outputStream = response.getOutputStream();
-			wb.write(outputStream);
-			outputStream.flush();			
-		} catch (Exception e) {
-			e.getMessage();
-		}finally {
-			if(outputStream!=null) {
-				try {
-					outputStream.close();
-				} catch (IOException e) {
-					e.printStackTrace();
-					
-				}
-			}
-		}
-		
-	}
+    @Override
+    public Integer updateTestCase(CaseDetail caseDetail) {
+        return caseDetailMapper.updateByPrimaryKeySelective(caseDetail);
+    }
 
-	@Override
-	public Integer batchInsertCaseDetail(List<CaseDetail> caseDetailList) {
-		return caseDetailMapper.batchInsertCaseDetail(caseDetailList);
-	}
+    @Override
+    public PageBean<CaseDetailVo> selectExportTestCaseByConditions(CaseDetail caseDetail) {
+        PageBean<CaseDetailVo> pb = new PageBean<CaseDetailVo>();
+        List<CaseDetailVo> caseDetailList = caseDetailMapper.selectExportTestCaseByConditions(caseDetail);
+        pb.setList(caseDetailList);
+        return pb;
+    }
+
+    @Override
+    public void exportTestCase(PageBean<CaseDetailVo> pb, HttpServletResponse response) {
+        List<CaseDetailVo> caseDetailList = pb.getList();
+        // ç¬¬ä¸€æ­¥ åˆ›å»ºä¸€ä¸ªwebbook,å¯¹åº”ä¸€ä¸ªexcelæ–‡ä»¶
+        HSSFWorkbook wb = new HSSFWorkbook();
+        // ç¬¬äºŒæ­¥ åœ¨webbookä¸­æ·»åŠ sheetï¼Œå¯¹åº”excelä¸­çš„sheet
+        HSSFSheet sheet = wb.createSheet("æµ‹è¯•ç”¨ä¾‹");
+        // ç¬¬ä¸‰æ­¥ åœ¨sheetä¸­æ·»åŠ è¡¨å¤´ç¬¬0è¡Œï¼Œæ­¤å¤„éœ€è¦æ³¨æ„è€ç‰ˆæœ¬poiå¯¹Excelçš„è¡Œæ•°åˆ—æ•°æœ‰é™åˆ¶short
+        HSSFRow row = sheet.createRow((int) 0);
+        // ç¬¬å››æ­¥ åˆ›å»ºå•å…ƒæ ¼æ ·å¼
+        HSSFCellStyle style = wb.createCellStyle();
+        HSSFFont hssfFont = wb.createFont(); // åˆ›å»ºå­—ä½“æ ·å¼
+        hssfFont.setFontName("ä»¿å®‹_GB2312"); // ä»¿å®‹
+        hssfFont.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);//ç²—ä½“æ˜¾ç¤º
+        style.setFont(hssfFont);
+
+        style.setAlignment(HSSFCellStyle.ALIGN_CENTER); // å±…ä¸­
+        style.setFillForegroundColor(IndexedColors.YELLOW.getIndex()); // è®¾ç½®èƒŒæ™¯è‰² (Yellow)
+        style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        style.setBorderBottom(HSSFCellStyle.BORDER_THIN); //ä¸‹è¾¹æ¡†
+        style.setBorderLeft(HSSFCellStyle.BORDER_THIN);//å·¦è¾¹æ¡†
+        style.setBorderTop(HSSFCellStyle.BORDER_THIN);//ä¸Šè¾¹æ¡†
+        style.setBorderRight(HSSFCellStyle.BORDER_THIN);//å³è¾¹æ¡†
+
+        // è®¾ç½®å®½åº¦
+        sheet.setColumnWidth(0, 1000);
+        sheet.setColumnWidth(1, 6000);
+        sheet.setColumnWidth(2, 24000);
+        sheet.setColumnWidth(3, 2000);
+        sheet.setColumnWidth(4, 2000);
+        sheet.setColumnWidth(5, 6000);
+        sheet.setColumnWidth(6, 30000);
+        sheet.setColumnWidth(7, 18000);
+        sheet.setColumnWidth(8, 18000);
+        sheet.setColumnWidth(9, 2000);
+        sheet.setColumnWidth(10, 2000);
+        sheet.setColumnWidth(11, 6000);
+
+        //ç¬¬äº”æ­¥ åˆ›å»ºå•å…ƒæ ¼
+        HSSFCell cell = row.createCell(0);
+        cell.setCellValue("ç¼–å·");
+        cell.setCellStyle(style);
+        cell = row.createCell(1);
+        cell.setCellValue("ç”¨ä¾‹åç§°");
+        cell.setCellStyle(style);
+        cell = row.createCell(2);
+        cell.setCellValue("ç”¨ä¾‹æ ‡é¢˜");
+        cell.setCellStyle(style);
+        cell = row.createCell(3);
+        cell.setCellValue("ä¼˜å…ˆçº§");
+        cell.setCellStyle(style);
+        cell = row.createCell(4);
+        cell.setCellValue("æµ‹è¯•æ–¹å¼");
+        cell.setCellStyle(style);
+        cell = row.createCell(5);
+        cell.setCellValue("æ¨¡å—");
+        cell.setCellStyle(style);
+        cell = row.createCell(6);
+        cell.setCellValue("æµ‹è¯•å‰æ");
+        cell.setCellStyle(style);
+        cell = row.createCell(7);
+        cell.setCellValue("è¯¦ç»†æ­¥éª¤");
+        cell.setCellStyle(style);
+        cell = row.createCell(8);
+        cell.setCellValue("æœŸæœ›ç»“æœ");
+        cell.setCellStyle(style);
+        cell = row.createCell(9);
+        cell.setCellValue("å®é™…ç»“æœ");
+        cell.setCellStyle(style);
+        cell = row.createCell(10);
+        cell.setCellValue("BUG_ID");
+        cell.setCellStyle(style);
+        cell = row.createCell(11);
+        cell.setCellValue("å¤‡æ³¨");
+        cell.setCellStyle(style);
+
+        OutputStream outputStream = null;
+        try {
+            for(int i =0;i<caseDetailList.size();i++){
+                CaseDetailVo caseDetail = caseDetailList.get(i);
+                row = sheet.createRow(i+1);
+                row.setHeightInPoints(40); //è®¾ç½®è¡Œé«˜
+                row.createCell(0).setCellValue(caseDetail.getId());
+                row.createCell(1).setCellValue(caseDetail.getCaseName());
+                row.createCell(2).setCellValue(caseDetail.getCaseTitle());
+                row.createCell(3).setCellValue(caseDetail.getPriority());
+                row.createCell(4).setCellValue(caseDetail.getTestMode());
+                row.createCell(5).setCellValue(caseDetail.getModuleName());
+                row.createCell(6).setCellValue(caseDetail.getTestConditions());
+                row.createCell(7).setCellValue(caseDetail.getDetailSteps());
+                row.createCell(8).setCellValue(caseDetail.getExpectedResult());
+                row.createCell(9).setCellValue(caseDetail.getActualResultValue());
+                row.createCell(10).setCellValue(caseDetail.getBugId());
+                row.createCell(11).setCellValue(caseDetail.getRemarks());
+            }
+            outputStream = response.getOutputStream();
+            wb.write(outputStream);
+            outputStream.flush();
+        } catch (Exception e) {
+            e.getMessage();
+        }finally {
+            if(outputStream!=null) {
+                try {
+                    outputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+
+                }
+            }
+        }
+
+    }
+
+    @Override
+    public Integer batchInsertCaseDetail(List<CaseDetail> caseDetailList) {
+        return caseDetailMapper.batchInsertCaseDetail(caseDetailList);
+    }
 
 }

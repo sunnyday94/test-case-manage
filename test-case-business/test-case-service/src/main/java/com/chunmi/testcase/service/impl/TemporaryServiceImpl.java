@@ -2,7 +2,7 @@
  * This class was created by sunny. It's distributed as
  * part of the test-case-service Mod.
  *
- * °æÈ¨ËùÓĞ(C) ÉÏº£´¿Ã×µç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2023
+ * ç‰ˆæƒæ‰€æœ‰(C) ä¸Šæµ·çº¯ç±³ç”µå­ç§‘æŠ€æœ‰é™å…¬å¸ 2014-2023
  * Copyright 2014-2023 CHUNMI TECHNOLOGY CO..
  *
  * This software is the confidential and proprietary information of
@@ -11,7 +11,7 @@
  * it only in accordance with the terms of the license agreement
  * you entered into with CHUNMI.
  *
- * File Created @ [2018Äê5ÔÂ22ÈÕ, ÉÏÎç11:32:48 (CST)]
+ * File Created @ [2018å¹´5æœˆ22æ—¥, ä¸Šåˆ11:32:48 (CST)]
  */
 package com.chunmi.testcase.service.impl;
 
@@ -33,115 +33,115 @@ import com.chunmi.testcase.service.TemporaryService;
 
 @Service
 public class TemporaryServiceImpl implements TemporaryService {
-	
-	@Autowired
-	private ProjectModuleService moduleService;
-	
-	@Autowired
-	private CaseDetailService caseDetailService;
 
-	@Override
-	@Transactional(propagation=Propagation.REQUIRED)
-	public void readContent(Workbook wb,Long projectId,Long versionId) {
-		Sheet sheet = wb.getSheetAt(0);// µÚÒ»¸ö¹¤×÷±í
-		int firstRowIndex = sheet.getFirstRowNum(); //»ñÈ¡µÚÒ»ĞĞ(´Ó0¿ªÊ¼)
-		int lastRowIndex = sheet.getLastRowNum();   //»ñÈ¡×îºóÒ»ĞĞ(´Ó0¿ªÊ¼)
-		
-		List<CaseDetail> caseDetailList = new ArrayList<CaseDetail>();
-		//´ÓµÚ¶şĞĞ¿ªÊ¼(µÚÒ»ĞĞÎª±êÌâ)
-		for(int rIndex =firstRowIndex+1;rIndex<=lastRowIndex;rIndex++) {
-			Row row = sheet.getRow(rIndex);
-			if(row !=null) {
-				CaseDetail caseDetail = new CaseDetail();
-				caseDetail.setProjectId(projectId);
-				caseDetail.setVersionId(versionId);
-				int firstCellIndex = row.getFirstCellNum(); //»ñÈ¡µÚÒ»¸öµ¥Ôª¸ñ(´Ó0¿ªÊ¼)
-				int lastCellIndex = row.getLastCellNum(); //»ñÈ¡×îºóÒ»¸öµ¥Ôª¸ñ(´Ó1¿ªÊ¼)
-				for(int cIndex = firstCellIndex;cIndex<lastCellIndex;cIndex++) {
-					Cell cell = row.getCell(cIndex);
-					if(cell !=null) {
-						if(cIndex == 1)
-							caseDetail.setCaseName(cell.getStringCellValue().trim());
-						if(cIndex ==2)
-							caseDetail.setCaseTitle(cell.getStringCellValue().trim());
-						if(cIndex == 3) {
-							String priority = cell.getStringCellValue().trim();
-							switch (priority) {
-							case "µÍ":
-								priority = "0";
-								break;
-							case "ÖĞ":
-								priority = "1";
-								break;
-							case "¸ß":
-								priority = "2";
-								break;
-							default:
-								break;
-							}
-							caseDetail.setPriority(priority);
-						}
-						if(cIndex == 4) {
-							String testMode = cell.getStringCellValue().trim();
-							switch (testMode) {
-							case "ÊÖ¶¯":
-								testMode = "0";
-								break;
-							case "×Ô¶¯":
-								testMode = "1";
-								break;
-							default:
-								break;
-							}
-							caseDetail.setTestMode(testMode);
-						}
-						if(cIndex == 5) {
-							ProjectModule pm = new ProjectModule();
-							pm.setProjectId(projectId);
-							pm.setModuleName(cell.getStringCellValue());
-							ProjectModule selectPm = moduleService.selectModuleByProjectIdAndModuleName(pm);
-							if(selectPm==null) {
-								moduleService.insertNewModule(pm);
-								caseDetail.setModuleId(pm.getId());
-							}else {
-								caseDetail.setModuleId(selectPm.getId());
-							}
-						}
-						if(cIndex == 6)
-							caseDetail.setTestConditions(cell.getStringCellValue().trim());
-						if(cIndex == 7)
-							caseDetail.setDetailSteps(cell.getStringCellValue().trim());
-						if(cIndex == 8)
-							caseDetail.setExpectedResult(cell.getStringCellValue().trim());
-						if(cIndex == 9) {
-							String actualResult  = cell.getStringCellValue().trim().toUpperCase();
-							Long actualResultId = null;
-							switch (actualResult) {
-							case "PASS":
-								actualResultId = 1L;
-								break;
-							case "Failed":
-								actualResultId = 2L;
-								break;
-							case "N/A":
-								actualResultId = 3L;
-								break;
-							default:
-								actualResultId = 4L;
-								break;
-							}
-							caseDetail.setActualResultId(actualResultId);
-						}
-						if(cIndex == 10)
-							caseDetail.setBugId(cell.getStringCellValue());
-						if(cIndex == 11)
-							caseDetail.setRemarks(cell.getStringCellValue());
-					}
-				}
-				caseDetailList.add(caseDetail);
-			}
-		}
-		if(caseDetailList!=null && caseDetailList.size()>0)
-			caseDetailService.batchInsertCaseDetail(caseDetailList);
-	}
+    @Autowired
+    private ProjectModuleService moduleService;
+
+    @Autowired
+    private CaseDetailService caseDetailService;
+
+    @Override
+    @Transactional(propagation=Propagation.REQUIRED)
+    public void readContent(Workbook wb,Long projectId,Long versionId) {
+        Sheet sheet = wb.getSheetAt(0);// ç¬¬ä¸€ä¸ªå·¥ä½œè¡¨
+        int firstRowIndex = sheet.getFirstRowNum(); //è·å–ç¬¬ä¸€è¡Œ(ä»0å¼€å§‹)
+        int lastRowIndex = sheet.getLastRowNum();   //è·å–æœ€åä¸€è¡Œ(ä»0å¼€å§‹)
+
+        List<CaseDetail> caseDetailList = new ArrayList<CaseDetail>();
+        //ä»ç¬¬äºŒè¡Œå¼€å§‹(ç¬¬ä¸€è¡Œä¸ºæ ‡é¢˜)
+        for(int rIndex =firstRowIndex+1;rIndex<=lastRowIndex;rIndex++) {
+            Row row = sheet.getRow(rIndex);
+            if(row !=null) {
+                CaseDetail caseDetail = new CaseDetail();
+                caseDetail.setProjectId(projectId);
+                caseDetail.setVersionId(versionId);
+                int firstCellIndex = row.getFirstCellNum(); //è·å–ç¬¬ä¸€ä¸ªå•å…ƒæ ¼(ä»0å¼€å§‹)
+                int lastCellIndex = row.getLastCellNum(); //è·å–æœ€åä¸€ä¸ªå•å…ƒæ ¼(ä»1å¼€å§‹)
+                for(int cIndex = firstCellIndex;cIndex<lastCellIndex;cIndex++) {
+                    Cell cell = row.getCell(cIndex);
+                    if(cell !=null) {
+                        if(cIndex == 1)
+                            caseDetail.setCaseName(cell.getStringCellValue().trim());
+                        if(cIndex ==2)
+                            caseDetail.setCaseTitle(cell.getStringCellValue().trim());
+                        if(cIndex == 3) {
+                            String priority = cell.getStringCellValue().trim();
+                            switch (priority) {
+                                case "ä½":
+                                    priority = "0";
+                                    break;
+                                case "ä¸­":
+                                    priority = "1";
+                                    break;
+                                case "é«˜":
+                                    priority = "2";
+                                    break;
+                                default:
+                                    break;
+                            }
+                            caseDetail.setPriority(priority);
+                        }
+                        if(cIndex == 4) {
+                            String testMode = cell.getStringCellValue().trim();
+                            switch (testMode) {
+                                case "æ‰‹åŠ¨":
+                                    testMode = "0";
+                                    break;
+                                case "è‡ªåŠ¨":
+                                    testMode = "1";
+                                    break;
+                                default:
+                                    break;
+                            }
+                            caseDetail.setTestMode(testMode);
+                        }
+                        if(cIndex == 5) {
+                            ProjectModule pm = new ProjectModule();
+                            pm.setProjectId(projectId);
+                            pm.setModuleName(cell.getStringCellValue());
+                            ProjectModule selectPm = moduleService.selectModuleByProjectIdAndModuleName(pm);
+                            if(selectPm==null) {
+                                moduleService.insertNewModule(pm);
+                                caseDetail.setModuleId(pm.getId());
+                            }else {
+                                caseDetail.setModuleId(selectPm.getId());
+                            }
+                        }
+                        if(cIndex == 6)
+                            caseDetail.setTestConditions(cell.getStringCellValue().trim());
+                        if(cIndex == 7)
+                            caseDetail.setDetailSteps(cell.getStringCellValue().trim());
+                        if(cIndex == 8)
+                            caseDetail.setExpectedResult(cell.getStringCellValue().trim());
+                        if(cIndex == 9) {
+                            String actualResult  = cell.getStringCellValue().trim().toUpperCase();
+                            Long actualResultId = null;
+                            switch (actualResult) {
+                                case "PASS":
+                                    actualResultId = 1L;
+                                    break;
+                                case "Failed":
+                                    actualResultId = 2L;
+                                    break;
+                                case "N/A":
+                                    actualResultId = 3L;
+                                    break;
+                                default:
+                                    actualResultId = 4L;
+                                    break;
+                            }
+                            caseDetail.setActualResultId(actualResultId);
+                        }
+                        if(cIndex == 10)
+                            caseDetail.setBugId(cell.getStringCellValue());
+                        if(cIndex == 11)
+                            caseDetail.setRemarks(cell.getStringCellValue());
+                    }
+                }
+                caseDetailList.add(caseDetail);
+            }
+        }
+        if(caseDetailList!=null && caseDetailList.size()>0)
+            caseDetailService.batchInsertCaseDetail(caseDetailList);
+    }
 }

@@ -2,7 +2,7 @@
  * This class was created by sunny. It's distributed as
  * part of the test-case-utils Mod.
  *
- * °æÈ¨ËùÓĞ(C) Î¨´æ(ÉÏº£)ÍøÂç¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2023
+ * ç‰ˆæƒæ‰€æœ‰(C) å”¯å­˜(ä¸Šæµ·)ç½‘ç»œç§‘æŠ€æœ‰é™å…¬å¸ 2014-2023
  * Copyright 2014-2023 Vphotos TECHNOLOGY CO..
  *
  * This software is the confidential and proprietary information of
@@ -11,7 +11,7 @@
  * it only in accordance with the terms of the license agreement
  * you entered into with Vphotos.
  *
- * File Created @ [2018Äê11ÔÂ1ÈÕ, ÏÂÎç4:06:23 (CST)]
+ * File Created @ [2018å¹´11æœˆ1æ—¥, ä¸‹åˆ4:06:23 (CST)]
  */
 package com.chunmi.testcase.utils;
 
@@ -29,468 +29,468 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 /**
- * ¼òÊö£º¶Ô²ÎÊıĞ£ÑéµÄ·½·¨<br>
- * ÏêÏ¸ÃèÊö£º<br>
- * ÏêÏ¸ËµÃ÷¸ÃÀàÍê³ÉÖ÷Òª¹¦ÄÜºÍ×¢Òâµã <br>
- * Ê±¼ä£º 2018Äê08ÔÂ02ÈÕ ÉÏÎç10:03:36 <br>
+ * ç®€è¿°ï¼šå¯¹å‚æ•°æ ¡éªŒçš„æ–¹æ³•<br>
+ * è¯¦ç»†æè¿°ï¼š<br>
+ * è¯¦ç»†è¯´æ˜è¯¥ç±»å®Œæˆä¸»è¦åŠŸèƒ½å’Œæ³¨æ„ç‚¹ <br>
+ * æ—¶é—´ï¼š 2018å¹´08æœˆ02æ—¥ ä¸Šåˆ10:03:36 <br>
  * @version V1.0
  */
 public class CheckUtils extends BaseUtils {
 
-	private static final String NEW_FIELDS = "_NEW_FIELDS";
-	public static final String FIELD_NAME_SEP = "#";
+    private static final String NEW_FIELDS = "_NEW_FIELDS";
+    public static final String FIELD_NAME_SEP = "#";
 
-	/**
-	 * ÊÖ»úºÅµÄ¹æÔò
-	 */
-	private static final String REGEX_MPHONE="^((13[\\d])|(14[\\d])|(15[\\d])|(17[\\d])|(18[\\d]))\\d{8}$";
+    /**
+     * æ‰‹æœºå·çš„è§„åˆ™
+     */
+    private static final String REGEX_MPHONE="^((13[\\d])|(14[\\d])|(15[\\d])|(17[\\d])|(18[\\d]))\\d{8}$";
 
-	/**
-	 * ÊÖ»úºÅµÄ¹æÔò
-	 */
-	private static final String REGEX_TPHONE="^(0[0-9]{2,3}\\-)?([1-9][0-9]{6,7})$";
+    /**
+     * æ‰‹æœºå·çš„è§„åˆ™
+     */
+    private static final String REGEX_TPHONE="^(0[0-9]{2,3}\\-)?([1-9][0-9]{6,7})$";
 
-	/**
-	 * emailµÄ¹æÔò
-	 */
-	private static final String REGEX_EMAIL = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
+    /**
+     * emailçš„è§„åˆ™
+     */
+    private static final String REGEX_EMAIL = "^([a-z0-9A-Z]+[-|\\.]?)+[a-z0-9A-Z]@([a-z0-9A-Z]+(-[a-z0-9A-Z]+)?\\.)+[a-zA-Z]{2,}$";
 
-	/**
-	 * Ğ£ÑéÉç»áÍ³Ò»ĞÅÓÃ´úÂë
-	 */
-	private static final String REGEX_USCI = "[1-9A-GY]{1}[1239]{1}[1-5]{1}[0-9]{5}[0-9,'A','B','C','D','E','F','G','H','J','K','L','M','N','P','Q','R','T','U','W','X','Y']{10}";
+    /**
+     * æ ¡éªŒç¤¾ä¼šç»Ÿä¸€ä¿¡ç”¨ä»£ç 
+     */
+    private static final String REGEX_USCI = "[1-9A-GY]{1}[1239]{1}[1-5]{1}[0-9]{5}[0-9,'A','B','C','D','E','F','G','H','J','K','L','M','N','P','Q','R','T','U','W','X','Y']{10}";
 
-	/**
-	 * ×éÖ¯½á¹¹´úÂë
-	 */
-	private static final String REGEX_ORGCD = "[a-zA-Z0-9]{8}-[a-zA-Z0-9]";
+    /**
+     * ç»„ç»‡ç»“æ„ä»£ç 
+     */
+    private static final String REGEX_ORGCD = "[a-zA-Z0-9]{8}-[a-zA-Z0-9]";
 
 
-	/**
-	 * ÅĞ¶Ï¶ÔÏóobjÊÇ·ñÊÇ¿Õ
-	 * @param obj ¶ÔÏó
-	 * @param field ¶ÔÓ¦µÄ¶ÔÏóÃû×Ö»òÕß×Ö¶ÎÃû×Ö Ó¢ÎÄ¼´¿É
-	 */
-	public static void checkNull(Object obj,String field) {
-		if(isNull(obj)) {
-			throw new VPhotoException(ResultCodeEnum.²ÎÊıÒì³£,"ÊôĞÔ["+field+"]Îª¿Õ");
-//			throw new VPhotoException(VPhotoExceType.NULL,"ÊôĞÔ["+field+"]Îª¿Õ");
-		}
-	}
+    /**
+     * åˆ¤æ–­å¯¹è±¡objæ˜¯å¦æ˜¯ç©º
+     * @param obj å¯¹è±¡
+     * @param field å¯¹åº”çš„å¯¹è±¡åå­—æˆ–è€…å­—æ®µåå­— è‹±æ–‡å³å¯
+     */
+    public static void checkNull(Object obj,String field) {
+        if(isNull(obj)) {
+            throw new VPhotoException(ResultCodeEnum.å‚æ•°å¼‚å¸¸,"å±æ€§["+field+"]ä¸ºç©º");
+//			throw new VPhotoException(VPhotoExceType.NULL,"å±æ€§["+field+"]ä¸ºç©º");
+        }
+    }
 
-	/**
-	 * ÅĞ¶Ï¶ÔÏóstrÊÇ·ñÊÇ¿Õ
-	 * @param str ¶ÔÏó
-	 * @param field ¶ÔÓ¦µÄ¶ÔÏóÃû×Ö»òÕß×Ö¶ÎÃû×Ö Ó¢ÎÄ¼´¿É
-	 */
-	public static void checkNull(String str,String field) {
-		if(isNull(str)) {
-			throw new VPhotoException(ResultCodeEnum.²ÎÊıÒì³£,"ÊôĞÔ["+field+"]Îª¿Õ");
-//			throw new VPhotoException(VPhotoExceType.NULL,"ÊôĞÔ["+field+"]Îª¿Õ");
-		}
-	}
+    /**
+     * åˆ¤æ–­å¯¹è±¡stræ˜¯å¦æ˜¯ç©º
+     * @param str å¯¹è±¡
+     * @param field å¯¹åº”çš„å¯¹è±¡åå­—æˆ–è€…å­—æ®µåå­— è‹±æ–‡å³å¯
+     */
+    public static void checkNull(String str,String field) {
+        if(isNull(str)) {
+            throw new VPhotoException(ResultCodeEnum.å‚æ•°å¼‚å¸¸,"å±æ€§["+field+"]ä¸ºç©º");
+//			throw new VPhotoException(VPhotoExceType.NULL,"å±æ€§["+field+"]ä¸ºç©º");
+        }
+    }
 
-	/**
-	 * ÅĞ¶Ï¶ÔÏóobjµÄËùÓĞÊôĞÔÊÇ·ñÎª¿Õ
-	 * @param obj ´ıĞ£Ñé¶ÔÏó
-	 * @param fields ´ıĞ£Ñé¶ÔÏóµÄËùÓĞÊôĞÔ  ¶ººÅ·Ö¸î
-	 */
-	public static void checkNulls(Object obj,String fields) {
-		if(isNull(obj)) {
-			throw new VPhotoException(ResultCodeEnum.²ÎÊıÒì³£,"ÊôĞÔ[obj]Îª¿Õ");
-//			throw new VPhotoException(VPhotoExceType.NULL,"ÊôĞÔ[obj]Îª¿Õ");
-		}
-		if(isNull(fields))return;
-		Map<String,String> fieldNames = getFieldsName(fields);
-		String newFields = fieldNames.get(NEW_FIELDS);//ĞÂÊôĞÔ×Ö·û´®
-		Map<String,Object> values = getFieldsValue(obj, newFields);
-		if(isNull(values)||values.size()<=0)return;
-		StringBuilder sb = new StringBuilder();
-		for (Map.Entry<String, Object> value : values.entrySet()) {
-			if(isNull(value.getValue()))sb.append("ÊôĞÔ["+fieldNames.get(value.getKey())+"]Îª¿Õ").append("¡¢");
-		}
-		if(sb.length()<=0)return;
+    /**
+     * åˆ¤æ–­å¯¹è±¡objçš„æ‰€æœ‰å±æ€§æ˜¯å¦ä¸ºç©º
+     * @param obj å¾…æ ¡éªŒå¯¹è±¡
+     * @param fields å¾…æ ¡éªŒå¯¹è±¡çš„æ‰€æœ‰å±æ€§  é€—å·åˆ†å‰²
+     */
+    public static void checkNulls(Object obj,String fields) {
+        if(isNull(obj)) {
+            throw new VPhotoException(ResultCodeEnum.å‚æ•°å¼‚å¸¸,"å±æ€§[obj]ä¸ºç©º");
+//			throw new VPhotoException(VPhotoExceType.NULL,"å±æ€§[obj]ä¸ºç©º");
+        }
+        if(isNull(fields))return;
+        Map<String,String> fieldNames = getFieldsName(fields);
+        String newFields = fieldNames.get(NEW_FIELDS);//æ–°å±æ€§å­—ç¬¦ä¸²
+        Map<String,Object> values = getFieldsValue(obj, newFields);
+        if(isNull(values)||values.size()<=0)return;
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<String, Object> value : values.entrySet()) {
+            if(isNull(value.getValue()))sb.append("å±æ€§["+fieldNames.get(value.getKey())+"]ä¸ºç©º").append("ã€");
+        }
+        if(sb.length()<=0)return;
 //		throw new VPhotoException(VPhotoExceType.NULL,sb.toString());
-		throw new VPhotoException(ResultCodeEnum.²ÎÊıÒì³£,sb.toString());
-	}
+        throw new VPhotoException(ResultCodeEnum.å‚æ•°å¼‚å¸¸,sb.toString());
+    }
 
-	/**
-	 * ²»ÄÜÍ¬Ê±Îª¿Õ
-	 * Ö÷ÒªÊÇÓÃÀ´ÅĞ¶ÏÄ³Ğ©ÖµÔÂÁíÍâµÄÒ»Ğ©×Ö¶Î²»ÄÜÍ¬Ê±Îª¿Õ
-	 * @param obj
-	 * @param fields  ÊôĞÔ×Ö·û´®¶ººÅ·Ö¸î ÀıÈç£ºa,b,c","d,e,f"  ±íÊ¾ abcÊôÓÚºÍdefÊôĞÔ²»ÄÜÍ¬Ê±Îª¿Õ
-	 */
-	public static void checkNotAllNulls(Object obj,String ...fields) {
-		if(isNull(obj)) {
-			throw new VPhotoException(ResultCodeEnum.²ÎÊıÒì³£,"ÊôĞÔ[obj]Îª¿Õ");
-//			throw new VPhotoException(VPhotoExceType.NULL,"ÊôĞÔ[obj]Îª¿Õ");
-		}
-		if(isNull(fields)||fields.length<=0)return;
-		Map<String,String> map = new HashMap<String,String>();
-		Map<String,Map<String,String>> newNames = new HashMap<String,Map<String,String>>();
-		Map<String,Object> values = null;
-		StringBuffer sb = new StringBuffer();
-		Map<String,String> fieldNames = null;
-		String newFields = null;
-		for(String field:fields) {
-			sb.setLength(0);
-			fieldNames = getFieldsName(field);//»ñÈ¡¶ÔÓ¦µÄÃû³Æ
-			newFields = fieldNames.get(NEW_FIELDS);//ĞÂÊôĞÔ×Ö·û´®
-			values = getFieldsValue(obj, newFields);
-			if(isNull(values)||values.size()<=0) {
-				map.put(field, sb.toString());
-				continue;
-			}
-			for (Map.Entry<String, Object> value : values.entrySet()) {
-				if(isNull(value.getValue()))sb.append("ÊôĞÔ["+fieldNames.get(value.getKey())+"]Îª¿Õ").append("¡¢");
-			}
-			map.put(newFields, sb.toString());
-			newNames.put(newFields, fieldNames);//ĞÂµÄÃû×Ö
-		}
-		//==Ğ£Ñé ÊÇ·ñÈ«²¿¶¼´óÓÚ0 Èç¹ûÊÇËµÃ÷ÓĞÖµÊÇÃ»ÌîĞ´µÄ
-		boolean flg = false; //ÊÇ·ñÈ«²¿ÊÇ¿ÕµÄ
-		sb.setLength(0);
-		for (Map.Entry<String, String> entry : map.entrySet()) {
-			 if(BaseUtils.isNotNull(entry.getValue())) {//º¬ÓĞÎ´ÌîĞ´µÄ
-				 sb.append("ÊôĞÔ[").append(getNewFileNames(newNames.get(entry.getKey()),entry.getKey())).append("]").append("¡¢");
-			 }else {
-				 flg = true;
-			 }
-		}
-		//==Ö»ÓĞÍ¬Ê±Îª¿ÕµÄÊ±ºò²ÅÅ×Òì³£
-		if(!flg) {
-			sb.setCharAt(sb.length()-1,'£¬');
-			throw new VPhotoException(ResultCodeEnum.²ÎÊıÒì³£,sb.toString()+"²»ÄÜÍ¬Ê±Îª¿Õ");
-		}
-	}
+    /**
+     * ä¸èƒ½åŒæ—¶ä¸ºç©º
+     * ä¸»è¦æ˜¯ç”¨æ¥åˆ¤æ–­æŸäº›å€¼æœˆå¦å¤–çš„ä¸€äº›å­—æ®µä¸èƒ½åŒæ—¶ä¸ºç©º
+     * @param obj
+     * @param fields  å±æ€§å­—ç¬¦ä¸²é€—å·åˆ†å‰² ä¾‹å¦‚ï¼ša,b,c","d,e,f"  è¡¨ç¤º abcå±äºå’Œdefå±æ€§ä¸èƒ½åŒæ—¶ä¸ºç©º
+     */
+    public static void checkNotAllNulls(Object obj,String ...fields) {
+        if(isNull(obj)) {
+            throw new VPhotoException(ResultCodeEnum.å‚æ•°å¼‚å¸¸,"å±æ€§[obj]ä¸ºç©º");
+//			throw new VPhotoException(VPhotoExceType.NULL,"å±æ€§[obj]ä¸ºç©º");
+        }
+        if(isNull(fields)||fields.length<=0)return;
+        Map<String,String> map = new HashMap<String,String>();
+        Map<String,Map<String,String>> newNames = new HashMap<String,Map<String,String>>();
+        Map<String,Object> values = null;
+        StringBuffer sb = new StringBuffer();
+        Map<String,String> fieldNames = null;
+        String newFields = null;
+        for(String field:fields) {
+            sb.setLength(0);
+            fieldNames = getFieldsName(field);//è·å–å¯¹åº”çš„åç§°
+            newFields = fieldNames.get(NEW_FIELDS);//æ–°å±æ€§å­—ç¬¦ä¸²
+            values = getFieldsValue(obj, newFields);
+            if(isNull(values)||values.size()<=0) {
+                map.put(field, sb.toString());
+                continue;
+            }
+            for (Map.Entry<String, Object> value : values.entrySet()) {
+                if(isNull(value.getValue()))sb.append("å±æ€§["+fieldNames.get(value.getKey())+"]ä¸ºç©º").append("ã€");
+            }
+            map.put(newFields, sb.toString());
+            newNames.put(newFields, fieldNames);//æ–°çš„åå­—
+        }
+        //==æ ¡éªŒ æ˜¯å¦å…¨éƒ¨éƒ½å¤§äº0 å¦‚æœæ˜¯è¯´æ˜æœ‰å€¼æ˜¯æ²¡å¡«å†™çš„
+        boolean flg = false; //æ˜¯å¦å…¨éƒ¨æ˜¯ç©ºçš„
+        sb.setLength(0);
+        for (Map.Entry<String, String> entry : map.entrySet()) {
+            if(BaseUtils.isNotNull(entry.getValue())) {//å«æœ‰æœªå¡«å†™çš„
+                sb.append("å±æ€§[").append(getNewFileNames(newNames.get(entry.getKey()),entry.getKey())).append("]").append("ã€");
+            }else {
+                flg = true;
+            }
+        }
+        //==åªæœ‰åŒæ—¶ä¸ºç©ºçš„æ—¶å€™æ‰æŠ›å¼‚å¸¸
+        if(!flg) {
+            sb.setCharAt(sb.length()-1,'ï¼Œ');
+            throw new VPhotoException(ResultCodeEnum.å‚æ•°å¼‚å¸¸,sb.toString()+"ä¸èƒ½åŒæ—¶ä¸ºç©º");
+        }
+    }
 
-	/**
-	 * id×ª»»³ÉÃû×Ö
-	 * @param fieldNames
-	 * @param newFields
-	 * @return
-	 */
-	private static String getNewFileNames(Map<String,String> fieldNames,String newFields ) {
-		if(isNull(fieldNames)||isNull(newFields))return "";
-		StringBuffer names = new StringBuffer();
-		for(String one:newFields.split(",")) {
-			if(isNull(one))continue;
-			names.append(fieldNames.get(one)).append(",");
-		}
-		if(names.length()>0)names.setLength(names.length()-1);
-		return names.toString();
-	}
+    /**
+     * idè½¬æ¢æˆåå­—
+     * @param fieldNames
+     * @param newFields
+     * @return
+     */
+    private static String getNewFileNames(Map<String,String> fieldNames,String newFields ) {
+        if(isNull(fieldNames)||isNull(newFields))return "";
+        StringBuffer names = new StringBuffer();
+        for(String one:newFields.split(",")) {
+            if(isNull(one))continue;
+            names.append(fieldNames.get(one)).append(",");
+        }
+        if(names.length()>0)names.setLength(names.length()-1);
+        return names.toString();
+    }
 
-	/**
-	 * ÎŞĞ§Êı×Ö
-	 * @param num ´ıĞ£ÑéµÄÊı×Ö
-	 * @param field ¶ÔÓ¦µÄÊôĞÔÃû³Æ
-	 */
-	public static void checkNum(String num,String field) {
-		if(!isNumber(num)) {
-			throw new VPhotoException(ResultCodeEnum.²ÎÊıÒì³£,"ÊôĞÔ["+field+"]ÖµÎª["+num+"]£¬Îª·ÇÊı×Ö");
-		}
-	}
-	/**
-	 * ¼ì²é¶ÔÏóµÄÊôĞÔÊÇ·ñÊÇÊı×Ö
-	 * @param obj ´ı¼ì²é¶ÔÏó
-	 * @param fields ËùÓĞÊôĞÔÖµ ¶ººÅ·Ö¸î
-	 */
-	public static void checkNums(Object obj,String fields) {
-		if(isNull(obj)) {
-			throw new VPhotoException(ResultCodeEnum.²ÎÊıÒì³£,"ÊôĞÔ[obj]Îª¿Õ");
-		}
-		if(isNull(fields))return;
-		Map<String,String> fieldNames = getFieldsName(fields);
-		String newFields = fieldNames.get(NEW_FIELDS);//ĞÂÊôĞÔ×Ö·û´®
-		Map<String,Object> values = getFieldsValue(obj, newFields);
-		if(isNull(values)||values.size()<=0)return;
-		StringBuffer sb = new StringBuffer();
-		for (Map.Entry<String, Object> value : values.entrySet()) {
-			if(!isNumber(null2string(value.getValue())))sb.append("ÊôĞÔ["+fieldNames.get(value.getKey())+"]ÖµÎª["+value.getValue()+"]£¬Îª·ÇÊı×Ö").append("¡¢");
-		}
-		if(sb.length()<=0)return;
-		throw new VPhotoException(ResultCodeEnum.²ÎÊıÒì³£,sb.toString());
-	}
+    /**
+     * æ— æ•ˆæ•°å­—
+     * @param num å¾…æ ¡éªŒçš„æ•°å­—
+     * @param field å¯¹åº”çš„å±æ€§åç§°
+     */
+    public static void checkNum(String num,String field) {
+        if(!isNumber(num)) {
+            throw new VPhotoException(ResultCodeEnum.å‚æ•°å¼‚å¸¸,"å±æ€§["+field+"]å€¼ä¸º["+num+"]ï¼Œä¸ºéæ•°å­—");
+        }
+    }
+    /**
+     * æ£€æŸ¥å¯¹è±¡çš„å±æ€§æ˜¯å¦æ˜¯æ•°å­—
+     * @param obj å¾…æ£€æŸ¥å¯¹è±¡
+     * @param fields æ‰€æœ‰å±æ€§å€¼ é€—å·åˆ†å‰²
+     */
+    public static void checkNums(Object obj,String fields) {
+        if(isNull(obj)) {
+            throw new VPhotoException(ResultCodeEnum.å‚æ•°å¼‚å¸¸,"å±æ€§[obj]ä¸ºç©º");
+        }
+        if(isNull(fields))return;
+        Map<String,String> fieldNames = getFieldsName(fields);
+        String newFields = fieldNames.get(NEW_FIELDS);//æ–°å±æ€§å­—ç¬¦ä¸²
+        Map<String,Object> values = getFieldsValue(obj, newFields);
+        if(isNull(values)||values.size()<=0)return;
+        StringBuffer sb = new StringBuffer();
+        for (Map.Entry<String, Object> value : values.entrySet()) {
+            if(!isNumber(null2string(value.getValue())))sb.append("å±æ€§["+fieldNames.get(value.getKey())+"]å€¼ä¸º["+value.getValue()+"]ï¼Œä¸ºéæ•°å­—").append("ã€");
+        }
+        if(sb.length()<=0)return;
+        throw new VPhotoException(ResultCodeEnum.å‚æ•°å¼‚å¸¸,sb.toString());
+    }
 
-	/**
-	 * ÎŞĞ§Ğ¡Êı
-	 * @param num ´ıĞ£ÑéµÄĞ¡Êı
-	 * @param field ¶ÔÓ¦µÄÊôĞÔÃû³Æ
-	 */
-	public static void checkDecml(String num,String field) {
-		if(!isDecimal(num)) {
-			throw new VPhotoException(ResultCodeEnum.²ÎÊıÒì³£,"ÊôĞÔ["+field+"]ÖµÎª["+num+"]£¬Îª·ÇÊı×Ö");
-		}
-	}
+    /**
+     * æ— æ•ˆå°æ•°
+     * @param num å¾…æ ¡éªŒçš„å°æ•°
+     * @param field å¯¹åº”çš„å±æ€§åç§°
+     */
+    public static void checkDecml(String num,String field) {
+        if(!isDecimal(num)) {
+            throw new VPhotoException(ResultCodeEnum.å‚æ•°å¼‚å¸¸,"å±æ€§["+field+"]å€¼ä¸º["+num+"]ï¼Œä¸ºéæ•°å­—");
+        }
+    }
 
-	/**
-	 * ¼ì²é¶ÔÏóµÄÊôĞÔÊÇ·ñÊÇÊı×Ö
-	 * @param obj ´ı¼ì²é¶ÔÏó
-	 * @param fields ËùÓĞÊôĞÔÖµ ¶ººÅ·Ö¸î
-	 */
-	public static void checkDecmls(Object obj,String fields) {
-		if(isNull(obj)) {
-			throw new VPhotoException(ResultCodeEnum.²ÎÊıÒì³£,"ÊôĞÔ[obj]Îª¿Õ");
-		}
-		if(isNull(fields))return;
-		Map<String,String> fieldNames = getFieldsName(fields);
-		String newFields = fieldNames.get(NEW_FIELDS);//ĞÂÊôĞÔ×Ö·û´®
-		Map<String,Object> values = getFieldsValue(obj, newFields);
-		if(isNull(values)||values.size()<=0)return;
-		StringBuffer sb = new StringBuffer();
-		for (Map.Entry<String, Object> value : values.entrySet()) {
-			if(!isDecimal(null2string(value.getValue())))sb.append("ÊôĞÔ["+fieldNames.get(value.getKey())+"]ÖµÎª["+value.getValue()+"]£¬Îª·ÇÊı×Ö").append("¡¢");
-		}
-		if(sb.length()<=0)return;
-		throw new VPhotoException(ResultCodeEnum.²ÎÊıÒì³£,sb.toString());
-	}
+    /**
+     * æ£€æŸ¥å¯¹è±¡çš„å±æ€§æ˜¯å¦æ˜¯æ•°å­—
+     * @param obj å¾…æ£€æŸ¥å¯¹è±¡
+     * @param fields æ‰€æœ‰å±æ€§å€¼ é€—å·åˆ†å‰²
+     */
+    public static void checkDecmls(Object obj,String fields) {
+        if(isNull(obj)) {
+            throw new VPhotoException(ResultCodeEnum.å‚æ•°å¼‚å¸¸,"å±æ€§[obj]ä¸ºç©º");
+        }
+        if(isNull(fields))return;
+        Map<String,String> fieldNames = getFieldsName(fields);
+        String newFields = fieldNames.get(NEW_FIELDS);//æ–°å±æ€§å­—ç¬¦ä¸²
+        Map<String,Object> values = getFieldsValue(obj, newFields);
+        if(isNull(values)||values.size()<=0)return;
+        StringBuffer sb = new StringBuffer();
+        for (Map.Entry<String, Object> value : values.entrySet()) {
+            if(!isDecimal(null2string(value.getValue())))sb.append("å±æ€§["+fieldNames.get(value.getKey())+"]å€¼ä¸º["+value.getValue()+"]ï¼Œä¸ºéæ•°å­—").append("ã€");
+        }
+        if(sb.length()<=0)return;
+        throw new VPhotoException(ResultCodeEnum.å‚æ•°å¼‚å¸¸,sb.toString());
+    }
 
-	/**
-	 * ÎŞĞ§ÈÕÆÚ¸ñÊ½
-	 * @param date ´ıĞ£ÑéµÄÈÕÆÚ×Ö·û´®
-	 * @param field ¶ÔÓ¦µÄÊôĞÔÃû³Æ
-	 */
-	public static void checkDate(String date,String field) {
-		if(!DateUtils.isDateString(date)) {
-			throw new VPhotoException(ResultCodeEnum.²ÎÊıÒì³£,"ÊôĞÔ["+field+"]ÖµÎª["+date+"]£¬Îª·ÇÈÕÆÚ¸ñÊ½£¬Ä¬ÈÏ¸ñÊ½Îª[yyyy-MM-dd¡¢yyyy-MM-dd HH:mm:ss]");
-		}
-	}
+    /**
+     * æ— æ•ˆæ—¥æœŸæ ¼å¼
+     * @param date å¾…æ ¡éªŒçš„æ—¥æœŸå­—ç¬¦ä¸²
+     * @param field å¯¹åº”çš„å±æ€§åç§°
+     */
+    public static void checkDate(String date,String field) {
+        if(!DateUtils.isDateString(date)) {
+            throw new VPhotoException(ResultCodeEnum.å‚æ•°å¼‚å¸¸,"å±æ€§["+field+"]å€¼ä¸º["+date+"]ï¼Œä¸ºéæ—¥æœŸæ ¼å¼ï¼Œé»˜è®¤æ ¼å¼ä¸º[yyyy-MM-ddã€yyyy-MM-dd HH:mm:ss]");
+        }
+    }
 
-	/**
-	 * ¼ì²é¶ÔÏóµÄÊôĞÔÊÇ·ñÊÇÈÕÆÚ
-	 * @param obj ´ı¼ì²é¶ÔÏó
-	 * @param fields ËùÓĞÊôĞÔÖµ ¶ººÅ·Ö¸î
-	 */
-	public static void checkDates(Object obj,String fields) {
-		if(isNull(obj)) {
-			throw new VPhotoException(ResultCodeEnum.²ÎÊıÒì³£,"ÊôĞÔ[obj]Îª¿Õ");
-		}
-		if(isNull(fields))return;
-		Map<String,String> fieldNames = getFieldsName(fields);
-		String newFields = fieldNames.get(NEW_FIELDS);//ĞÂÊôĞÔ×Ö·û´®
-		Map<String,Object> values = getFieldsValue(obj, newFields);
-		if(isNull(values)||values.size()<=0)return;
-		StringBuffer sb = new StringBuffer();
-		for (Map.Entry<String, Object> value : values.entrySet()) {
-			if(!DateUtils.isDateString(null2string(value.getValue())))sb.append("ÊôĞÔ["+fieldNames.get(value.getKey())+"]ÖµÎª["+value.getValue()+"]£¬Îª·ÇÈÕÆÚ¸ñÊ½").append("¡¢");
-		}
-		if(sb.length()<=0)return;
-		sb.append("Ä¬ÈÏ¸ñÊ½Îª[yyyy-MM-dd¡¢yyyy-MM-dd HH:mm:ss]");
-		throw new VPhotoException(ResultCodeEnum.²ÎÊıÒì³£,sb.toString());
-	}
+    /**
+     * æ£€æŸ¥å¯¹è±¡çš„å±æ€§æ˜¯å¦æ˜¯æ—¥æœŸ
+     * @param obj å¾…æ£€æŸ¥å¯¹è±¡
+     * @param fields æ‰€æœ‰å±æ€§å€¼ é€—å·åˆ†å‰²
+     */
+    public static void checkDates(Object obj,String fields) {
+        if(isNull(obj)) {
+            throw new VPhotoException(ResultCodeEnum.å‚æ•°å¼‚å¸¸,"å±æ€§[obj]ä¸ºç©º");
+        }
+        if(isNull(fields))return;
+        Map<String,String> fieldNames = getFieldsName(fields);
+        String newFields = fieldNames.get(NEW_FIELDS);//æ–°å±æ€§å­—ç¬¦ä¸²
+        Map<String,Object> values = getFieldsValue(obj, newFields);
+        if(isNull(values)||values.size()<=0)return;
+        StringBuffer sb = new StringBuffer();
+        for (Map.Entry<String, Object> value : values.entrySet()) {
+            if(!DateUtils.isDateString(null2string(value.getValue())))sb.append("å±æ€§["+fieldNames.get(value.getKey())+"]å€¼ä¸º["+value.getValue()+"]ï¼Œä¸ºéæ—¥æœŸæ ¼å¼").append("ã€");
+        }
+        if(sb.length()<=0)return;
+        sb.append("é»˜è®¤æ ¼å¼ä¸º[yyyy-MM-ddã€yyyy-MM-dd HH:mm:ss]");
+        throw new VPhotoException(ResultCodeEnum.å‚æ•°å¼‚å¸¸,sb.toString());
+    }
 
-	/**
-	 * ÎŞĞ§ÈÕÆÚ¸ñÊ½ÅĞ¶Ï
-	 * @param date ÈÕÆÚ×Ö·û´®
-	 * @param formatString ÈÕÆÚ¸ñÊ½
-	 * @param field ¶ÔÓ¦ÊôĞÔÃû³Æ
-	 */
-	public static void checkDate(String date,String field,String formatString) {
-		if(DateUtils.isDateString(date,formatString)) {
-			throw new VPhotoException(ResultCodeEnum.²ÎÊıÒì³£,"ÊôĞÔ["+field+"]ÖµÎª["+date+"]£¬Îª·ÇÈÕÆÚ¸ñÊ½£¬Ö¸¶¨¸ñÊ½Îª["+formatString+"]");
-		}
-	}
+    /**
+     * æ— æ•ˆæ—¥æœŸæ ¼å¼åˆ¤æ–­
+     * @param date æ—¥æœŸå­—ç¬¦ä¸²
+     * @param formatString æ—¥æœŸæ ¼å¼
+     * @param field å¯¹åº”å±æ€§åç§°
+     */
+    public static void checkDate(String date,String field,String formatString) {
+        if(DateUtils.isDateString(date,formatString)) {
+            throw new VPhotoException(ResultCodeEnum.å‚æ•°å¼‚å¸¸,"å±æ€§["+field+"]å€¼ä¸º["+date+"]ï¼Œä¸ºéæ—¥æœŸæ ¼å¼ï¼ŒæŒ‡å®šæ ¼å¼ä¸º["+formatString+"]");
+        }
+    }
 
-	/**
-	 * ¼ì²é¶ÔÏóµÄÊôĞÔÊÇ·ñÊÇÈÕÆÚ
-	 * @param obj ´ı¼ì²é¶ÔÏó
-	 * @param fields ËùÓĞÊôĞÔÖµ ¶ººÅ·Ö¸î
-	 */
-	public static void checkDates(Object obj,String fields,String formatString) {
-		if(isNull(obj)) {
-			throw new VPhotoException(ResultCodeEnum.²ÎÊıÒì³£,"ÊôĞÔ[obj]Îª¿Õ");
-		}
-		if(isNull(fields))return;
-		Map<String,String> fieldNames = getFieldsName(fields);
-		String newFields = fieldNames.get(NEW_FIELDS);//ĞÂÊôĞÔ×Ö·û´®
-		Map<String,Object> values = getFieldsValue(obj, newFields);
-		if(isNull(values)||values.size()<=0)return;
-		StringBuffer sb = new StringBuffer();
-		for (Map.Entry<String, Object> value : values.entrySet()) {
-			if(!DateUtils.isDateString(null2string(value.getValue()),formatString))sb.append("ÊôĞÔ["+fieldNames.get(value.getKey())+"]ÖµÎª["+value.getValue()+"]£¬Îª·ÇÈÕÆÚ¸ñÊ½").append("¡¢");
-		}
-		if(sb.length()<=0)return;
-		sb.append("Ö¸¶¨¸ñÊ½Îª["+formatString+"]");
-		throw new VPhotoException(ResultCodeEnum.²ÎÊıÒì³£,sb.toString());
-	}
+    /**
+     * æ£€æŸ¥å¯¹è±¡çš„å±æ€§æ˜¯å¦æ˜¯æ—¥æœŸ
+     * @param obj å¾…æ£€æŸ¥å¯¹è±¡
+     * @param fields æ‰€æœ‰å±æ€§å€¼ é€—å·åˆ†å‰²
+     */
+    public static void checkDates(Object obj,String fields,String formatString) {
+        if(isNull(obj)) {
+            throw new VPhotoException(ResultCodeEnum.å‚æ•°å¼‚å¸¸,"å±æ€§[obj]ä¸ºç©º");
+        }
+        if(isNull(fields))return;
+        Map<String,String> fieldNames = getFieldsName(fields);
+        String newFields = fieldNames.get(NEW_FIELDS);//æ–°å±æ€§å­—ç¬¦ä¸²
+        Map<String,Object> values = getFieldsValue(obj, newFields);
+        if(isNull(values)||values.size()<=0)return;
+        StringBuffer sb = new StringBuffer();
+        for (Map.Entry<String, Object> value : values.entrySet()) {
+            if(!DateUtils.isDateString(null2string(value.getValue()),formatString))sb.append("å±æ€§["+fieldNames.get(value.getKey())+"]å€¼ä¸º["+value.getValue()+"]ï¼Œä¸ºéæ—¥æœŸæ ¼å¼").append("ã€");
+        }
+        if(sb.length()<=0)return;
+        sb.append("æŒ‡å®šæ ¼å¼ä¸º["+formatString+"]");
+        throw new VPhotoException(ResultCodeEnum.å‚æ•°å¼‚å¸¸,sb.toString());
+    }
 
-	/**
-	 * Ğ£Ñé³¤¶È
-	 * @param str ´ıĞ£ÑéµÄ×Ö·û´®
-	 * @param min ×î¶Ì³¤¶È ¿ÉÒÔÎª0£¬Îª0²»Ğ£Ñé
-	 * @param max ´ó²é¸ßÄÑ¶È ¿ÉÒÔÎª0 Îª0²»Ğ£Ñé
-	 * @param field ¶ÔÓ¦×Ö¶Î
-	 */
-	public static void checkLength(String str,int min,int max,String field) {
-		if(isNull(str)) {
-			checkNull(str, field);
-		}
-		int len = str.trim().length();
-		if(min>0) {
-			if(len<min) {
-				throw new VPhotoException(ResultCodeEnum.²ÎÊıÒì³£,"ÊôĞÔ["+field+"]ÖµÎª["+str+"]£¬³¤¶È¶ÌÓÚ×îĞ¡³¤¶È["+min+"]");
-			}
-		}
-		if(max>0) {
-			if(len>max) {
-				throw new VPhotoException(ResultCodeEnum.²ÎÊıÒì³£,"ÊôĞÔ["+field+"]ÖµÎª["+str+"]£¬³¤¶È´óÓÚ×î´ó³¤¶È["+max+"]");
-			}
-		}
-	}
+    /**
+     * æ ¡éªŒé•¿åº¦
+     * @param str å¾…æ ¡éªŒçš„å­—ç¬¦ä¸²
+     * @param min æœ€çŸ­é•¿åº¦ å¯ä»¥ä¸º0ï¼Œä¸º0ä¸æ ¡éªŒ
+     * @param max å¤§æŸ¥é«˜éš¾åº¦ å¯ä»¥ä¸º0 ä¸º0ä¸æ ¡éªŒ
+     * @param field å¯¹åº”å­—æ®µ
+     */
+    public static void checkLength(String str,int min,int max,String field) {
+        if(isNull(str)) {
+            checkNull(str, field);
+        }
+        int len = str.trim().length();
+        if(min>0) {
+            if(len<min) {
+                throw new VPhotoException(ResultCodeEnum.å‚æ•°å¼‚å¸¸,"å±æ€§["+field+"]å€¼ä¸º["+str+"]ï¼Œé•¿åº¦çŸ­äºæœ€å°é•¿åº¦["+min+"]");
+            }
+        }
+        if(max>0) {
+            if(len>max) {
+                throw new VPhotoException(ResultCodeEnum.å‚æ•°å¼‚å¸¸,"å±æ€§["+field+"]å€¼ä¸º["+str+"]ï¼Œé•¿åº¦å¤§äºæœ€å¤§é•¿åº¦["+max+"]");
+            }
+        }
+    }
 
-	/**
-	 * ¼ì²é¶ÔÏóµÄÊôĞÔÊÇ·ñÂú×ã³¤¶È
-	 * ÕâÀïÖ»×ö³¤¶ÈĞ£Ñé ²»×ö¿ÕĞ£Ñé ¼´Èç¹ûÖµÎª¿Õ ²»»áÅ×³öÒì³£
-	 * @param obj ´ı¼ì²é¶ÔÏó
-	 * @param fields ¸ñÊ½£ºfield-min-max,field-min-max
-	 */
-	public static void checkLengths(Object obj,String fields) {
-		if(isNull(obj)) {
-			throw new VPhotoException(ResultCodeEnum.²ÎÊıÒì³£,"ÊôĞÔ[obj]Îª¿Õ");
-		}
-		if(isNull(fields))return;
-		String newFields = "";
-		Map<String,String> fieldMap = new HashMap<String,String>();
-		String tmp[] = null;
-		for(String field:fields.split(",")) {
-			if(isNull(field))continue;
-			tmp = field.split("-");
-			if(tmp==null||tmp.length<3)continue;
-			newFields += tmp[0]+",";
-			fieldMap.put(tmp[0], tmp[1]+"-"+tmp[2]);
-		}
-		if(newFields.endsWith(","))newFields = newFields.substring(0,newFields.length()-1);
-		Map<String,Object> values = getFieldsValue(obj, newFields);
-		if(isNull(values)||values.size()<=0)return;
-		StringBuffer sbShort = new StringBuffer();
-		StringBuffer sbLong =  new StringBuffer();
-		String v = null;
-		int min,max;
-		for (Map.Entry<String, Object> value : values.entrySet()) {
-			min = string2int(fieldMap.get(value.getKey()).split("-")[0]);
-			max = string2int(fieldMap.get(value.getKey()).split("-")[1]);
-			v = null2string(value.getValue());
-			if(isNull(v))continue;//²»×ö¿ÕĞ£Ñé£¬ÖµÎª¿Õ²»»áÅ×³öÒì³£
-			int len = v.trim().length();
-			if(min>0) {
-				if(len<min) {
-					sbShort.append("ÊôĞÔ["+value.getKey()+"]ÖµÎª["+v+"]£¬³¤¶È¶ÌÓÚ×îĞ¡³¤¶È["+min+"]").append("¡¢");
-				}
-			}
-			if(max>0) {
-				if(len>max) {
-					sbLong.append("ÊôĞÔ["+value.getKey()+"]ÖµÎª["+v+"]£¬³¤¶È´óÓÚ×î´ó³¤¶È["+max+"]").append("¡¢");
-				}
-			}
-		}
-		if(sbShort.length()<=0&&sbLong.length()>0) {
-			throw new VPhotoException(ResultCodeEnum.²ÎÊıÒì³£,sbLong.toString());
-		}else if(sbShort.length()>0&&sbLong.length()<=0) {
-			throw new VPhotoException(ResultCodeEnum.²ÎÊıÒì³£,sbLong.toString());
-		}else if(sbShort.length()>0&&sbLong.length()>0) {//Èç¹û¶¼ÓĞ °´ÕÕĞ¡ÓÚµÄÀàĞÍÊä³ö
-			throw new VPhotoException(ResultCodeEnum.²ÎÊıÒì³£,sbShort.toString()+sbLong.toString());
-		}else {
-			//Ã»ÓĞÒì³£
-		}
-	}
+    /**
+     * æ£€æŸ¥å¯¹è±¡çš„å±æ€§æ˜¯å¦æ»¡è¶³é•¿åº¦
+     * è¿™é‡Œåªåšé•¿åº¦æ ¡éªŒ ä¸åšç©ºæ ¡éªŒ å³å¦‚æœå€¼ä¸ºç©º ä¸ä¼šæŠ›å‡ºå¼‚å¸¸
+     * @param obj å¾…æ£€æŸ¥å¯¹è±¡
+     * @param fields æ ¼å¼ï¼šfield-min-max,field-min-max
+     */
+    public static void checkLengths(Object obj,String fields) {
+        if(isNull(obj)) {
+            throw new VPhotoException(ResultCodeEnum.å‚æ•°å¼‚å¸¸,"å±æ€§[obj]ä¸ºç©º");
+        }
+        if(isNull(fields))return;
+        String newFields = "";
+        Map<String,String> fieldMap = new HashMap<String,String>();
+        String tmp[] = null;
+        for(String field:fields.split(",")) {
+            if(isNull(field))continue;
+            tmp = field.split("-");
+            if(tmp==null||tmp.length<3)continue;
+            newFields += tmp[0]+",";
+            fieldMap.put(tmp[0], tmp[1]+"-"+tmp[2]);
+        }
+        if(newFields.endsWith(","))newFields = newFields.substring(0,newFields.length()-1);
+        Map<String,Object> values = getFieldsValue(obj, newFields);
+        if(isNull(values)||values.size()<=0)return;
+        StringBuffer sbShort = new StringBuffer();
+        StringBuffer sbLong =  new StringBuffer();
+        String v = null;
+        int min,max;
+        for (Map.Entry<String, Object> value : values.entrySet()) {
+            min = string2int(fieldMap.get(value.getKey()).split("-")[0]);
+            max = string2int(fieldMap.get(value.getKey()).split("-")[1]);
+            v = null2string(value.getValue());
+            if(isNull(v))continue;//ä¸åšç©ºæ ¡éªŒï¼Œå€¼ä¸ºç©ºä¸ä¼šæŠ›å‡ºå¼‚å¸¸
+            int len = v.trim().length();
+            if(min>0) {
+                if(len<min) {
+                    sbShort.append("å±æ€§["+value.getKey()+"]å€¼ä¸º["+v+"]ï¼Œé•¿åº¦çŸ­äºæœ€å°é•¿åº¦["+min+"]").append("ã€");
+                }
+            }
+            if(max>0) {
+                if(len>max) {
+                    sbLong.append("å±æ€§["+value.getKey()+"]å€¼ä¸º["+v+"]ï¼Œé•¿åº¦å¤§äºæœ€å¤§é•¿åº¦["+max+"]").append("ã€");
+                }
+            }
+        }
+        if(sbShort.length()<=0&&sbLong.length()>0) {
+            throw new VPhotoException(ResultCodeEnum.å‚æ•°å¼‚å¸¸,sbLong.toString());
+        }else if(sbShort.length()>0&&sbLong.length()<=0) {
+            throw new VPhotoException(ResultCodeEnum.å‚æ•°å¼‚å¸¸,sbLong.toString());
+        }else if(sbShort.length()>0&&sbLong.length()>0) {//å¦‚æœéƒ½æœ‰ æŒ‰ç…§å°äºçš„ç±»å‹è¾“å‡º
+            throw new VPhotoException(ResultCodeEnum.å‚æ•°å¼‚å¸¸,sbShort.toString()+sbLong.toString());
+        }else {
+            //æ²¡æœ‰å¼‚å¸¸
+        }
+    }
 
-	/**
-	 * »ñÈ¡¶ÔÏó²¿·ÖÊôĞÔÖµ
-	 * @param obj
-	 * @param fields
-	 * @return
-	 */
-	private static Map<String,Object> getFieldsValue(Object obj,String fields){
-		PropertyDescriptor[] pds = BeanUtils.getPropertyDescriptors(obj.getClass());
-		List<String> proList = (fields != null ? Arrays.asList(fields.split(",")) : null);
-		Method readMethod = null;
-		Object value = null;
-		Map<String,Object> values = new HashMap<String,Object>();
-		for (PropertyDescriptor pd : pds) {
-			if(!proList.contains(pd.getName()))continue;//Èç¹û´«ÈëÁËĞèÒª¸´ÖÆµÄÊôĞÔ ²¢ÇÒµ±Ç°ÊôĞÔ²»ÔÚÁĞ±íÄÚ Ôò²»ĞèÒª¸´ÖÆ
-			try {
-				readMethod = pd.getReadMethod();
-				value = readMethod.invoke(obj);
-			} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-				e.printStackTrace();
-				value = null;
-			}
-			values.put(pd.getName(), value);
-		}
-		return values;
-	}
-	/**
-	 * »ñÈ¡feild¶ÔÓ¦µÄname
-	 * @param fields
-	 * @return
-	 */
-	private static Map<String,String> getFieldsName(String fields){
-		List<String> proList = (fields != null ? Arrays.asList(fields.split(",")) : null);
-		StringBuffer newFields = new StringBuffer();
-		Map<String,String> fieldNames = new HashMap<String,String>();
-		String fieldName[] = null;
-		if(proList!=null) {
-			for(String one:proList) {
-				if(isNull(one))continue;
-				if(one.indexOf(FIELD_NAME_SEP)<0) { //Î´´«ÈëÃû×Ö
-					fieldNames.put(one, one);
-					newFields.append(one).append(",");
-				}else {
-					fieldName = one.split(FIELD_NAME_SEP);
-					fieldNames.put(fieldName[0], fieldName[1]);
-					newFields.append(fieldName[0]).append(",");
-				}
-			}
-		}
-		fieldNames.put(NEW_FIELDS, newFields.toString());
-		return fieldNames;
-	}
+    /**
+     * è·å–å¯¹è±¡éƒ¨åˆ†å±æ€§å€¼
+     * @param obj
+     * @param fields
+     * @return
+     */
+    private static Map<String,Object> getFieldsValue(Object obj,String fields){
+        PropertyDescriptor[] pds = BeanUtils.getPropertyDescriptors(obj.getClass());
+        List<String> proList = (fields != null ? Arrays.asList(fields.split(",")) : null);
+        Method readMethod = null;
+        Object value = null;
+        Map<String,Object> values = new HashMap<String,Object>();
+        for (PropertyDescriptor pd : pds) {
+            if(!proList.contains(pd.getName()))continue;//å¦‚æœä¼ å…¥äº†éœ€è¦å¤åˆ¶çš„å±æ€§ å¹¶ä¸”å½“å‰å±æ€§ä¸åœ¨åˆ—è¡¨å†… åˆ™ä¸éœ€è¦å¤åˆ¶
+            try {
+                readMethod = pd.getReadMethod();
+                value = readMethod.invoke(obj);
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+                e.printStackTrace();
+                value = null;
+            }
+            values.put(pd.getName(), value);
+        }
+        return values;
+    }
+    /**
+     * è·å–feildå¯¹åº”çš„name
+     * @param fields
+     * @return
+     */
+    private static Map<String,String> getFieldsName(String fields){
+        List<String> proList = (fields != null ? Arrays.asList(fields.split(",")) : null);
+        StringBuffer newFields = new StringBuffer();
+        Map<String,String> fieldNames = new HashMap<String,String>();
+        String fieldName[] = null;
+        if(proList!=null) {
+            for(String one:proList) {
+                if(isNull(one))continue;
+                if(one.indexOf(FIELD_NAME_SEP)<0) { //æœªä¼ å…¥åå­—
+                    fieldNames.put(one, one);
+                    newFields.append(one).append(",");
+                }else {
+                    fieldName = one.split(FIELD_NAME_SEP);
+                    fieldNames.put(fieldName[0], fieldName[1]);
+                    newFields.append(fieldName[0]).append(",");
+                }
+            }
+        }
+        fieldNames.put(NEW_FIELDS, newFields.toString());
+        return fieldNames;
+    }
 
 
-	/**
-	 * ÅĞ¶ÏÊÇ·ñÎªÒ»¸ö×ù»úºÅ
-	 * @return
-	 */
-	public static boolean checkMPhone(String phoneNumber,String field){
-		if(isNull(phoneNumber)){
-			return false;
-		}
-		Pattern p = Pattern.compile(REGEX_MPHONE);
-		if(!p.matcher(phoneNumber).matches()) {
-			throw new VPhotoException(ResultCodeEnum.²ÎÊıÒì³£,"ÊôĞÔ["+field+"]ÖµÎª["+phoneNumber+"],²»ÊÇÊÖ»úºÅ");
-		}
-		return true;
-	}
+    /**
+     * åˆ¤æ–­æ˜¯å¦ä¸ºä¸€ä¸ªåº§æœºå·
+     * @return
+     */
+    public static boolean checkMPhone(String phoneNumber,String field){
+        if(isNull(phoneNumber)){
+            return false;
+        }
+        Pattern p = Pattern.compile(REGEX_MPHONE);
+        if(!p.matcher(phoneNumber).matches()) {
+            throw new VPhotoException(ResultCodeEnum.å‚æ•°å¼‚å¸¸,"å±æ€§["+field+"]å€¼ä¸º["+phoneNumber+"],ä¸æ˜¯æ‰‹æœºå·");
+        }
+        return true;
+    }
 
-	/**
-	 * ÅĞ¶ÏÊÇ·ñÎªÒ»¸ö×ù»úºÅ
-	 * @return
-	 */
-	public static boolean checkTPhone(String phoneNumber,String field){
-		if(isNull(phoneNumber)){
-			return false;
-		}
-		Pattern p = Pattern.compile(REGEX_TPHONE);
-		if(!p.matcher(phoneNumber).matches()) {
-			throw new VPhotoException(ResultCodeEnum.²ÎÊıÒì³£,"ÊôĞÔ["+field+"]ÖµÎª["+phoneNumber+"],²»ÊÇ×ù»úºÅ");
-		}
-		return true;
-	}
+    /**
+     * åˆ¤æ–­æ˜¯å¦ä¸ºä¸€ä¸ªåº§æœºå·
+     * @return
+     */
+    public static boolean checkTPhone(String phoneNumber,String field){
+        if(isNull(phoneNumber)){
+            return false;
+        }
+        Pattern p = Pattern.compile(REGEX_TPHONE);
+        if(!p.matcher(phoneNumber).matches()) {
+            throw new VPhotoException(ResultCodeEnum.å‚æ•°å¼‚å¸¸,"å±æ€§["+field+"]å€¼ä¸º["+phoneNumber+"],ä¸æ˜¯åº§æœºå·");
+        }
+        return true;
+    }
 
-	/**
-	 * ÅĞ¶ÏÊÇ·ñÎªÒ»¸öÊÖ»úºÅ
-	 * @return
-	 */
-	public static boolean checkEmail(String email,String field){
-		if(isNull(email)){
-			return false;
-		}
-		Pattern p = Pattern.compile(REGEX_EMAIL);
-		if(!p.matcher(email).matches()) {
-			throw new VPhotoException(ResultCodeEnum.²ÎÊıÒì³£,"ÊôĞÔ["+field+"]ÖµÎª["+email+"],²»ÊÇÊÖ»úºÅ");
-		}
-		return true;
-	}
+    /**
+     * åˆ¤æ–­æ˜¯å¦ä¸ºä¸€ä¸ªæ‰‹æœºå·
+     * @return
+     */
+    public static boolean checkEmail(String email,String field){
+        if(isNull(email)){
+            return false;
+        }
+        Pattern p = Pattern.compile(REGEX_EMAIL);
+        if(!p.matcher(email).matches()) {
+            throw new VPhotoException(ResultCodeEnum.å‚æ•°å¼‚å¸¸,"å±æ€§["+field+"]å€¼ä¸º["+email+"],ä¸æ˜¯æ‰‹æœºå·");
+        }
+        return true;
+    }
 
 }
