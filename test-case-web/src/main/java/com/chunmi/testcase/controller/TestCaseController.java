@@ -19,8 +19,14 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.chunmi.testcase.service.ActualResultService;
+import com.chunmi.testcase.service.CaseDetailService;
+import com.chunmi.testcase.service.ProjectModuleService;
+import com.chunmi.testcase.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,14 +38,6 @@ import com.chunmi.testcase.annotation.Loggable;
 import com.chunmi.testcase.model.po.ActualResult;
 import com.chunmi.testcase.model.po.CaseDetail;
 import com.chunmi.testcase.model.vo.CaseDetailVo;
-import com.chunmi.testcase.service.ActualResultService;
-import com.chunmi.testcase.service.CaseDetailService;
-import com.chunmi.testcase.service.ProjectModuleService;
-import com.chunmi.testcase.utils.Constant;
-import com.chunmi.testcase.utils.MessageExceptionEnum;
-import com.chunmi.testcase.utils.PageBean;
-import com.chunmi.testcase.utils.PageUtil;
-import com.chunmi.testcase.utils.Response;
 import com.fasterxml.jackson.databind.Module;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -51,14 +49,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TestCaseController {
 	
-	@Autowired
-	private CaseDetailService caseDetailService;
+	@Resource
+	private CaseDetailService caseDetailServiceImpl;
 	
-	@Autowired
-	private ProjectModuleService moduleService;
+	@Resource
+	private ProjectModuleService projectModuleServiceImpl;
 	
-	@Autowired
-	private ActualResultService actualResultService;
+	@Resource
+	private ActualResultService actualResultServiceImpl;
 	
 
 	/**
@@ -82,9 +80,9 @@ public class TestCaseController {
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		map.put(Constant.LOGIN_MANAGER, request.getSession().getAttribute(Constant.LOGIN_MANAGER));		
 		try {
-			PageBean<CaseDetail> pb = caseDetailService.selectTestCaseList(testCase,pageCurrent,pageSize,pageCount);
-			List<Module> moduleList = moduleService.selectAllModuleList();
-			List<ActualResult> actualResultList = actualResultService.selectAllActualResultList();
+			PageBean<CaseDetail> pb = caseDetailServiceImpl.selectTestCaseList(testCase,pageCurrent,pageSize,pageCount);
+			List<Module> moduleList = projectModuleServiceImpl.selectAllModuleList();
+			List<ActualResult> actualResultList = actualResultServiceImpl.selectAllActualResultList();
 			map.put("pb",pb);
 			map.put("moduleList",moduleList);
 			map.put("actualResultList",actualResultList);
@@ -119,9 +117,9 @@ public class TestCaseController {
 	@ResponseBody
 	public Response addTestCase(HttpServletRequest request,CaseDetail testCase) {
 		try {
-			if(caseDetailService.selectTestCaseByConditions(testCase.getCaseName())!=null)
+			if(caseDetailServiceImpl.selectTestCaseByConditions(testCase.getCaseName())!=null)
 				return Response.getError(MessageExceptionEnum.TESTCASE_EXISTED);
-			caseDetailService.addTestCase(testCase);
+			caseDetailServiceImpl.addTestCase(testCase);
 			return Response.getSuccess();
 		} catch (Exception e) {
 			log.info(e.getMessage());
@@ -145,7 +143,7 @@ public class TestCaseController {
 	@ResponseBody
 	public CaseDetailVo selectTestCaseDetailById(@PathVariable("id") Long id) {
 		try {
-			CaseDetailVo caseDetail = caseDetailService.selectTestCaseDetailById(id);
+			CaseDetailVo caseDetail = caseDetailServiceImpl.selectTestCaseDetailById(id);
 			return caseDetail;
 		} catch (Exception e) {
 			log.info(e.getMessage());
@@ -167,7 +165,7 @@ public class TestCaseController {
 	@ResponseBody
 	public Response delTestCaseDetailById(CaseDetail caseDetail) {
 		try {
-			caseDetailService.delTestCaseDetailById(caseDetail.getId());
+			caseDetailServiceImpl.delTestCaseDetailById(caseDetail.getId());
 			return Response.getSuccess();
 		} catch (Exception e) {
 			log.info(e.getMessage());
@@ -190,7 +188,7 @@ public class TestCaseController {
 	@ResponseBody
 	public Response updateTestCase(CaseDetail caseDetail) {
 		try {
-			caseDetailService.updateTestCase(caseDetail);
+			caseDetailServiceImpl.updateTestCase(caseDetail);
 			return Response.getSuccess();
 		} catch (Exception e) {
 			log.info(e.getMessage());
@@ -214,10 +212,10 @@ public class TestCaseController {
 		PageBean<CaseDetailVo> pb = null;
 		try {
 			String fileName = "测试用例_"+System.currentTimeMillis()+".xls";  //设置下载时excel客户端名称
-			pb = caseDetailService.selectExportTestCaseByConditions(caseDetail);
+			pb = caseDetailServiceImpl.selectExportTestCaseByConditions(caseDetail);
 			response.setContentType("application/vnd.ms-excel");
 			response.setHeader("Content-disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
-			caseDetailService.exportTestCase(pb,response);
+			caseDetailServiceImpl.exportTestCase(pb,response);
 		} catch (Exception e) {
 			log.error("查询测试用例失败:{}",e.getMessage());
 		}
@@ -239,12 +237,12 @@ public class TestCaseController {
 			String fileName = "测试用例_"+System.currentTimeMillis()+".xls";  //设置下载时excel客户端名称
 			List<CaseDetailVo> caseDetailList = new ArrayList<CaseDetailVo>();
 			PageBean<CaseDetailVo> pb = new PageBean<CaseDetailVo>();
-			CaseDetailVo caseDetail = caseDetailService.selectTestCaseDetailById(id);
+			CaseDetailVo caseDetail = caseDetailServiceImpl.selectTestCaseDetailById(id);
 			caseDetailList.add(caseDetail);
 			pb.setList(caseDetailList);
 			response.setContentType("application/vnd.ms-excel");
 			response.setHeader("Content-disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
-			caseDetailService.exportTestCase(pb, response);
+			caseDetailServiceImpl.exportTestCase(pb, response);
 		} catch (Exception e) {
 			log.error("查询测试用例失败:{}",e.getMessage());
 		}

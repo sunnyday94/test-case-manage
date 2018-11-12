@@ -1,22 +1,18 @@
 /**
- * This class was created by sunny. It's distributed as
- * part of the test-case-service Mod.
- *
- * 版权所有(C) 上海纯米电子科技有限公司 2014-2023
- * Copyright 2014-2023 CHUNMI TECHNOLOGY CO..
- *
- * This software is the confidential and proprietary information of
- * CHUNMI Corporation ("Confidential Information").  You
- * shall not disclose such Confidential Information and shall use
- * it only in accordance with the terms of the license agreement
- * you entered into with CHUNMI.
- *
- * File Created @ [2018年5月22日, 上午11:32:48 (CST)]
+ * FileName: TemporaryServiceImpl
+ * Author:   sunny
+ * Date:     2018/11/12 22:39
+ * History:
+ * <author>          <time>          <version>          <desc>
+ * 作者姓名           修改时间           版本号              描述
  */
 package com.chunmi.testcase.service.impl;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.chunmi.testcase.model.po.CaseDetail;
+import com.chunmi.testcase.model.po.ProjectModule;
+import com.chunmi.testcase.service.CaseDetailService;
+import com.chunmi.testcase.service.ProjectModuleService;
+import com.chunmi.testcase.service.TemporaryService;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -25,24 +21,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import com.chunmi.testcase.model.po.CaseDetail;
-import com.chunmi.testcase.model.po.ProjectModule;
-import com.chunmi.testcase.service.CaseDetailService;
-import com.chunmi.testcase.service.ProjectModuleService;
-import com.chunmi.testcase.service.TemporaryService;
 
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * 〈一句话功能简述〉
+ * @author sunny
+ * @create 2018/11/12
+ * @since 1.0.0
+ */
 @Service
 public class TemporaryServiceImpl implements TemporaryService {
 
-    @Autowired
-    private ProjectModuleService moduleService;
+    @Resource
+    private ProjectModuleService projectModuleService;
 
-    @Autowired
+    @Resource
     private CaseDetailService caseDetailService;
 
     @Override
-    @Transactional(propagation=Propagation.REQUIRED)
-    public void readContent(Workbook wb,Long projectId,Long versionId) {
+    @Transactional(propagation= Propagation.REQUIRED)
+    public void readContent(Workbook wb, Long projectId, Long versionId) {
         Sheet sheet = wb.getSheetAt(0);// 第一个工作表
         int firstRowIndex = sheet.getFirstRowNum(); //获取第一行(从0开始)
         int lastRowIndex = sheet.getLastRowNum();   //获取最后一行(从0开始)
@@ -99,9 +100,9 @@ public class TemporaryServiceImpl implements TemporaryService {
                             ProjectModule pm = new ProjectModule();
                             pm.setProjectId(projectId);
                             pm.setModuleName(cell.getStringCellValue());
-                            ProjectModule selectPm = moduleService.selectModuleByProjectIdAndModuleName(pm);
+                            ProjectModule selectPm = projectModuleService.selectModuleByProjectIdAndModuleName(pm);
                             if(selectPm==null) {
-                                moduleService.insertNewModule(pm);
+                                projectModuleService.insertNewModule(pm);
                                 caseDetail.setModuleId(pm.getId());
                             }else {
                                 caseDetail.setModuleId(selectPm.getId());

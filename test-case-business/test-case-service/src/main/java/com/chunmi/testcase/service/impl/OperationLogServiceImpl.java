@@ -1,24 +1,12 @@
 /**
- * This class was created by sunny. It's distributed as
- * part of the test-case-service Mod.
- *
- * °æÈ¨ËùÓĞ(C) ÉÏº£´¿Ã×µç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2023
- * Copyright 2014-2023 CHUNMI TECHNOLOGY CO..
- *
- * This software is the confidential and proprietary information of
- * CHUNMI Corporation ("Confidential Information").  You
- * shall not disclose such Confidential Information and shall use
- * it only in accordance with the terms of the license agreement
- * you entered into with CHUNMI.
- *
- * File Created @ [2018Äê5ÔÂ23ÈÕ, ÏÂÎç2:09:02 (CST)]
+ * FileName: OperationLogServiceImpl
+ * Author:   sunny
+ * Date:     2018/11/12 22:30
+ * History:
+ * <author>          <time>          <version>          <desc>
+ * ä½œè€…å§“å           ä¿®æ”¹æ—¶é—´           ç‰ˆæœ¬å·              æè¿°
  */
 package com.chunmi.testcase.service.impl;
-
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.chunmi.testcase.mapper.OperationLogMapper;
 import com.chunmi.testcase.model.po.OperationLog;
@@ -26,52 +14,62 @@ import com.chunmi.testcase.model.po.Users;
 import com.chunmi.testcase.service.OperationLogService;
 import com.chunmi.testcase.utils.PageBean;
 import com.chunmi.testcase.utils.PageRequest;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+ * ã€ˆä¸€å¥è¯åŠŸèƒ½ç®€è¿°ã€‰
+ * @author sunny
+ * @create 2018/11/12
+ * @since 1.0.0
+ */
 @Service
 public class OperationLogServiceImpl implements OperationLogService {
 
-	@Autowired
-	private OperationLogMapper operationLogMapper;
-	
-	@Override
-	public Integer insertOperationLog(OperationLog operationLog) {
-		return operationLogMapper.insertSelective(operationLog);
-	}
+    @Resource
+    private OperationLogMapper operationLogMapper;
 
-	@Override
-	public PageBean<OperationLog> selectOperationLogListByCondition(Users user, Integer pageCurrent, Integer pageSize,
-			Integer pageCount) {
-		PageBean<OperationLog> pb = new PageBean<OperationLog>();
-		//ÅĞ¶Ï
-		if(pageSize == 0) pageSize = 12;         //Ã¿Ò³12ÌõÊı¾İ
-		if(pageCurrent == 0) pageCurrent = 1;    //µ±Ç°Ò³
-		Integer rows = operationLogMapper.selectOperationLogsCountsByCondition(user).intValue();
-		pb.setRows(rows);   //ÉèÖÃ×ÜÌõÄ¿Êı
-		//¼ÆËã·ÖÒ³
-		pageCount = rows%pageSize == 0 ? (rows/pageSize) : (rows/pageSize) + 1;
-		//ÉèÖÃ×ÜÒ³Êı
-		pageCount = pageCount ==0 ? 1: pageCount;  
-		//Èç¹ûµ±Ç°Ò³>=×î´óÒ³,ÔòÉèÖÃµ±Ç°Ò³Îª×î´óÒ³
-		if(pageCurrent>=pageCount) {
-			pb.setPageCurrent(pageCount);
-		}
-		PageRequest pageRequest = new PageRequest(pageCurrent, pageSize);
-		pb.setPageSize(pageSize);       //Ã¿Ò³ÏÔÊ¾ÌõÄ¿
-		pb.setPageCount(pageCount);     //×ÜÒ³Êı
-		pb.setObjectBean(user);        // ÉèÖÃ²éÑ¯Ìõ¼ş
-		List<OperationLog> operationLogs = operationLogMapper.selectOperationLogListByCondition(user,pageRequest);
-		pb.setList(operationLogs);
-		return pb;
-	}
+    @Override
+    public Integer insertOperationLog(OperationLog operationLog) {
+        return operationLogMapper.insertSelective(operationLog);
+    }
 
-	@Override
-	public Integer delOperationLog(OperationLog operationLog) {
-		return operationLogMapper.delOperationLog(operationLog);
-	}
+    @Override
+    public PageBean<OperationLog> selectOperationLogListByCondition(Users user, Integer pageCurrent, Integer pageSize,
+                                                                    Integer pageCount) {
+        PageBean<OperationLog> pb = new PageBean<>();
+        //ï¿½Ğ¶ï¿½
+        if(pageSize == 0) pageSize = 12;         //æ¯é¡µæ¡ç›®æ•°
+        if(pageCurrent == 0) pageCurrent = 1;    //å½“å‰é¡µ
+        Integer rows = operationLogMapper.selectOperationLogsCountsByCondition(user).intValue();
+        pb.setRows(rows);
+        //è®¡ç®—åˆ†é¡µ
+        pageCount = rows%pageSize == 0 ? (rows/pageSize) : (rows/pageSize) + 1;
+        //è®¾ç½®åˆ†é¡µ
+        pageCount = pageCount ==0 ? 1: pageCount;
 
-	@Override
-	public OperationLog selectOperationLogDetailById(Long id) {
-		return operationLogMapper.selectOperationLogDetailById(id);
-	}
+        if(pageCurrent>=pageCount) {
+            pb.setPageCurrent(pageCount);
+        }
+        PageRequest pageRequest = new PageRequest(pageCurrent, pageSize);
+        pb.setPageSize(pageSize);
+        pb.setPageCount(pageCount);
+        pb.setObjectBean(user);
+        List<OperationLog> operationLogs = operationLogMapper.selectOperationLogListByCondition(user,pageRequest);
+        pb.setList(operationLogs);
+        return pb;
+    }
+
+    @Override
+    public Integer delOperationLog(OperationLog operationLog) {
+        return operationLogMapper.delOperationLog(operationLog);
+    }
+
+    @Override
+    public OperationLog selectOperationLogDetailById(Long id) {
+        return operationLogMapper.selectOperationLogDetailById(id);
+    }
 
 }

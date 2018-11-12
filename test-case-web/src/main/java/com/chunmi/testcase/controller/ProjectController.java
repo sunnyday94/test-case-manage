@@ -16,8 +16,11 @@
 package com.chunmi.testcase.controller;
 
 import java.util.HashMap;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import com.chunmi.testcase.service.ProjectService;
+import com.chunmi.testcase.utils.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,12 +30,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.chunmi.testcase.annotation.Loggable;
 import com.chunmi.testcase.model.po.Project;
-import com.chunmi.testcase.service.ProjectService;
-import com.chunmi.testcase.utils.Constant;
-import com.chunmi.testcase.utils.MessageExceptionEnum;
-import com.chunmi.testcase.utils.PageBean;
-import com.chunmi.testcase.utils.PageUtil;
-import com.chunmi.testcase.utils.Response;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -40,7 +37,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ProjectController {
 
-	@Autowired
+	@Resource
 	private ProjectService projectService;
 	
 	

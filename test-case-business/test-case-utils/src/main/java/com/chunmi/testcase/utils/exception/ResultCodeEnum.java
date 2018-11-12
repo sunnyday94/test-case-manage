@@ -1,21 +1,19 @@
 /**
- * This class was created by sunny. It's distributed as
- * part of the test-case-utils Mod.
- *
- * 版权所有(C) 唯存(上海)网络科技有限公司 2014-2023
- * Copyright 2014-2023 Vphotos TECHNOLOGY CO..
- *
- * This software is the confidential and proprietary information of
- * Vphotos Corporation ("Confidential Information").  You
- * shall not disclose such Confidential Information and shall use
- * it only in accordance with the terms of the license agreement
- * you entered into with Vphotos.
- *
- * File Created @ [2018年11月1日, 下午4:04:58 (CST)]
+ * FileName: ResultCodeEnum
+ * Author:   sunny
+ * Date:     2018/11/12 21:59
+ * History:
+ * <author>          <time>          <version>          <desc>
+ * 作者姓名           修改时间           版本号              描述
  */
-
 package com.chunmi.testcase.utils.exception;
 
+/**
+ * 〈一句话功能简述〉
+ * @author sunny
+ * @create 2018/11/12
+ * @since 1.0.0
+ */
 public enum ResultCodeEnum {
     /*0-9999状态码务使用,系统级状态码*/
     成功(0, 200, "succeed"),
@@ -53,4 +51,3 @@ public enum ResultCodeEnum {
         return null;
     }
 }
-

@@ -1,38 +1,36 @@
 /**
- * This class was created by sunny. It's distributed as
- * part of the test-case-service Mod.
- *
- * °æÈ¨ËùÓĞ(C) ÉÏº£´¿Ã×µç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2023
- * Copyright 2014-2023 CHUNMI TECHNOLOGY CO..
- *
- * This software is the confidential and proprietary information of
- * CHUNMI Corporation ("Confidential Information").  You
- * shall not disclose such Confidential Information and shall use
- * it only in accordance with the terms of the license agreement
- * you entered into with CHUNMI.
- *
- * File Created @ [2018Äê4ÔÂ9ÈÕ, ÉÏÎç10:27:23 (CST)]
+ * FileName: ActualResultServiceImpl
+ * Author:   sunny
+ * Date:     2018/11/12 22:28
+ * History:
+ * <author>          <time>          <version>          <desc>
+ * ä½œè€…å§“å           ä¿®æ”¹æ—¶é—´           ç‰ˆæœ¬å·              æè¿°
  */
 package com.chunmi.testcase.service.impl;
-
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.chunmi.testcase.mapper.ActualResultMapper;
 import com.chunmi.testcase.model.po.ActualResult;
 import com.chunmi.testcase.service.ActualResultService;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+ * ã€ˆä¸€å¥è¯åŠŸèƒ½ç®€è¿°ã€‰
+ * @author sunny
+ * @create 2018/11/12
+ * @since 1.0.0
+ */
 @Service
-public class ActualResultServiceImpl implements ActualResultService{
+public class ActualResultServiceImpl implements ActualResultService {
 
-	@Autowired
-	private ActualResultMapper actualResultMapper;
-	
-	@Override
-	public List<ActualResult> selectAllActualResultList() {
-		return actualResultMapper.selectAllActualResultList();
-	}
+    @Resource
+    private ActualResultMapper actualResultMapper;
+
+    @Override
+    public List<ActualResult> selectAllActualResultList() {
+        return actualResultMapper.selectAllActualResultList();
+    }
 
 }

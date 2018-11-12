@@ -1,71 +1,69 @@
 /**
- * This class was created by sunny. It's distributed as
- * part of the test-case-service Mod.
- *
- * °æÈ¨ËùÓĞ(C) ÉÏº£´¿Ã×µç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2023
- * Copyright 2014-2023 CHUNMI TECHNOLOGY CO..
- *
- * This software is the confidential and proprietary information of
- * CHUNMI Corporation ("Confidential Information").  You
- * shall not disclose such Confidential Information and shall use
- * it only in accordance with the terms of the license agreement
- * you entered into with CHUNMI.
- *
- * File Created @ [2018Äê4ÔÂ3ÈÕ, ÏÂÎç4:03:12 (CST)]
+ * FileName: ProjectVersionServiceImpl
+ * Author:   sunny
+ * Date:     2018/11/12 22:38
+ * History:
+ * <author>          <time>          <version>          <desc>
+ * ä½œè€…å§“å           ä¿®æ”¹æ—¶é—´           ç‰ˆæœ¬å·              æè¿°
  */
 package com.chunmi.testcase.service.impl;
-
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.chunmi.testcase.mapper.ProjectVersionMapper;
 import com.chunmi.testcase.model.po.ProjectVersion;
 import com.chunmi.testcase.service.ProjectVersionService;
 import com.chunmi.testcase.utils.PageBean;
 import com.chunmi.testcase.utils.PageRequest;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+ * ã€ˆä¸€å¥è¯åŠŸèƒ½ç®€è¿°ã€‰
+ * @author sunny
+ * @create 2018/11/12
+ * @since 1.0.0
+ */
 @Service
 public class ProjectVersionServiceImpl implements ProjectVersionService {
-	
-	@Autowired
-	private ProjectVersionMapper versionMapper;
 
-	@Override
-	public PageBean<ProjectVersion> selectProjectVersionByCondition(ProjectVersion projectVersion, Integer pageCurrent,
-			Integer pageSize, Integer pageCount) {
-		PageBean<ProjectVersion> pb = new PageBean<ProjectVersion>();
-		//ÅĞ¶Ï
-		if(pageCurrent==0) pageCurrent =1;  
-		if(pageSize==0)  pageSize = 12;  //Ã¿Ò³ÏÔÊ¾12ÌõÊı¾İ
-		Integer rows = versionMapper.selectProjectVersionCountsByCondition(projectVersion);
-		pb.setRows(rows);  
-		//¼ÆËã·ÖÒ³
-		pageCount = rows%pageSize == 0 ? (rows/pageSize) : (rows/pageSize) + 1;
-		//ÉèÖÃ×ÜÒ³Êı
-		pageCount = pageCount ==0 ? 1: pageCount;  
-		//Èç¹ûµ±Ç°Ò³>=×î´óÒ³,ÔòÉèÖÃµ±Ç°Ò³Îª×î´óÒ³
-		if(pageCurrent>=pageCount) {
-			pb.setPageCurrent(pageCount);
-		}
-		PageRequest pageRequest = new PageRequest(pageCurrent, pageSize);
-		pb.setPageSize(pageSize);       //Ã¿Ò³ÏÔÊ¾ÌõÄ¿
-		pb.setPageCount(pageCount);     //×ÜÒ³Êı
-		pb.setObjectBean(projectVersion);      //ÉèÖÃ²éÑ¯Ìõ¼ş
-		List<ProjectVersion> projectVersionList = versionMapper.selectProjectVersionByCondition(pageRequest,projectVersion);
-		pb.setList(projectVersionList);
-		return pb;
-	}
+    @Resource
+    private ProjectVersionMapper projectVersionMapper;
 
-	@Override
-	public ProjectVersion seletProjectVersionByProjectIdAndVersionNum(ProjectVersion projectVersion) {
-		return versionMapper.seletProjectVersionByProjectIdAndVersionNum(projectVersion);
-	}
+    @Override
+    public PageBean<ProjectVersion> selectProjectVersionByCondition(ProjectVersion projectVersion, Integer pageCurrent,
+                                                                    Integer pageSize, Integer pageCount) {
+        PageBean<ProjectVersion> pb = new PageBean<>();
 
-	@Override
-	public Integer addProjectVersion(ProjectVersion projectVersion) {
-		return versionMapper.insertSelective(projectVersion);
-	}
+        if(pageCurrent==0) pageCurrent =1;
+        if(pageSize==0)  pageSize = 12;
+        Integer rows = projectVersionMapper.selectProjectVersionCountsByCondition(projectVersion);
+        pb.setRows(rows);
+
+        pageCount = rows%pageSize == 0 ? (rows/pageSize) : (rows/pageSize) + 1;
+
+        pageCount = pageCount ==0 ? 1: pageCount;
+
+        if(pageCurrent>=pageCount) {
+            pb.setPageCurrent(pageCount);
+        }
+        PageRequest pageRequest = new PageRequest(pageCurrent, pageSize);
+        pb.setPageSize(pageSize);
+        pb.setPageCount(pageCount);
+        pb.setObjectBean(projectVersion);
+        List<ProjectVersion> projectVersionList = projectVersionMapper.selectProjectVersionByCondition(pageRequest,projectVersion);
+        pb.setList(projectVersionList);
+        return pb;
+    }
+
+    @Override
+    public ProjectVersion seletProjectVersionByProjectIdAndVersionNum(ProjectVersion projectVersion) {
+        return projectVersionMapper.seletProjectVersionByProjectIdAndVersionNum(projectVersion);
+    }
+
+    @Override
+    public Integer addProjectVersion(ProjectVersion projectVersion) {
+        return projectVersionMapper.insertSelective(projectVersion);
+    }
 
 }

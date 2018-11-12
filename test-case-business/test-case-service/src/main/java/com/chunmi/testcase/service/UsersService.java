@@ -1,46 +1,39 @@
 /**
- * This class was created by sunny. It's distributed as
- * part of the test-case-service Mod.
- *
- * °æÈ¨ËùÓĞ(C) ÉÏº£´¿Ã×µç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2023
- * Copyright 2014-2023 CHUNMI TECHNOLOGY CO..
- *
- * This software is the confidential and proprietary information of
- * CHUNMI Corporation ("Confidential Information").  You
- * shall not disclose such Confidential Information and shall use
- * it only in accordance with the terms of the license agreement
- * you entered into with CHUNMI.
- *
- * File Created @ [2018Äê4ÔÂ2ÈÕ, ÉÏÎç10:50:50 (CST)]
+ * FileName: UsersService
+ * Author:   sunny
+ * Date:     2018/11/12 22:40
+ * History:
+ * <author>          <time>          <version>          <desc>
+ * ä½œè€…å§“å           ä¿®æ”¹æ—¶é—´           ç‰ˆæœ¬å·              æè¿°
  */
 package com.chunmi.testcase.service;
 
 import com.chunmi.testcase.model.po.Users;
 import com.chunmi.testcase.utils.PageBean;
 
+/**
+ * ã€ˆä¸€å¥è¯åŠŸèƒ½ç®€è¿°ã€‰
+ * @author sunny
+ * @create 2018/11/12
+ * @since 1.0.0
+ */
 public interface UsersService {
 
-	Users selectUserByName(String userName);
+    Users selectUserByName(String userName);
 
-	Integer addUser(Users user);
-
-	/**
-	 * 
-	 * @description: <p class="detail">²éÑ¯ÓÃ»§ÁĞ±í</p>
-	 * @author: <a href="mailto:sunny@chunmi.com ">sunny</a>
-	 * @date: 2018Äê4ÔÂ2ÈÕ-ÏÂÎç2:36:40
-	 * @param @param user
-	 * @param @param pageCurrent
-	 * @param @param pageSize
-	 * @param @param pageCount
-	 * @param @return
-	 * @return PageBean<User>
-	 */
-	PageBean<Users> selectUserListByCondition(Users user, Integer pageCurrent, Integer pageSize, Integer pageCount);
+    Integer addUser(Users user);
 
 
-	Integer updateUserStatus(Users user);
+    /**
+      * @Description: æ ¹æ®æ¡ä»¶åˆ†é¡µæŸ¥è¯¢ç”¨æˆ·åˆ—è¡¨
+      * @Author: sunny
+      * @Date: 22:40 2018/11/12
+      */
+    PageBean<Users> selectUserListByCondition(Users user, Integer pageCurrent, Integer pageSize, Integer pageCount);
 
-	Integer updateUserPassword(Users users);
+
+    Integer updateUserStatus(Users user);
+
+    Integer updateUserPassword(Users users);
 
 }

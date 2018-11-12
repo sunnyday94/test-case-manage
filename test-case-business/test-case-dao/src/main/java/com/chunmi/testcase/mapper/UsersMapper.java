@@ -57,48 +57,35 @@ public interface UsersMapper extends IBaseMapperDao<Users,Long> {
      */
     int updateByPrimaryKey(Users record);
 
+
     /**
-     * 
-     * @description: <p class="detail">¸ù¾İÃû³Æ²éÑ¯ÓÃ»§</p>
-     * @author: <a href="mailto:sunny@chunmi.com ">sunny</a>
-     * @date: 2018Äê4ÔÂ2ÈÕ-ÉÏÎç10:58:18
-     * @param @param userName
-     * @param @return
-     * @return Users
-     */
-	Users selectUserByName(@Param("userName")String userName);
+      * @Description: æ ¹æ®åå­—æŸ¥è¯¢ç”¨æˆ·
+      * @Author: sunny
+      * @Date: 21:50 2018/11/12
+      */
+    Users selectUserByName(@Param("userName")String userName);
 
-	/**
-	 * 
-	 * @description: <p class="detail">¸ù¾İÌõ¼ş²éÑ¯ÓÃ»§ÌõÄ¿Êı</p>
-	 * @author: <a href="mailto:sunny@chunmi.com ">sunny</a>
-	 * @date: 2018Äê4ÔÂ2ÈÕ-ÏÂÎç2:50:22
-	 * @param @param user
-	 * @param @return
-	 * @return Integer
-	 */
-	Integer selectUserCountsByCondition(@Param("user")Users user);
 
-	/**
-	 * 
-	 * @description: <p class="detail">¸ù¾İÌõ¼ş²éÑ¯ÓÃ»§ĞÅÏ¢</p>
-	 * @author: <a href="mailto:sunny@chunmi.com ">sunny</a>
-	 * @date: 2018Äê4ÔÂ2ÈÕ-ÏÂÎç2:55:34
-	 * @param @param user
-	 * @param @param pageRequest
-	 * @param @return
-	 * @return List<Users>
-	 */
-	List<Users> selectUserListByCondition(@Param("user")Users user, @Param("pageRequest")PageRequest pageRequest);
+    /**
+      * @Description: æ ¹æ®æ¡ä»¶æŸ¥è¯¢ç”¨æˆ·æ•°é‡
+      * @Author: sunny
+      * @Date: 21:50 2018/11/12
+      */
+    Integer selectUserCountsByCondition(@Param("user")Users user);
 
-	/**
-	 * 
-	 * @description: <p class="detail">¸üĞÂÓÃ»§×´Ì¬</p>
-	 * @author: <a href="mailto:sunny@chunmi.com ">sunny</a>
-	 * @date: 2018Äê4ÔÂ2ÈÕ-ÏÂÎç4:27:40
-	 * @param @param user
-	 * @param @return
-	 * @return Integer
-	 */
-	Integer updateUserStatus(@Param("user")Users user);
+
+    /**
+      * @Description: æ ¹æ®æ¡ä»¶æŸ¥è¯¢ç”¨æˆ·åˆ—è¡¨
+      * @Author: sunny
+      * @Date: 21:50 2018/11/12
+      */
+    List<Users> selectUserListByCondition(@Param("user")Users user, @Param("pageRequest")PageRequest pageRequest);
+
+
+    /**
+      * @Description:  æ›´æ–°ç”¨æˆ·çŠ¶æ€
+      * @Author: sunny
+      * @Date: 21:51 2018/11/12
+      */
+    Integer updateUserStatus(@Param("user")Users user);
 }

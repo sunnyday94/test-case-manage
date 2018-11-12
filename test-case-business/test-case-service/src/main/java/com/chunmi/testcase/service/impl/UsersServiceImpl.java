@@ -2,7 +2,7 @@
  * This class was created by sunny. It's distributed as
  * part of the test-case-service Mod.
  *
- * °æÈ¨ËùÓÐ(C) ÉÏº£´¿Ã×µç×Ó¿Æ¼¼ÓÐÏÞ¹«Ë¾ 2014-2023
+ * ???????(C) ?????????????????? 2014-2023
  * Copyright 2014-2023 CHUNMI TECHNOLOGY CO..
  *
  * This software is the confidential and proprietary information of
@@ -11,71 +11,72 @@
  * it only in accordance with the terms of the license agreement
  * you entered into with CHUNMI.
  *
- * File Created @ [2018Äê4ÔÂ2ÈÕ, ÉÏÎç10:51:19 (CST)]
+ * File Created @ [2018??4??2??, ????10:51:19 (CST)]
  */
 package com.chunmi.testcase.service.impl;
 
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.chunmi.testcase.mapper.UsersMapper;
-import com.chunmi.testcase.model.po.Users;
 import com.chunmi.testcase.service.UsersService;
+import org.springframework.stereotype.Service;
+import com.chunmi.testcase.model.po.Users;
 import com.chunmi.testcase.utils.PageBean;
 import com.chunmi.testcase.utils.PageRequest;
+
+import javax.annotation.Resource;
 
 @Service
 public class UsersServiceImpl implements UsersService {
 
-	@Autowired
-	private UsersMapper usersMapper;
-	
-	@Override
-	public Users selectUserByName(String userName) {
-		return usersMapper.selectUserByName(userName);
-	}
+    @Resource
+    private UsersMapper usersMapper;
 
-	@Override
-	public Integer addUser(Users user) {
-		return usersMapper.insertSelective(user);
-	}
+    @Override
+    public Users selectUserByName(String userName) {
+        return usersMapper.selectUserByName(userName);
+    }
 
-	@Override
-	public PageBean<Users> selectUserListByCondition(Users user, Integer pageCurrent, Integer pageSize,
-			Integer pageCount) {
-		PageBean<Users> pb = new PageBean<Users>();
-		//ÅÐ¶Ï
-		if(pageSize == 0) pageSize = 12;         //Ã¿Ò³12ÌõÊý¾Ý
-		if(pageCurrent == 0) pageCurrent = 1;    //µ±Ç°Ò³
-		Integer rows = usersMapper.selectUserCountsByCondition(user).intValue();  //×ÜÌõÄ¿Êý
-		pb.setRows(rows);   //ÉèÖÃ×ÜÌõÄ¿Êý
-		//¼ÆËã·ÖÒ³
-		pageCount = rows%pageSize == 0 ? (rows/pageSize) : (rows/pageSize) + 1;
-		//ÉèÖÃ×ÜÒ³Êý
-		pageCount = pageCount ==0 ? 1: pageCount;  
-		//Èç¹ûµ±Ç°Ò³>=×î´óÒ³,ÔòÉèÖÃµ±Ç°Ò³Îª×î´óÒ³
-		if(pageCurrent>=pageCount) {
-			pb.setPageCurrent(pageCount);
-		}
-		PageRequest pageRequest = new PageRequest(pageCurrent,pageSize);
-		pb.setPageSize(pageSize);       //Ã¿Ò³ÏÔÊ¾ÌõÄ¿
-		pb.setPageCount(pageCount);     //×ÜÒ³Êý
-		pb.setObjectBean(user);
-		List<Users> userList = usersMapper.selectUserListByCondition(user,pageRequest);
-		pb.setList(userList);
-		return pb;
-	}
+    @Override
+    public Integer addUser(Users user) {
+        return usersMapper.insertSelective(user);
+    }
 
-	@Override
-	public Integer updateUserStatus(Users user) {
-		return usersMapper.updateUserStatus(user);
-	}
+    @Override
+    public PageBean<Users> selectUserListByCondition(Users user, Integer pageCurrent, Integer pageSize,
+                                                     Integer pageCount) {
+        PageBean<Users> pb = new PageBean<Users>();
+        //åˆ¤æ–­
+        if(pageSize == 0) pageSize = 12;         //æ¯é¡µæ¡ç›®æ•°
+        if(pageCurrent == 0) pageCurrent = 1;    //å½“å‰é¡µ
+        Integer rows = usersMapper.selectUserCountsByCondition(user);  //æ€»æ¡ç›®æ•°
+        pb.setRows(rows);   //è®¾ç½®æ€»æ¡æ•°
+        //è®¡ç®—åˆ†é¡µ
+        pageCount = rows%pageSize == 0 ? (rows/pageSize) : (rows/pageSize) + 1;
+        //è®¾ç½®åˆ†é¡µ
+        pageCount = pageCount ==0 ? 1: pageCount;
+        //åˆ¤æ–­å½“å‰é¡µæ˜¯å¦>=æœ€å¤§é¡µ
+        if(pageCurrent>=pageCount) {
+            pb.setPageCurrent(pageCount);
+        }
+        PageRequest pageRequest = new PageRequest(pageCurrent,pageSize);
+        pb.setPageSize(pageSize);
+        pb.setPageCount(pageCount);
+        pb.setObjectBean(user);
+        List<Users> userList = usersMapper.selectUserListByCondition(user,pageRequest);
+        pb.setList(userList);
+        return pb;
+    }
 
-	@Override
-	public Integer updateUserPassword(Users users) {
-		return usersMapper.updateByPrimaryKeySelective(users);
-	}
+    @Override
+    public Integer updateUserStatus(Users user) {
+        return usersMapper.updateUserStatus(user);
+    }
+
+    @Override
+    public Integer updateUserPassword(Users users) {
+        return usersMapper.updateByPrimaryKeySelective(users);
+    }
 
 }

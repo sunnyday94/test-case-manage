@@ -1,5 +1,6 @@
 package com.chunmi.testcase.controller;
 
+import com.chunmi.testcase.service.TemporaryService;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -11,16 +12,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.chunmi.testcase.annotation.Loggable;
-import com.chunmi.testcase.service.TemporaryService;
 import com.chunmi.testcase.utils.Response;
 
 import lombok.extern.slf4j.Slf4j;
 
+import javax.annotation.Resource;
+
 @Controller
 @Slf4j
 public class TemporaryController {
-	
-	@Autowired
+
+	@Resource
 	private TemporaryService temporaryService;
 
 

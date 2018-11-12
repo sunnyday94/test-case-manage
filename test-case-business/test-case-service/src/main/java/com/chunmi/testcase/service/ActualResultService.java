@@ -1,26 +1,25 @@
 /**
- * This class was created by sunny. It's distributed as
- * part of the test-case-service Mod.
- *
- * °æÈ¨ËùÓĞ(C) ÉÏº£´¿Ã×µç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2023
- * Copyright 2014-2023 CHUNMI TECHNOLOGY CO..
- *
- * This software is the confidential and proprietary information of
- * CHUNMI Corporation ("Confidential Information").  You
- * shall not disclose such Confidential Information and shall use
- * it only in accordance with the terms of the license agreement
- * you entered into with CHUNMI.
- *
- * File Created @ [2018Äê4ÔÂ9ÈÕ, ÉÏÎç10:26:55 (CST)]
+ * FileName: ActualResultService
+ * Author:   sunny
+ * Date:     2018/11/12 22:27
+ * History:
+ * <author>          <time>          <version>          <desc>
+ * ä½œè€…å§“å           ä¿®æ”¹æ—¶é—´           ç‰ˆæœ¬å·              æè¿°
  */
 package com.chunmi.testcase.service;
 
+/**
+ * ã€ˆä¸€å¥è¯åŠŸèƒ½ç®€è¿°ã€‰
+ * @author sunny
+ * @create 2018/11/12
+ * @since 1.0.0
+ */
 import java.util.List;
 
 import com.chunmi.testcase.model.po.ActualResult;
 
 public interface ActualResultService {
 
-	List<ActualResult> selectAllActualResultList();
+    List<ActualResult> selectAllActualResultList();
 
 }

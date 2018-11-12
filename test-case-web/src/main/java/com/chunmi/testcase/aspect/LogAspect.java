@@ -17,7 +17,10 @@ package com.chunmi.testcase.aspect;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
+import com.chunmi.testcase.service.OperationLogService;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
@@ -26,14 +29,12 @@ import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import com.chunmi.testcase.annotation.Loggable;
 import com.chunmi.testcase.model.po.OperationLog;
 import com.chunmi.testcase.model.po.Users;
-import com.chunmi.testcase.service.OperationLogService;
 import com.chunmi.testcase.utils.Constant;
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,8 +43,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class LogAspect {
 	
-	@Autowired
-	private OperationLogService operationLogService;
+	@Resource
+	private OperationLogService operationLogServiceImpl;
 
 	/**
 	 * 
@@ -79,7 +80,7 @@ public class LogAspect {
 			operationLog.setParams(params);
 			operationLog.setMethod(method);
 			operationLog.setMessage(description);
-			operationLogService.insertOperationLog(operationLog);
+			operationLogServiceImpl.insertOperationLog(operationLog);
 			StringBuilder builder = new StringBuilder("请求方法:"+method+"描述信息:"+description);
 			if(params!=null)
 				builder.append("请求参数:"+params);

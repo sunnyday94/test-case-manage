@@ -1,74 +1,75 @@
 /**
- * This class was created by sunny. It's distributed as
- * part of the test-case-service Mod.
- *
- * °æÈ¨ËùÓĞ(C) ÉÏº£´¿Ã×µç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2023
- * Copyright 2014-2023 CHUNMI TECHNOLOGY CO..
- *
- * This software is the confidential and proprietary information of
- * CHUNMI Corporation ("Confidential Information").  You
- * shall not disclose such Confidential Information and shall use
- * it only in accordance with the terms of the license agreement
- * you entered into with CHUNMI.
- *
- * File Created @ [2018Äê4ÔÂ3ÈÕ, ÏÂÎç1:27:03 (CST)]
+ * FileName: ProjectServiceImpl
+ * Author:   sunny
+ * Date:     2018/11/12 22:35
+ * History:
+ * <author>          <time>          <version>          <desc>
+ * ä½œè€…å§“å           ä¿®æ”¹æ—¶é—´           ç‰ˆæœ¬å·              æè¿°
  */
 package com.chunmi.testcase.service.impl;
 
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.chunmi.testcase.mapper.ProjectMapper;
 import com.chunmi.testcase.model.po.Project;
 import com.chunmi.testcase.service.ProjectService;
 import com.chunmi.testcase.utils.PageBean;
 import com.chunmi.testcase.utils.PageRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+ * ã€ˆä¸€å¥è¯åŠŸèƒ½ç®€è¿°ã€‰
+ * @author sunny
+ * @create 2018/11/12
+ * @since 1.0.0
+ */
 @Service
 public class ProjectServiceImpl implements ProjectService {
-	
-	@Autowired
-	private ProjectMapper projectMapper;
 
-	@Override
-	public PageBean<Project> selectProjectListByCondition(Project project, Integer pageCurrent, Integer pageSize,
-			Integer pageCount) {
-		PageBean<Project> pb = new PageBean<Project>();
-		//ÅĞ¶Ï
-		if(pageCurrent==0) pageCurrent =1;  
-		if(pageSize==0)  pageSize = 12;  //Ã¿Ò³ÏÔÊ¾12ÌõÊı¾İ
-		Integer rows = projectMapper.selectProjectCountsByCondition(project); //×ÜÌõÄ¿Êı
-		pb.setRows(rows);  
-		//¼ÆËã·ÖÒ³
-		pageCount = rows%pageSize == 0 ? (rows/pageSize) : (rows/pageSize) + 1;
-		//ÉèÖÃ×ÜÒ³Êı
-		pageCount = pageCount ==0 ? 1: pageCount;  
-		//Èç¹ûµ±Ç°Ò³>=×î´óÒ³,ÔòÉèÖÃµ±Ç°Ò³Îª×î´óÒ³
-		if(pageCurrent>=pageCount) {
-			pb.setPageCurrent(pageCount);
-		}
-		PageRequest pageRequest = new PageRequest(pageCurrent, pageSize);
-		pb.setPageSize(pageSize);       //Ã¿Ò³ÏÔÊ¾ÌõÄ¿
-		pb.setPageCount(pageCount);     //×ÜÒ³Êı
-		pb.setObjectBean(project);      //ÉèÖÃ²éÑ¯Ìõ¼ş
-		List<Project> projectList = projectMapper.selectProjectListByCondition(project,pageRequest);
-		pb.setList(projectList);
-		return pb;
-	}
+    @Resource
+    private ProjectMapper projectMapper;
 
-	@Override
-	public Project selectProjectByName(String projectName) {
-		return projectMapper.selectProjectByName(projectName);
-	}
+    @Override
+    public PageBean<Project> selectProjectListByCondition(Project project, Integer pageCurrent, Integer pageSize,
+                                                          Integer pageCount) {
+        PageBean<Project> pb = new PageBean<>();
+        //ï¿½Ğ¶ï¿½
+        if(pageCurrent==0) pageCurrent =1;
+        if(pageSize==0)  pageSize = 12;
+        Integer rows = projectMapper.selectProjectCountsByCondition(project);
+        pb.setRows(rows);
 
-	@Override
-	public Integer addProject(Project project) {
-		return projectMapper.insertSelective(project);
-	}
+        pageCount = rows%pageSize == 0 ? (rows/pageSize) : (rows/pageSize) + 1;
 
-	@Override
-	public Integer delProjectById(Long id) {
-		return projectMapper.delProjectById(id);
-	}
+        pageCount = pageCount ==0 ? 1: pageCount;
+
+        if(pageCurrent>=pageCount) {
+            pb.setPageCurrent(pageCount);
+        }
+        PageRequest pageRequest = new PageRequest(pageCurrent, pageSize);
+        pb.setPageSize(pageSize);
+        pb.setPageCount(pageCount);
+        pb.setObjectBean(project);     
+        List<Project> projectList = projectMapper.selectProjectListByCondition(project,pageRequest);
+        pb.setList(projectList);
+        return pb;
+    }
+
+    @Override
+    public Project selectProjectByName(String projectName) {
+        return projectMapper.selectProjectByName(projectName);
+    }
+
+    @Override
+    public Integer addProject(Project project) {
+        return projectMapper.insertSelective(project);
+    }
+
+    @Override
+    public Integer delProjectById(Long id) {
+        return projectMapper.delProjectById(id);
+    }
 
 }

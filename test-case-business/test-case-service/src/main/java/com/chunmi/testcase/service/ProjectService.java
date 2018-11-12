@@ -1,32 +1,31 @@
 /**
- * This class was created by sunny. It's distributed as
- * part of the test-case-service Mod.
- *
- * °æÈ¨ËùÓĞ(C) ÉÏº£´¿Ã×µç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2023
- * Copyright 2014-2023 CHUNMI TECHNOLOGY CO..
- *
- * This software is the confidential and proprietary information of
- * CHUNMI Corporation ("Confidential Information").  You
- * shall not disclose such Confidential Information and shall use
- * it only in accordance with the terms of the license agreement
- * you entered into with CHUNMI.
- *
- * File Created @ [2018Äê4ÔÂ3ÈÕ, ÏÂÎç1:26:12 (CST)]
+ * FileName: ProjectService
+ * Author:   sunny
+ * Date:     2018/11/12 22:34
+ * History:
+ * <author>          <time>          <version>          <desc>
+ * ä½œè€…å§“å           ä¿®æ”¹æ—¶é—´           ç‰ˆæœ¬å·              æè¿°
  */
 package com.chunmi.testcase.service;
 
 import com.chunmi.testcase.model.po.Project;
 import com.chunmi.testcase.utils.PageBean;
 
+/**
+ * ã€ˆä¸€å¥è¯åŠŸèƒ½ç®€è¿°ã€‰
+ * @author sunny
+ * @create 2018/11/12
+ * @since 1.0.0
+ */
 public interface ProjectService {
 
-	PageBean<Project> selectProjectListByCondition(Project project, Integer pageCurrent, Integer pageSize,
-			Integer pageCount);
+    PageBean<Project> selectProjectListByCondition(Project project, Integer pageCurrent, Integer pageSize,
+                                                   Integer pageCount);
 
-	Project selectProjectByName(String projectName);
+    Project selectProjectByName(String projectName);
 
-	Integer addProject(Project project);
+    Integer addProject(Project project);
 
-	Integer delProjectById(Long id);
+    Integer delProjectById(Long id);
 
 }

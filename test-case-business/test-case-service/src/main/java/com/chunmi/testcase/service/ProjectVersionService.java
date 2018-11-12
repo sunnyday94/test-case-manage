@@ -1,30 +1,29 @@
 /**
- * This class was created by sunny. It's distributed as
- * part of the test-case-service Mod.
- *
- * °æÈ¨ËùÓĞ(C) ÉÏº£´¿Ã×µç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2023
- * Copyright 2014-2023 CHUNMI TECHNOLOGY CO..
- *
- * This software is the confidential and proprietary information of
- * CHUNMI Corporation ("Confidential Information").  You
- * shall not disclose such Confidential Information and shall use
- * it only in accordance with the terms of the license agreement
- * you entered into with CHUNMI.
- *
- * File Created @ [2018Äê4ÔÂ3ÈÕ, ÏÂÎç4:02:44 (CST)]
+ * FileName: ProjectVersionService
+ * Author:   sunny
+ * Date:     2018/11/12 22:36
+ * History:
+ * <author>          <time>          <version>          <desc>
+ * ä½œè€…å§“å           ä¿®æ”¹æ—¶é—´           ç‰ˆæœ¬å·              æè¿°
  */
 package com.chunmi.testcase.service;
 
 import com.chunmi.testcase.model.po.ProjectVersion;
 import com.chunmi.testcase.utils.PageBean;
 
+/**
+ * ã€ˆä¸€å¥è¯åŠŸèƒ½ç®€è¿°ã€‰
+ * @author sunny
+ * @create 2018/11/12
+ * @since 1.0.0
+ */
 public interface ProjectVersionService {
 
-	PageBean<ProjectVersion> selectProjectVersionByCondition(ProjectVersion projectVersion, Integer pageCurrent,
-			Integer pageSize, Integer pageCount);
+    PageBean<ProjectVersion> selectProjectVersionByCondition(ProjectVersion projectVersion, Integer pageCurrent,
+                                                             Integer pageSize, Integer pageCount);
 
-	ProjectVersion seletProjectVersionByProjectIdAndVersionNum(ProjectVersion projectVersion);
+    ProjectVersion seletProjectVersionByProjectIdAndVersionNum(ProjectVersion projectVersion);
 
-	Integer addProjectVersion(ProjectVersion projectVersion);
+    Integer addProjectVersion(ProjectVersion projectVersion);
 
 }

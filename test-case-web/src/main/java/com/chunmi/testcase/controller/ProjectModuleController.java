@@ -17,8 +17,11 @@ package com.chunmi.testcase.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import com.chunmi.testcase.service.ProjectModuleService;
+import com.chunmi.testcase.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,12 +32,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.chunmi.testcase.annotation.Loggable;
 import com.chunmi.testcase.model.po.ProjectModule;
-import com.chunmi.testcase.service.ProjectModuleService;
-import com.chunmi.testcase.utils.Constant;
-import com.chunmi.testcase.utils.MessageExceptionEnum;
-import com.chunmi.testcase.utils.PageBean;
-import com.chunmi.testcase.utils.PageUtil;
-import com.chunmi.testcase.utils.Response;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,8 +39,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class ProjectModuleController {
 	
-	@Autowired
-	private ProjectModuleService moduleService;
+	@Resource
+	private ProjectModuleService projectModuleServiceImpl;
 
 	/**
 	 * 
@@ -66,7 +63,7 @@ public class ProjectModuleController {
 		Map<String,Object> map = new HashMap<String,Object>();
 		map.put(Constant.LOGIN_MANAGER,request.getSession().getAttribute(Constant.LOGIN_MANAGER));
 		try {
-			PageBean<ProjectModule> pb = moduleService.selectModuleListByCondition(projectModule,pageCurrent,pageSize,pageCount);
+			PageBean<ProjectModule> pb = projectModuleServiceImpl.selectModuleListByCondition(projectModule,pageCurrent,pageSize,pageCount);
 		    map.put("pb",pb);
 			//生成新的查询url
 			String newUrl = "projectModuleList_{pageCurrent}_{pageSize}_{pageCount}?projectId="+projectModule.getProjectId()+"&moduleName="+projectModule.getModuleName();
@@ -94,9 +91,9 @@ public class ProjectModuleController {
 	@ResponseBody
 	public Response addProjectModule(ProjectModule projectModule) {
 		try {
-			if(moduleService.selectModuleByProjectIdAndModuleName(projectModule)!=null)
+			if(projectModuleServiceImpl.selectModuleByProjectIdAndModuleName(projectModule)!=null)
 				return Response.getError(MessageExceptionEnum.MODULE_EXISTED);
-			moduleService.addProjectModule(projectModule);
+			projectModuleServiceImpl.addProjectModule(projectModule);
 			return Response.getSuccess();
 		} catch (Exception e) {
 			log.info(e.getMessage());
@@ -118,6 +115,6 @@ public class ProjectModuleController {
 	@PostMapping(value="/delModule")
 	@ResponseBody
 	public Integer delModule(ProjectModule projectModule) {
-		return moduleService.delModule(projectModule);
+		return projectModuleServiceImpl.delModule(projectModule);
 	}
 }

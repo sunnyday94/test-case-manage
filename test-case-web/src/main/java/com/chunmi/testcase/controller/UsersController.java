@@ -17,7 +17,10 @@ package com.chunmi.testcase.controller;
 
 import java.util.HashMap;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+
+import com.chunmi.testcase.service.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +32,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.chunmi.testcase.annotation.Loggable;
 import com.chunmi.testcase.model.po.Users;
 import com.chunmi.testcase.model.vo.UsersVo;
-import com.chunmi.testcase.service.UsersService;
 import com.chunmi.testcase.utils.Constant;
 import com.chunmi.testcase.utils.MD5Util;
 import com.chunmi.testcase.utils.PageBean;
@@ -42,8 +44,8 @@ import lombok.extern.slf4j.Slf4j;
 public class UsersController {
 
 
-	@Autowired
-	private UsersService usersService;
+	@Resource
+	private UsersService usersServiceImpl;
 
 
 	/**
@@ -94,7 +96,7 @@ public class UsersController {
 			model.addAttribute("error", "The password for the two input is inconsistent");
 			return "register";
 		}
-		Users user = usersService.selectUserByName(usersVo.getUserName());
+		Users user = usersServiceImpl.selectUserByName(usersVo.getUserName());
 		if(user!=null) {
 			model.addAttribute("error","The user already exists");
 			return "register";
@@ -103,7 +105,7 @@ public class UsersController {
 			Users insertUser = new Users();
 			insertUser.setUserName(usersVo.getUserName());
 			insertUser.setPassword(usersVo.getPassword());
-			usersService.addUser(insertUser);
+			usersServiceImpl.addUser(insertUser);
 			return "redirect:/goToLogin";
 		} catch (Exception e) {
 			log.info(e.getMessage());
@@ -126,7 +128,7 @@ public class UsersController {
 	public String checkLogin(Users user,Model model,HttpServletRequest request) {
 		String userName = user.getUserName();
 		String password = user.getPassword();
-		Users u = usersService.selectUserByName(userName);
+		Users u = usersServiceImpl.selectUserByName(userName);
 		if(u==null) {
 			model.addAttribute("error", "User does not exist, please register first");  //用户不存在
 		}else {
@@ -202,7 +204,7 @@ public class UsersController {
 		HashMap<String,Object> map = new HashMap<String,Object>();
 		map.put(Constant.LOGIN_MANAGER, request.getSession().getAttribute(Constant.LOGIN_MANAGER));
 		try {
-			PageBean<Users> pb = usersService.selectUserListByCondition(user,pageCurrent,pageSize,pageCount); //查询用户列表
+			PageBean<Users> pb = usersServiceImpl.selectUserListByCondition(user,pageCurrent,pageSize,pageCount); //查询用户列表
 			map.put("pb",pb);
 			//生成新的查询url
 			String newUrl = "userList_{pageCurrent}_{pageSize}_{pageCount}?userName="+user.getUserName()+"&isDisabled="+user.getIsDisabled();
@@ -230,7 +232,7 @@ public class UsersController {
 	@PostMapping(value="/updateUserStatus")
 	@ResponseBody
 	public Integer updateUserStatus(Users user) {
-		return usersService.updateUserStatus(user);
+		return usersServiceImpl.updateUserStatus(user);
 	}
 	
 	
@@ -278,7 +280,7 @@ public class UsersController {
 		}
 		users.setPassword(password);
 		try {
-			result = usersService.updateUserPassword(users);
+			result = usersServiceImpl.updateUserPassword(users);
 		} catch (Exception e) {
 			log.error("用户密码更新失败:{}",e.getMessage());
 		}

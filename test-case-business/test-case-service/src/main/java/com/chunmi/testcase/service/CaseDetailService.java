@@ -1,47 +1,45 @@
 /**
- * This class was created by sunny. It's distributed as
- * part of the test-case-service Mod.
- *
- * °æÈ¨ËùÓĞ(C) ÉÏº£´¿Ã×µç×Ó¿Æ¼¼ÓĞÏŞ¹«Ë¾ 2014-2023
- * Copyright 2014-2023 CHUNMI TECHNOLOGY CO..
- *
- * This software is the confidential and proprietary information of
- * CHUNMI Corporation ("Confidential Information").  You
- * shall not disclose such Confidential Information and shall use
- * it only in accordance with the terms of the license agreement
- * you entered into with CHUNMI.
- *
- * File Created @ [2018Äê4ÔÂ8ÈÕ, ÉÏÎç10:34:07 (CST)]
+ * FileName: CaseDetailService
+ * Author:   sunny
+ * Date:     2018/11/12 22:29
+ * History:
+ * <author>          <time>          <version>          <desc>
+ * ä½œè€…å§“å           ä¿®æ”¹æ—¶é—´           ç‰ˆæœ¬å·              æè¿°
  */
 package com.chunmi.testcase.service;
-
-import java.util.List;
-
-import javax.servlet.http.HttpServletResponse;
 
 import com.chunmi.testcase.model.po.CaseDetail;
 import com.chunmi.testcase.model.vo.CaseDetailVo;
 import com.chunmi.testcase.utils.PageBean;
 
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+
+/**
+ * ã€ˆä¸€å¥è¯åŠŸèƒ½ç®€è¿°ã€‰
+ * @author sunny
+ * @create 2018/11/12
+ * @since 1.0.0
+ */
 public interface CaseDetailService {
 
-	PageBean<CaseDetail> selectTestCaseList(CaseDetail testCase, Integer pageCurrent, Integer pageSize,
-			Integer pageCount);
+    PageBean<CaseDetail> selectTestCaseList(CaseDetail testCase, Integer pageCurrent, Integer pageSize,
+                                            Integer pageCount);
 
-	CaseDetail selectTestCaseByConditions(String caseName);
+    CaseDetail selectTestCaseByConditions(String caseName);
 
-	Integer addTestCase(CaseDetail testCase);
+    Integer addTestCase(CaseDetail testCase);
 
-	CaseDetailVo selectTestCaseDetailById(Long id);
+    CaseDetailVo selectTestCaseDetailById(Long id);
 
-	Integer delTestCaseDetailById(Long id);
+    Integer delTestCaseDetailById(Long id);
 
-	Integer updateTestCase(CaseDetail caseDetail);
+    Integer updateTestCase(CaseDetail caseDetail);
 
-	PageBean<CaseDetailVo> selectExportTestCaseByConditions(CaseDetail caseDetail);
+    PageBean<CaseDetailVo> selectExportTestCaseByConditions(CaseDetail caseDetail);
 
-	void exportTestCase(PageBean<CaseDetailVo> pb, HttpServletResponse response);
+    void exportTestCase(PageBean<CaseDetailVo> pb, HttpServletResponse response);
 
-	Integer batchInsertCaseDetail(List<CaseDetail> caseDetailList);
+    Integer batchInsertCaseDetail(List<CaseDetail> caseDetailList);
 
 }

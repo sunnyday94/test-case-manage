@@ -1,24 +1,12 @@
 /**
- * This class was created by sunny. It's distributed as
- * part of the test-case-service Mod.
- *
- * ∞Ê»®À˘”–(C) …œ∫£¥ø√◊µÁ◊”ø∆ºº”–œﬁπ´Àæ 2014-2023
- * Copyright 2014-2023 CHUNMI TECHNOLOGY CO..
- *
- * This software is the confidential and proprietary information of
- * CHUNMI Corporation ("Confidential Information").  You
- * shall not disclose such Confidential Information and shall use
- * it only in accordance with the terms of the license agreement
- * you entered into with CHUNMI.
- *
- * File Created @ [2018ƒÍ4‘¬4»’, …œŒÁ10:53:01 (CST)]
+ * FileName: ProjectModuleServiceImpl
+ * Author:   sunny
+ * Date:     2018/11/12 22:33
+ * History:
+ * <author>          <time>          <version>          <desc>
+ * ‰ΩúËÄÖÂßìÂêç           ‰øÆÊîπÊó∂Èó¥           ÁâàÊú¨Âè∑              ÊèèËø∞
  */
 package com.chunmi.testcase.service.impl;
-
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
 import com.chunmi.testcase.mapper.ProjectModuleMapper;
 import com.chunmi.testcase.model.po.ProjectModule;
@@ -26,62 +14,73 @@ import com.chunmi.testcase.service.ProjectModuleService;
 import com.chunmi.testcase.utils.PageBean;
 import com.chunmi.testcase.utils.PageRequest;
 import com.fasterxml.jackson.databind.Module;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
+import java.util.List;
+
+/**
+ * „Äà‰∏ÄÂè•ËØùÂäüËÉΩÁÆÄËø∞„Äâ
+ * @author sunny
+ * @create 2018/11/12
+ * @since 1.0.0
+ */
 @Service
 public class ProjectModuleServiceImpl implements ProjectModuleService {
-	
-	@Autowired
-	private ProjectModuleMapper moduleMapper;
 
-	@Override
-	public PageBean<ProjectModule> selectModuleListByCondition(ProjectModule projectModule, Integer pageCurrent,
-			Integer pageSize, Integer pageCount) {
-		PageBean<ProjectModule> pb = new PageBean<ProjectModule>();
-		//≈–∂œ
-		if(pageCurrent==0) pageCurrent =1;  
-		if(pageSize==0)  pageSize = 12;  //√ø“≥œ‘ æ12Ãı ˝æ›
-		Integer rows = moduleMapper.selectModuleCountsByCondition(projectModule);
-		pb.setRows(rows);  
-		//º∆À„∑÷“≥
-		pageCount = rows%pageSize == 0 ? (rows/pageSize) : (rows/pageSize) + 1;
-		//…Ë÷√◊‹“≥ ˝
-		pageCount = pageCount ==0 ? 1: pageCount;  
-		//»Áπ˚µ±«∞“≥>=◊Ó¥Û“≥,‘Ú…Ë÷√µ±«∞“≥Œ™◊Ó¥Û“≥
-		if(pageCurrent>=pageCount) {
-			pb.setPageCurrent(pageCount);
-		}
-		PageRequest pageRequest = new PageRequest(pageCurrent, pageSize);
-		pb.setPageSize(pageSize);       //√ø“≥œ‘ æÃıƒø
-		pb.setPageCount(pageCount);     //◊‹“≥ ˝
-		pb.setObjectBean(projectModule); //…Ë÷√≤È—ØÃıº˛
-		List<ProjectModule> projectModuleList = moduleMapper.selectModuleListByCondition(pageRequest,projectModule);
-		pb.setList(projectModuleList);
-		return pb;
-	}
+    @Resource
+    private ProjectModuleMapper projectModuleMapper;
 
-	@Override
-	public ProjectModule selectModuleByProjectIdAndModuleName(ProjectModule projectModule) {
-		return moduleMapper.selectModuleByProjectIdAndModuleName(projectModule);
-	}
+    @Override
+    public PageBean<ProjectModule> selectModuleListByCondition(ProjectModule projectModule, Integer pageCurrent,
+                                                               Integer pageSize, Integer pageCount) {
+        PageBean<ProjectModule> pb = new PageBean<>();
 
-	@Override
-	public Integer addProjectModule(ProjectModule projectModule) {
-		return moduleMapper.insertSelective(projectModule);
-	}
+        if(pageCurrent==0) pageCurrent =1;
+        if(pageSize==0)  pageSize = 12;
+        Integer rows = projectModuleMapper.selectModuleCountsByCondition(projectModule);
+        pb.setRows(rows);
 
-	@Override
-	public Integer delModule(ProjectModule projectModule) {
-		return moduleMapper.delModule(projectModule);
-	}
+        pageCount = rows%pageSize == 0 ? (rows/pageSize) : (rows/pageSize) + 1;
 
-	@Override
-	public List<Module> selectAllModuleList() {
-		return moduleMapper.selectAllModuleList();
-	}
+        pageCount = pageCount ==0 ? 1: pageCount;
 
-	@Override
-	public Integer insertNewModule(ProjectModule pm) {
-		return moduleMapper.insertSelective(pm);
-	}
+        if(pageCurrent>=pageCount) {
+            pb.setPageCurrent(pageCount);
+        }
+        PageRequest pageRequest = new PageRequest(pageCurrent, pageSize);
+        pb.setPageSize(pageSize);
+        pb.setPageCount(pageCount);
+        pb.setObjectBean(projectModule);
+        List<ProjectModule> projectModuleList = projectModuleMapper.selectModuleListByCondition(pageRequest,projectModule);
+        pb.setList(projectModuleList);
+        return pb;
+    }
+
+    @Override
+    public ProjectModule selectModuleByProjectIdAndModuleName(ProjectModule projectModule) {
+        return projectModuleMapper.selectModuleByProjectIdAndModuleName(projectModule);
+    }
+
+    @Override
+    public Integer addProjectModule(ProjectModule projectModule) {
+        return projectModuleMapper.insertSelective(projectModule);
+    }
+
+    @Override
+    public Integer delModule(ProjectModule projectModule) {
+        return projectModuleMapper.delModule(projectModule);
+    }
+
+    @Override
+    public List<Module> selectAllModuleList() {
+        return projectModuleMapper.selectAllModuleList();
+    }
+
+    @Override
+    public Integer insertNewModule(ProjectModule pm) {
+        return projectModuleMapper.insertSelective(pm);
+    }
 
 }

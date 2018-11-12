@@ -15,31 +15,27 @@
  */
 package com.chunmi.testcase.service.impl;
 
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.List;
-import javax.servlet.http.HttpServletResponse;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.chunmi.testcase.mapper.CaseDetailMapper;
 import com.chunmi.testcase.model.po.CaseDetail;
 import com.chunmi.testcase.model.vo.CaseDetailVo;
 import com.chunmi.testcase.service.CaseDetailService;
 import com.chunmi.testcase.utils.PageBean;
 import com.chunmi.testcase.utils.PageRequest;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.List;
 
 @Service
 public class CaseDetailServiceImpl implements CaseDetailService {
 
-    @Autowired
+    @Resource
     private CaseDetailMapper caseDetailMapper;
 
     @Override
