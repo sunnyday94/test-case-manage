@@ -17,6 +17,7 @@ package com.chunmi.testcase.aspect;
 
 import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Objects;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -69,7 +70,7 @@ public class LogAspect {
 	 */
 	@Before(value="controllerAspect()")
 	public void doBefore(JoinPoint joinPoint) {
-		HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+		HttpServletRequest request = ((ServletRequestAttributes) Objects.requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
 		String method = joinPoint.getTarget().getClass().getName() + "." + joinPoint.getSignature().getName() + "()"; //方法名
 		String params = joinPoint.getArgs()==null || joinPoint.getArgs().length==0 ? null : Arrays.toString(joinPoint.getArgs()); //参数
 		String description = getControllerMethodDescription(joinPoint);  //描述信息
@@ -128,7 +129,7 @@ public class LogAspect {
 		try {
 			sourceMethod = joinPoint.getTarget().getClass().getMethod(proxyMethod.getName(),
 					proxyMethod.getParameterTypes());
-			message = AnnotationUtils.findAnnotation(sourceMethod,Loggable.class).logDescription();
+			message = Objects.requireNonNull(AnnotationUtils.findAnnotation(sourceMethod, Loggable.class)).logDescription();
 		} catch (NoSuchMethodException e) {
 			log.error("error: ", e);
 		}
