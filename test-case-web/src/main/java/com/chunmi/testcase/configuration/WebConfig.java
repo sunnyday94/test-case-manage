@@ -9,6 +9,7 @@
 package com.chunmi.testcase.configuration;
 
 import com.chunmi.testcase.interceptor.CustomInterceptor;
+import com.chunmi.testcase.interceptor.ManagerCheckInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -25,5 +26,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new CustomInterceptor()).addPathPatterns("/**");
+        registry.addInterceptor(new ManagerCheckInterceptor()).addPathPatterns("/**");
     }
 }
