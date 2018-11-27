@@ -15,13 +15,11 @@
  */
 package com.chunmi.testcase.configuration;
 
+import com.chunmi.testcase.filter.XSSFilter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.CharacterEncodingFilter;
-
-import com.chunmi.testcase.filter.ManagerCheckFilter;
-import com.chunmi.testcase.filter.XSSFilter;
 
 @Configuration
 public class FilterConfig {
@@ -55,15 +53,15 @@ public class FilterConfig {
 	 * @param @return
 	 * @return FilterRegistrationBean<ManagerCheckFilter>
 	 */
-	@Bean
-	public FilterRegistrationBean<ManagerCheckFilter> managerCheckFilter(){
-		FilterRegistrationBean<ManagerCheckFilter> registrationBean = new FilterRegistrationBean<ManagerCheckFilter>();
-		registrationBean.setFilter(new ManagerCheckFilter());
-		registrationBean.addServletNames("managerCheckFilter");
-		registrationBean.addUrlPatterns("/*");
-		registrationBean.setEnabled(true);
-		return registrationBean;
-	}
+//	@Bean
+//	public FilterRegistrationBean<ManagerCheckFilter> managerCheckFilter(){
+//		FilterRegistrationBean<ManagerCheckFilter> registrationBean = new FilterRegistrationBean<ManagerCheckFilter>();
+//		registrationBean.setFilter(new ManagerCheckFilter());
+//		registrationBean.addServletNames("managerCheckFilter");
+//		registrationBean.addUrlPatterns("/*");
+//		registrationBean.setEnabled(true);
+//		return registrationBean;
+//	}
 	
 	
 	/**
