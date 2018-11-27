@@ -50,6 +50,6 @@ public class CustomInterceptor implements HandlerInterceptor {
         if(method.getName().equals("error"))
             return ;
         stopwatch.stop();
-        log.info(method.getName()+"方法总耗时:{}", stopwatch.getTotalTimeSeconds());
+        log.info(method.getName()+"方法总耗时:{}", stopwatch.getTotalTimeSeconds()+"秒");
     }
 }
