@@ -18,6 +18,7 @@ package com.chunmi.testcase.aspect;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -75,20 +76,23 @@ public class LogAspect {
 		String params = joinPoint.getArgs()==null || joinPoint.getArgs().length==0 ? null : Arrays.toString(joinPoint.getArgs()); //参数
 		String description = getControllerMethodDescription(joinPoint);  //描述信息
 		Users user = (Users) request.getSession().getAttribute(Constant.LOGIN_MANAGER);
-		try {
+		//开启异步线程执行日志插入操作
+		CompletableFuture.runAsync(() -> {
+			StringBuilder builder = new StringBuilder("请求方法:" + method + "描述信息:" + description);
+			if (params != null)
+				builder.append("请求参数:" + params);
+			log.debug(builder.toString());
 			OperationLog operationLog = new OperationLog();
 			operationLog.setUserId(user.getId());
 			operationLog.setParams(params);
 			operationLog.setMethod(method);
 			operationLog.setMessage(description);
-			operationLogServiceImpl.insertOperationLog(operationLog);
-			StringBuilder builder = new StringBuilder("请求方法:"+method+"描述信息:"+description);
-			if(params!=null)
-				builder.append("请求参数:"+params);
-			log.debug(builder.toString());
-		} catch (Exception e) {
-			log.error("前置通知异常，异常信息:{}",e);
-		}
+			try{
+				operationLogServiceImpl.insertOperationLog(operationLog);
+			}catch (Exception e){
+				log.error("插入日志失败:{}", e);
+			}
+		});
 	}
 	
 
