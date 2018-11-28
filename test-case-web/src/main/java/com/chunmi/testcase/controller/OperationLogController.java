@@ -43,7 +43,7 @@ public class OperationLogController {
 			//返回新url
 			String newUrl = "operationLogList_{pageCurrent}_{pageSize}_{pageCount}?userName="+user.getUserName();
 
-			String pageHTML = PageUtil.getPageContent(newUrl,pageCurrent,pageSize, pb.getPageCount());
+			String pageHTML = PageUtil.getPageContent(newUrl,pb.getPageCurrent(),pb.getPageSize(), pb.getPageCount());
 			map.put("pageHTML", pageHTML);
 		} catch (Exception e) {
 			log.error("查询日志列表出错:{}",e);

@@ -54,6 +54,7 @@ public class OperationLogServiceImpl implements OperationLogService {
             pb.setPageCurrent(pageCount);
         }
         PageRequest pageRequest = new PageRequest(pageCurrent, pageSize);
+        pb.setPageCurrent(pageCurrent);
         pb.setPageSize(pageSize);
         pb.setPageCount(pageCount);
         pb.setObjectBean(user);

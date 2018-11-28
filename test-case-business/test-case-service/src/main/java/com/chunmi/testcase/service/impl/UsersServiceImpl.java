@@ -16,16 +16,15 @@
 package com.chunmi.testcase.service.impl;
 
 
-import java.util.List;
-
 import com.chunmi.testcase.mapper.UsersMapper;
-import com.chunmi.testcase.service.UsersService;
-import org.springframework.stereotype.Service;
 import com.chunmi.testcase.model.po.Users;
+import com.chunmi.testcase.service.UsersService;
 import com.chunmi.testcase.utils.PageBean;
 import com.chunmi.testcase.utils.PageRequest;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class UsersServiceImpl implements UsersService {
@@ -61,6 +60,7 @@ public class UsersServiceImpl implements UsersService {
             pb.setPageCurrent(pageCount);
         }
         PageRequest pageRequest = new PageRequest(pageCurrent,pageSize);
+        pb.setPageCurrent(pageCurrent);
         pb.setPageSize(pageSize);
         pb.setPageCount(pageCount);
         pb.setObjectBean(user);
