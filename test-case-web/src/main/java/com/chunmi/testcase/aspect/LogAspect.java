@@ -15,30 +15,29 @@
  */
 package com.chunmi.testcase.aspect;
 
-import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Objects;
-import java.util.concurrent.CompletableFuture;
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
+import com.chunmi.testcase.annotation.Loggable;
+import com.chunmi.testcase.model.po.OperationLog;
+import com.chunmi.testcase.model.po.Users;
 import com.chunmi.testcase.service.OperationLogService;
+import com.chunmi.testcase.utils.Constant;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import com.chunmi.testcase.annotation.Loggable;
-import com.chunmi.testcase.model.po.OperationLog;
-import com.chunmi.testcase.model.po.Users;
-import com.chunmi.testcase.utils.Constant;
-import lombok.extern.slf4j.Slf4j;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.Objects;
+import java.util.concurrent.CompletableFuture;
 
 @Aspect
 @Component
@@ -77,22 +76,23 @@ public class LogAspect {
 		String description = getControllerMethodDescription(joinPoint);  //描述信息
 		Users user = (Users) request.getSession().getAttribute(Constant.LOGIN_MANAGER);
 		//开启异步线程执行日志插入操作
-		CompletableFuture.runAsync(() -> {
-			StringBuilder builder = new StringBuilder("请求方法:" + method + "描述信息:" + description);
-			if (params != null)
-				builder.append("请求参数:" + params);
-			log.debug(builder.toString());
-			OperationLog operationLog = new OperationLog();
-			operationLog.setUserId(user.getId());
-			operationLog.setParams(params);
-			operationLog.setMethod(method);
-			operationLog.setMessage(description);
-			try{
+		try{
+			CompletableFuture.runAsync(() -> {
+				StringBuilder builder = new StringBuilder("请求方法:" + method + "描述信息:" + description);
+				if (params != null)
+					builder.append("请求参数:" + params);
+				log.debug(builder.toString());
+				OperationLog operationLog = new OperationLog();
+				operationLog.setUserId(user.getId());
+				operationLog.setParams(params);
+				operationLog.setMethod(method);
+				operationLog.setMessage(description);
 				operationLogServiceImpl.insertOperationLog(operationLog);
-			}catch (Exception e){
-				log.error("插入日志失败:{}", e);
-			}
-		});
+			}).exceptionally(e -> {throw new RuntimeException();});
+		}catch (Exception e){
+			log.error("插入日志失败:{}", e.getMessage());
+		}
+
 	}
 	
 
