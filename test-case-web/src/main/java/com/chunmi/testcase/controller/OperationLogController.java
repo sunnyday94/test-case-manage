@@ -1,12 +1,12 @@
 package com.chunmi.testcase.controller;
 
-import java.util.HashMap;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
-
+import com.chunmi.testcase.model.po.OperationLog;
+import com.chunmi.testcase.model.po.Users;
 import com.chunmi.testcase.service.OperationLogService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.chunmi.testcase.utils.Constant;
+import com.chunmi.testcase.utils.PageBean;
+import com.chunmi.testcase.utils.PageUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,13 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.chunmi.testcase.model.po.OperationLog;
-import com.chunmi.testcase.model.po.Users;
-import com.chunmi.testcase.utils.Constant;
-import com.chunmi.testcase.utils.PageBean;
-import com.chunmi.testcase.utils.PageUtil;
-
-import lombok.extern.slf4j.Slf4j;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 
 @Controller
 @Slf4j
@@ -47,7 +43,7 @@ public class OperationLogController {
 			//返回新url
 			String newUrl = "operationLogList_{pageCurrent}_{pageSize}_{pageCount}?userName="+user.getUserName();
 
-			String pageHTML = PageUtil.getPageContent(newUrl,pb.getPageCurrent(), pb.getPageSize(), pb.getPageCount());
+			String pageHTML = PageUtil.getPageContent(newUrl,pageCurrent,pageSize, pb.getPageCount());
 			map.put("pageHTML", pageHTML);
 		} catch (Exception e) {
 			log.error("查询日志列表出错:{}",e);

@@ -40,7 +40,7 @@ public class OperationLogServiceImpl implements OperationLogService {
     public PageBean<OperationLog> selectOperationLogListByCondition(Users user, Integer pageCurrent, Integer pageSize,
                                                                     Integer pageCount) {
         PageBean<OperationLog> pb = new PageBean<>();
-        //�ж�
+        //判断
         if(pageSize == 0) pageSize = 12;         //每页条目数
         if(pageCurrent == 0) pageCurrent = 1;    //当前页
         Integer rows = operationLogMapper.selectOperationLogsCountsByCondition(user).intValue();

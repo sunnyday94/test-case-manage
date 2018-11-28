@@ -92,11 +92,12 @@ $(document).ready(function () {
 
     // Append config box / Only for demo purpose
     // Uncomment on server mode to enable XHR calls
+    /*暂时不加载
     $.get("skin-config.html", function (data) {
         if (!$('body').hasClass('no-skin-config'))
             $('body').append(data);
     });
-
+    */
     // Minimalize menu
     $('.navbar-minimalize').click(function () {
         $("body").toggleClass("mini-navbar");
