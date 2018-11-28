@@ -80,7 +80,7 @@ public class LogAspect {
 			CompletableFuture.runAsync(() -> {
 				StringBuilder builder = new StringBuilder("请求方法:" + method + "描述信息:" + description);
 				if (params != null)
-					builder.append("请求参数:" + params);
+					builder.append("请求参数:").append(params);
 				log.debug(builder.toString());
 				OperationLog operationLog = new OperationLog();
 				operationLog.setUserId(user.getId());
