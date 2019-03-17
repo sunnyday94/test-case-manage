@@ -12,9 +12,9 @@ spring:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: Asia/Shanghai
   datasource:
-    url: jdbc:mysql://193.112.6.17:3306/test_case_manage?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
+    url: jdbc:mysql://39.108.239.226:3306/test_case_manage?useUnicode=true&characterEncoding=utf8&autoReconnect=true&rewriteBatchedStatements=TRUE
     username: root
-    password: 123456
+    password: uAiqwVwjJ8-i
     driver-class-name: com.mysql.jdbc.Driver
     tomcat:
       max-active: 800
