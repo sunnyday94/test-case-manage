@@ -196,6 +196,7 @@ public class CaseDetailServiceImpl implements CaseDetailService {
             outputStream = response.getOutputStream();
             wb.write(outputStream);
             outputStream.flush();
+            outputStream.close();
         } catch (Exception e) {
             e.getMessage();
         }finally {
