@@ -48,7 +48,7 @@ public class TemporaryServiceImpl implements TemporaryService {
         int firstRowIndex = sheet.getFirstRowNum(); //获取第一行(从0开始)
         int lastRowIndex = sheet.getLastRowNum();   //获取最后一行(从0开始)
 
-        List<CaseDetail> caseDetailList = new ArrayList<CaseDetail>();
+        List<CaseDetail> caseDetailList = new ArrayList<>();
         //从第二行开始(第一行为标题)
         for(int rIndex =firstRowIndex+1;rIndex<=lastRowIndex;rIndex++) {
             Row row = sheet.getRow(rIndex);
@@ -142,7 +142,7 @@ public class TemporaryServiceImpl implements TemporaryService {
                 caseDetailList.add(caseDetail);
             }
         }
-        if(caseDetailList!=null && caseDetailList.size()>0)
+        if(caseDetailList.size() > 0)
             caseDetailService.batchInsertCaseDetail(caseDetailList);
     }
 }
