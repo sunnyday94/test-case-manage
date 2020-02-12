@@ -137,14 +137,13 @@ public class TestCaseController {
 	 * @return CaseDetail
 	 */
 	@ApiOperation(value="查询测试用例详情",notes="查询测试用例详情")
-	@ApiImplicitParam(name="id",value="测试用例id",dataType="long",paramType="query")
+	@ApiImplicitParam(name="id",value="测试用例id",dataType="long",paramType="path",required = true,defaultValue = "1")
 	@Loggable(logDescription="查询测试用例详情")
 	@GetMapping(value="selectTestCaseDetailById/{id}")
 	@ResponseBody
 	public CaseDetailVo selectTestCaseDetailById(@PathVariable("id") Long id) {
 		try {
-			CaseDetailVo caseDetail = caseDetailServiceImpl.selectTestCaseDetailById(id);
-			return caseDetail;
+			return caseDetailServiceImpl.selectTestCaseDetailById(id);
 		} catch (Exception e) {
 			log.info(e.getMessage());
 		}
@@ -214,7 +213,7 @@ public class TestCaseController {
 			String fileName = "测试用例_"+System.currentTimeMillis()+".xls";  //设置下载时excel客户端名称
 			pb = caseDetailServiceImpl.selectExportTestCaseByConditions(caseDetail);
 			response.setContentType("application/vnd.ms-excel");
-			response.setHeader("Content-disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
+			response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode(fileName, "UTF-8"));
 			caseDetailServiceImpl.exportTestCase(pb,response);
 		} catch (Exception e) {
 			log.error("查询测试用例失败:{}",e.getMessage());
