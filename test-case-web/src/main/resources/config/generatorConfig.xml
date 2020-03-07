@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<context id="duckbill-demo" targetRuntime="MyBatis3">
+		<commentGenerator>
+			<!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+			<property name="suppressAllComments" value="false" />
+		</commentGenerator>
+		<!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://106.15.102.224:5566/yzs_user?useUnicode=true&amp;characterEncoding=UTF-8" userId="deploy"
+			password="6bBgEieavECot4T">
+		</jdbcConnection>
+
+
+		<!-- targetProject:生成po类的位置 -->
+		<javaModelGenerator targetPackage="com.duckbillscm.modules.user.web.entity"
+			targetProject="E:\Projects\userCenter\src\main\java">
+			<!-- 从数据库返回的值被清理前后的空格 -->
+			<!--  <property name="trimStrings" value="true" />  -->
+		</javaModelGenerator>
+		
+		
+        <!-- targetProject:mapper映射文件生成的位置 -->
+		<sqlMapGenerator targetPackage="mapper"
+			targetProject="E:\Projects\userCenter\src\main\resources">
+		</sqlMapGenerator>
+		
+		<!-- targetPackage：mapper接口生成的位置 -->
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="com.duckbillscm.modules.user.web.repository"
+			targetProject="E:\Projects\userCenter\src\main\java">
+		</javaClientGenerator>
+		
+		<!-- 数据库表和对应实体类 -->
+
+		<table tableName="company" domainObjectName="Company"
+				enableCountByExample="false"  enableDeleteByExample="false" 
+				enableSelectByExample="false" enableUpdateByExample="false"/>
+
+		<table tableName="dict_data" domainObjectName="DictData"
+			   enableCountByExample="false"  enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false"/>
+
+		<table tableName="dict_type" domainObjectName="DictType"
+			   enableCountByExample="false"  enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false"/>
+
+		<table tableName="group" domainObjectName="Group"
+			   enableCountByExample="false"  enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false"/>
+
+		<table tableName="office" domainObjectName="Office"
+			   enableCountByExample="false"  enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false"/>
+
+		<table tableName="post" domainObjectName="Post"
+			   enableCountByExample="false"  enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false"/>
+
+		<table tableName="role" domainObjectName="Role"
+			   enableCountByExample="false"  enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false"/>
+
+		<table tableName="user_source" domainObjectName="UserSource"
+			   enableCountByExample="false"  enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false"/>
+
+		<table tableName="user_bind_third" domainObjectName="UserBindThird"
+			   enableCountByExample="false"  enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false"/>
+
+		<table tableName="user_primary" domainObjectName="UserPrimary"
+			   enableCountByExample="false"  enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false"/>
+
+		<table tableName="user_profile_employ" domainObjectName="userProfileEmploy"
+			   enableCountByExample="false"  enableDeleteByExample="false"
+			   enableSelectByExample="false" enableUpdateByExample="false"/>
+	</context>
+</generatorConfiguration>
